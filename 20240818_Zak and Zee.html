@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zak and Zee Reading Adventure 🐞</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #6DA03B;
+            --accent-yellow: #F7E300;
+            --bg-light: #F0F7E9;
+            --text-dark: #2D401C;
+            --white: #ffffff;
+            --berry-red: #D64550;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 8px solid var(--primary-green);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-green);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 20px;
+            background-color: #fcfcfc;
+            border: 2px solid #eee;
+        }
+
+        h2 {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.3rem;
+            margin-top: 0;
+        }
+
+        .word-bank {
+            background: var(--accent-yellow);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 2px dashed var(--text-dark);
+        }
+
+        .question-card {
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            font-family: 'Lexend', sans-serif;
+            font-size: 1.1rem;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #ccc;
+            width: 100%;
+            max-width: 350px;
+            box-sizing: border-box;
+        }
+
+        .options label {
+            display: block;
+            margin: 12px 0;
+            padding: 12px;
+            border-radius: 12px;
+            background: #f0f0f0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .options label:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-audio {
+            background-color: var(--berry-red);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--primary-green);
+            color: white;
+            font-size: 1.6rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 20px;
+            display: none;
+            text-align: center;
+            background: var(--accent-yellow);
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Zak and Zee Quiz 🐞</h1>
+
+    <div class="section">
+        <h2>Part 1: Story Understanding 🧐</h2>
+        
+        <div class="question-card">
+            <p class="question-text">1. Who had big yellow eyes in the story?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="Zak"> Zak</label>
+                <label><input type="radio" name="q1" value="Zee"> Zee</label>
+                <label><input type="radio" name="q1" value="Dragonfly"> A dragonfly</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <p class="question-text">2. Why did Zee Bug talk to Zak's back?</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> He was playing a game</label>
+                <label><input type="radio" name="q2" value="B"> He did not see well</label>
+                <label><input type="radio" name="q2" value="C"> He liked Zak's tail</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <p class="question-text">3. What did the two bugs do at the end of the story?</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> They went to sleep</label>
+                <label><input type="radio" name="q3" value="B"> They ate a green leaf</label>
+                <label><input type="radio" name="q3" value="C"> They flew away to play</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 2: Word Bank Fun ✍️</h2>
+        <div class="word-bank">
+            Word Bank: green / dragonfly / small / tail / face
+        </div>
+
+        <div class="question-card">
+            <p class="question-text">4. Two ______ bugs sat in a tree.</p>
+            <input type="text" id="q4" autocomplete="off">
+        </div>
+
+        <div class="question-card">
+            <p class="question-text">5. Zee Bug's eyes were very ______.</p>
+            <input type="text" id="q5" autocomplete="off">
+        </div>
+
+        <div class="question-card">
+            <p class="question-text">6. Zak said, "That's my ______!" when Zee shouted.</p>
+            <input type="text" id="q6" autocomplete="off">
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 3: Think & Write 📝</h2>
+        <div class="question-card">
+            <p class="question-text">7. Zak said his eyes are not on his back. Where are they?</p>
+            <input type="text" id="q7" placeholder="Type your answer...">
+        </div>
+
+        <div class="question-card">
+            <p class="question-text">8. What can Zee do just as well as Zak?</p>
+            <input type="text" id="q8" placeholder="Type your answer...">
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 4: Read Aloud 🗣️</h2>
+        <div class="question-card">
+            <p class="question-text">9. "Would you like to come to tea?"</p>
+            <button class="btn-audio" onclick="speak('Would you like to come to tea?')">🔊 Listen and Repeat</button>
+        </div>
+
+        <div class="question-card">
+            <p class="question-text">10. "You keep talking to my back."</p>
+            <button class="btn-audio" onclick="speak('You keep talking to my back.')">🔊 Listen and Repeat</button>
+        </div>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Finished! Check Score 🌟</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.lang = 'en-US';
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        const woman = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (woman) msg.voice = woman;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        
+        // Part 1
+        if(document.querySelector('input[name="q1"]:checked')?.value === 'Zak') score++;
+        if(document.querySelector('input[name="q2"]:checked')?.value === 'B') score++;
+        if(document.querySelector('input[name="q3"]:checked')?.value === 'C') score++;
+
+        // Part 2
+        if(document.getElementById('q4').value.toLowerCase().trim() === 'green') score++;
+        if(document.getElementById('q5').value.toLowerCase().trim() === 'small') score++;
+        if(document.getElementById('q6').value.toLowerCase().trim() === 'tail') score++;
+
+        // Part 3
+        if(document.getElementById('q7').value.toLowerCase().includes('face')) score++;
+        if(document.getElementById('q8').value.toLowerCase().includes('fly')) score++;
+
+        // Part 4 (Reading participation points)
+        score += 2;
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = "You got " + score + " / 10! You are amazing! 🌟";
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
