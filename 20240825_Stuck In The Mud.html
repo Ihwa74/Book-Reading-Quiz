@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club Quiz: Stuck in the Mud</title>
+    <style>
+        :root {
+            --primary-color: #6B8E23; /* Olive Drab Green */
+            --secondary-color: #8B4513; /* Saddle Brown */
+            --bg-color: #F0F8FF; /* Alice Blue */
+            --card-bg: #FFFFFF;
+            --accent-color: #FFD700; /* Gold */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--secondary-color);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+            color: var(--primary-color);
+        }
+
+        .word-bank {
+            background-color: #FFF9E6;
+            border: 2px dashed var(--accent-color);
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .word-item {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            padding: 5px 15px;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 15px;
+            background: #fdfdfd;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="text"], select {
+            font-size: 1.1rem;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        input[type="radio"] {
+            transform: scale(1.2);
+            margin-right: 10px;
+        }
+
+        .option-label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        .btn-play {
+            background-color: var(--accent-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-play:hover {
+            background-color: #f2c600;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-top: 50px;
+        }
+
+        #result {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .correct-ans {
+            color: green;
+            font-size: 0.9rem;
+            display: none;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🐑 Stuck in the Mud</h1>
+    <p class="subtitle">Oxford Reading Tree Stage 4 Quiz</p>
+
+    <h2>Part 1: Story Understanding 🧐</h2>
+    <div class="question">
+        <span class="question-text">1. Where were the children and Dad walking? 🗺️</span>
+        <label class="option-label"><input type="radio" name="q1" value="a"> A. In a big city</label>
+        <label class="option-label"><input type="radio" name="q1" value="b"> B. On a muddy path</label>
+        <label class="option-label"><input type="radio" name="q1" value="c"> C. Inside a house</label>
+    </div>
+
+    <div class="question">
+        <span class="question-text">2. Why couldn't the sheep get out of the mud? 🐏</span>
+        <label class="option-label"><input type="radio" name="q2" value="a"> A. The mud was too deep</label>
+        <label class="option-label"><input type="radio" name="q2" value="b"> B. The sheep was sleeping</label>
+        <label class="option-label"><input type="radio" name="q2" value="c"> C. It was a toy sheep</label>
+    </div>
+
+    <div class="question">
+        <span class="question-text">3. What happened to Dad's boot? 🥾</span>
+        <label class="option-label"><input type="radio" name="q3" value="a"> A. He gave it to Wilma</label>
+        <label class="option-label"><input type="radio" name="q3" value="b"> B. It was clean</label>
+        <label class="option-label"><input type="radio" name="q3" value="c"> C. He lost it in the mud</label>
+    </div>
+
+    <h2>Part 2: Word Bank Fun ✍️</h2>
+    <div class="word-bank">
+        <span class="word-item">muddy</span>
+        <span class="word-item">sank</span>
+        <span class="word-item">pushed</span>
+        <span class="word-item">pulled</span>
+        <span class="word-item">stuck</span>
+    </div>
+
+    <div class="question">
+        <span class="question-text">4. The children went for a ______ walk. 🚶‍♀️🚶‍♂️</span>
+        <input type="text" id="q4" placeholder="Type word from the list">
+    </div>
+
+    <div class="question">
+        <span class="question-text">5. Oh no! A sheep is ______ in the mud. 🆘</span>
+        <input type="text" id="q5" placeholder="Type word from the list">
+    </div>
+
+    <div class="question">
+        <span class="question-text">6. Dad ______ the sheep and Wilma and Chip ______ it. 💪</span>
+        <input type="text" id="q6_1" placeholder="First word" style="margin-bottom: 10px;">
+        <input type="text" id="q6_2" placeholder="Second word">
+    </div>
+
+    <h2>Part 3: Think & Write 📝</h2>
+    <div class="question">
+        <span class="question-text">7. Who went to help Dad and the sheep? 🤝</span>
+        <input type="text" id="q7" placeholder="Name the characters...">
+    </div>
+
+    <div class="question">
+        <span class="question-text">8. What did Wilma go to get for Dad? 🥾</span>
+        <input type="text" id="q8" placeholder="Type your answer...">
+    </div>
+
+    <h2>Part 4: Read Aloud 🔊</h2>
+    <div class="question">
+        <span class="question-text">9. Listen and Repeat: "What a muddy path!" 🌿</span>
+        <button class="btn-play" onclick="speak('What a muddy path!')">▶️ Listen</button>
+    </div>
+
+    <div class="question">
+        <span class="question-text">10. Listen and Repeat: "Help! Now I'm stuck!" 🆘</span>
+        <button class="btn-play" onclick="speak('Help! Now I am stuck!')">▶️ Listen</button>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit Quiz 🚀</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.lang = 'en-US';
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        
+        // Q1-3
+        if (document.querySelector('input[name="q1"]:checked')?.value === 'b') score++;
+        if (document.querySelector('input[name="q2"]:checked')?.value === 'a') score++;
+        if (document.querySelector('input[name="q3"]:checked')?.value === 'c') score++;
+
+        // Q4-6
+        if (document.getElementById('q4').value.toLowerCase().trim() === 'muddy') score++;
+        if (document.getElementById('q5').value.toLowerCase().trim() === 'stuck') score++;
+        const q6_1 = document.getElementById('q6_1').value.toLowerCase().trim();
+        const q6_2 = document.getElementById('q6_2').value.toLowerCase().trim();
+        if (q6_1 === 'pushed' && q6_2 === 'pulled') score++;
+
+        // Q7-8 (Simple keyword check)
+        const q7 = document.getElementById('q7').value.toLowerCase();
+        if (q7.includes('wilma') && q7.includes('chip')) score++;
+        if (document.getElementById('q8').value.toLowerCase().includes('boot')) score++;
+
+        // Q9-10 (Auto-pass on click/attempt)
+        score += 2; 
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `Great Job! Your Score: ${score} / 10 🎉`;
+        resultDiv.style.backgroundColor = score > 7 ? '#d4edda' : '#f8d7da';
+        
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
