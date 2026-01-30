@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Dragon Training Interactive Quiz</title> <style> :root { --primary-green: #76b82a; --secondary-yellow: #f9d423; --bg-blue: #e0f2f1; --wrong-red: #ffebee; --correct-green: #e8f5e9; --text-color: #2c3e50; }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-blue);
+        color: var(--text-color);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        font-size: 18px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 30px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border: 8px solid var(--primary-green);
+    }
+
+    h1 {
+        text-align: center;
+        color: var(--primary-green);
+        font-size: 2.5em;
+        text-shadow: 2px 2px var(--secondary-yellow);
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 30px;
+        display: block;
+    }
+
+    .section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border-bottom: 2px dashed #ccc;
+    }
+
+    .section-title {
+        background-color: var(--secondary-yellow);
+        display: inline-block;
+        padding: 5px 20px;
+        border-radius: 15px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .question-block {
+        margin-bottom: 25px;
+        padding: 15px;
+        border-radius: 15px;
+        transition: background 0.3s;
+        position: relative;
+    }
+
+    .audio-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+        vertical-align: middle;
+        margin-left: 10px;
+    }
+
+    .options label {
+        display: block;
+        margin: 10px 0;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    input[type="text"] {
+        padding: 8px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 18px;
+        width: 150px;
+    }
+
+    textarea {
+        width: 100%;
+        height: 80px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 18px;
+    }
+
+    .word-bank {
+        background: #fff9c4;
+        padding: 15px;
+        border-radius: 15px;
+        border: 2px solid var(--secondary-yellow);
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .word-item {
+        display: inline-block;
+        margin: 5px 15px;
+        color: #d35400;
+    }
+
+    .feedback {
+        display: none;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+    .correct-answer {
+        display: none;
+        color: #2e7d32;
+        font-size: 0.9em;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    #submit-btn {
+        display: block;
+        width: 100%;
+        padding: 20px;
+        background-color: var(--primary-green);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 1.5em;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 5px #558b2f;
+    }
+
+    #submit-btn:active {
+        box-shadow: 0 2px #558b2f;
+        transform: translateY(3px);
+    }
+
+    #score-display {
+        text-align: center;
+        font-size: 3em;
+        margin-top: 30px;
+        color: var(--primary-green);
+        display: none;
+    }
+
+    .incorrect-bg { background-color: var(--wrong-red) !important; }
+    .correct-bg { background-color: var(--correct-green) !important; }
+
+    .reading-box {
+        background: #f0f0f0;
+        padding: 20px;
+        border-radius: 15px;
+        border-left: 5px solid var(--primary-green);
+        font-size: 1.2em;
+        font-style: italic;
+    }
+</style>
+</head> <body>
+
+<div class="container"> <h1>🐲 Dragon Training Quiz 🐲</h1> <span class="subtitle">Can you become a Dragon Master? Let's find out! 🐾</span>
+
+<div class="section">
+    <div class="section-title">Part 1: Choose the Best Answer (Selection) 📖</div>
+    
+    <div class="question-block" id="q1">
+        <p>1. What happens if you go down into a dragon's den? <button class="audio-btn" onclick="speak('What happens if you go down into a dragon\'s den?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A. It will make the dragon happy.</label>
+            <label><input type="radio" name="q1" value="B"> B. It will annoy the dragon.</label>
+            <label><input type="radio" name="q1" value="C"> C. It will make the dragon sleep.</label>
+        </div>
+        <div class="correct-answer">Correct Answer: B. It will annoy the dragon.</div>
+    </div>
+
+    <div class="question-block" id="q2">
+        <p>2. What do dragons like the sound of? <button class="audio-btn" onclick="speak('What do dragons like the sound of?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A. Loud shouting.</label>
+            <label><input type="radio" name="q2" value="B"> B. Dragons dens.</label>
+            <label><input type="radio" name="q2" value="C"> C. Sweet singing.</label>
+        </div>
+        <div class="correct-answer">Correct Answer: C. Sweet singing.</div>
+    </div>
+
+    <div class="question-block" id="q3">
+        <p>3. Where should you NOT go near on a dragon? <button class="audio-btn" onclick="speak('Where should you NOT go near on a dragon?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> A. Its mouth.</label>
+            <label><input type="radio" name="q3" value="B"> B. Its back.</label>
+            <label><input type="radio" name="q3" value="C"> C. Its wings.</label>
+        </div>
+        <div class="correct-answer">Correct Answer: A. Its mouth.</div>
+    </div>
+
+    <div class="question-block" id="q4">
+        <p>4. How did Tiger make the green dragon turn right? <button class="audio-btn" onclick="speak('How did Tiger make the green dragon turn right?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A. He pulled its ears.</label>
+            <label><input type="radio" name="q4" value="B"> B. He tapped it with his right leg.</label>
+            <label><input type="radio" name="q4" value="C"> C. He sang a song.</label>
+        </div>
+        <div class="correct-answer">Correct Answer: B. He tapped it with his right leg.</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Part 2: Fill in the Blanks ✏️</div>
+    <div class="word-bank">
+        Word Bank: <span class="word-item">straps</span> | <span class="word-item">sleep</span> | <span class="word-item">drink</span> | <span class="word-item">food</span> | <span class="word-item">crouched</span>
+    </div>
+
+    <div class="question-block" id="q5">
+        <p>5. A dragon needs lots of <input type="text" id="ans5" placeholder="..."> and it needs a <input type="text" id="ans5b" placeholder="...">. <button class="audio-btn" onclick="speak('A dragon needs lots of sleep and it needs a drink.')">🔊</button> <span class="feedback"></span></p>
+        <div class="correct-answer">Correct Answer: sleep / drink</div>
+    </div>
+
+    <div class="question-block" id="q6">
+        <p>6. The dragon <input type="text" id="ans6" placeholder="..."> down and Tiger got on its back. <button class="audio-btn" onclick="speak('The dragon crouched down and Tiger got on its back.')">🔊</button> <span class="feedback"></span></p>
+        <div class="correct-answer">Correct Answer: crouched</div>
+    </div>
+
+    <div class="question-block" id="q7">
+        <p>7. Tiger tugged on the <input type="text" id="ans7" placeholder="..."> to make the dragon slow down. <button class="audio-btn" onclick="speak('Tiger tugged on the straps to make the dragon slow down.')">🔊</button> <span class="feedback"></span></p>
+        <div class="correct-answer">Correct Answer: straps</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Part 3: Short Answer Questions 📝</div>
+    
+    <div class="question-block" id="q8">
+        <p>8. Why should you not go near a dragon's mouth? <button class="audio-btn" onclick="speak('Why should you not go near a dragon\'s mouth?')">🔊</button> <span class="feedback"></span></p>
+        <textarea id="ans8" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer">Example Answer: Because it is boiling hot!</div>
+    </div>
+
+    <div class="question-block" id="q9">
+        <p>9. What did Cat find to help Tiger? <button class="audio-btn" onclick="speak('What did Cat find to help Tiger?')">🔊</button> <span class="feedback"></span></p>
+        <textarea id="ans9" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer">Example Answer: Cat found some dragon food.</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Part 4: Read Aloud 🗣️</div>
+    <div class="question-block" id="q10">
+        <p>10. Read this sentence clearly: <span class="feedback"></span></p>
+        <div class="reading-box">
+            "Suddenly the dragon shot off quickly. Stop! Too fast! shouted Tiger."
+        </div>
+        <div style="margin-top:15px;">
+            <button id="listen-example" style="padding:10px; border-radius:10px; cursor:pointer;" onclick="speak('Suddenly the dragon shot off quickly. Stop! Too fast! shouted Tiger.')">▶️ Listen to Example</button>
+            <p><small>(Ask your teacher to check your reading!)</small></p>
+        </div>
+        <div class="correct-answer">Task: Read with excitement!</div>
+    </div>
+</div>
+
+<button id="submit-btn" onclick="calculateScore()">Submit My Answers! 🚀</button>
+
+<div id="score-display"></div>
+</div>
+
+<script> function speak(text) { window.speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(text); const voices = window.speechSynthesis.getVoices();
+
+    // Try to find a natural English female voice
+    const preferredVoice = voices.find(v =&gt; v.name.includes(&#39;Google US English&#39;) || v.name.includes(&#39;Natural&#39;)) 
+                         || voices.find(v =&gt; v.lang.startsWith(&#39;en&#39;));
+    
+    if (preferredVoice) utterance.voice = preferredVoice;
+    
+    utterance.rate = 0.85;
+    utterance.pitch = 1.1;
+    window.speechSynthesis.speak(utterance);
+}
+
+// Load voices
+window.speechSynthesis.onvoiceschanged = () =&gt; {};
+
+function calculateScore() {
+    let score = 0;
+    const total = 10;
+
+    // Reset
+    document.querySelectorAll(&#39;.question-block&#39;).forEach(el =&gt; {
+        el.classList.remove(&#39;incorrect-bg&#39;, &#39;correct-bg&#39;);
+    });
+    document.querySelectorAll(&#39;.feedback&#39;).forEach(el =&gt; el.style.display = &#39;inline&#39;);
+    document.querySelectorAll(&#39;.correct-answer&#39;).forEach(el =&gt; el.style.display = &#39;block&#39;);
+
+    // Q1-Q4
+    const answers = { q1: &#39;B&#39;, q2: &#39;C&#39;, q3: &#39;A&#39;, q4: &#39;B&#39; };
+    for (let i = 1; i &lt;= 4; i++) {
+        const selected = document.querySelector(`input[name=&quot;q${i}&quot;]:checked`);
+        const block = document.getElementById(`q${i}`);
+        const fb = block.querySelector(&#39;.feedback&#39;);
+        if (selected &amp;&amp; selected.value === answers[`q${i}`]) {
+            score++;
+            fb.innerHTML = &#39;✅ Correct&#39;;
+            block.classList.add(&#39;correct-bg&#39;);
+        } else {
+            fb.innerHTML = &#39;❌ Incorrect&#39;;
+            block.classList.add(&#39;incorrect-bg&#39;);
+        }
+    }
+
+    // Q5
+    const ans5 = document.getElementById(&#39;ans5&#39;).value.toLowerCase().trim();
+    const ans5b = document.getElementById(&#39;ans5b&#39;).value.toLowerCase().trim();
+    if (ans5 === &#39;sleep&#39; &amp;&amp; ans5b === &#39;drink&#39;) {
+        score++;
+        document.getElementById(&#39;q5&#39;).querySelector(&#39;.feedback&#39;).innerHTML = &#39;✅ Correct&#39;;
+        document.getElementById(&#39;q5&#39;).classList.add(&#39;correct-bg&#39;);
+    } else {
+        document.getElementById(&#39;q5&#39;).querySelector(&#39;.feedback&#39;).innerHTML = &#39;❌ Incorrect&#39;;
+        document.getElementById(&#39;q5&#39;).classList.add(&#39;incorrect-bg&#39;);
+    }
+
+    // Q6
+    const ans6 = document.getElementById(&#39;ans6&#39;).value.toLowerCase().trim();
+    if (ans6 === &#39;crouched&#39;) {
+        score++;
+        document.getElementById(&#39;q6&#39;).querySelector(&#39;.feedback&#39;).innerHTML = &#39;✅ Correct&#39;;
+        document.getElementById(&#39;q6&#39;).classList.add(&#39;correct-bg&#39;);
+    } else {
+        document.getElementById(&#39;q6&#39;).querySelector(&#39;.feedback&#39;).innerHTML = &#39;❌ Incorrect&#39;;
+        document.getElementById(&#39;q6&#39;).classList.add(&#39;incorrect-bg&#39;);
+    }
+
+    // Q7
+    const ans7 = document.getElementById(&#39;ans7&#39;).value.toLowerCase().trim();
+    if (ans7 === &#39;straps&#39;) {
+        score++;
+        document.getElementById(&#39;q7&#39;).querySelector(&#39;.feedback&#39;).innerHTML = &#39;✅ Correct&#39;;
+        document.getElementById(&#39;q7&#39;).classList.add(&#39;correct-bg&#39;);
+    } else {
+        document.getElementById(&#39;q7&#39;).querySelector(&#39;.feedback&#39;).innerHTML = &#39;❌ Incorrect&#39;;
+        document.getElementById(&#39;q7&#39;).classList.add(&#39;incorrect-bg&#39;);
+    }
+
+    // Q8 &amp; Q9 (Basic keyword check for &quot;correct&quot; status)
+    const keywords = {
+        q8: [&#39;hot&#39;, &#39;boiling&#39;],
+        q9: [&#39;food&#39;]
+    };
+    [8, 9].forEach(num =&gt; {
+        const val = document.getElementById(`ans${num}`).value.toLowerCase();
+        const block = document.getElementById(`q${num}`);
+        let found = keywords[`q${num}`].some(k =&gt; val.includes(k));
+        if (found) {
+            score++;
+            block.querySelector(&#39;.feedback&#39;).innerHTML = &#39;✅ Good Effort!&#39;;
+            block.classList.add(&#39;correct-bg&#39;);
+        } else {
+            block.querySelector(&#39;.feedback&#39;).innerHTML = &#39;❌ Check Example&#39;;
+            block.classList.add(&#39;incorrect-bg&#39;);
+        }
+    });
+
+    // Q10 (Self-marking / Teacher check)
+    score++; // Give point for attempt
+    document.getElementById(&#39;q10&#39;).querySelector(&#39;.feedback&#39;).innerHTML = &#39;✅ Done!&#39;;
+    document.getElementById(&#39;q10&#39;).classList.add(&#39;correct-bg&#39;);
+
+    // Final Score
+    const display = document.getElementById(&#39;score-display&#39;);
+    display.style.display = &#39;block&#39;;
+    let message = score &gt; 7 ? &quot;Wonderful! You&#39;re a Dragon Master! 🌟&quot; : &quot;Good job! Read again to get 10/10! 💪&quot;;
+    display.innerHTML = `Score: ${score}/${total}<br>&lt;small style=&quot;font-size:0.5em&quot;&gt;${message}&lt;/small&gt;`;
+    
+    window.scrollTo(0, document.body.scrollHeight);
+}
+</script>
+
+</body> </html>
