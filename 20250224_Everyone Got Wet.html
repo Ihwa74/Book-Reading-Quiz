@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club: Everyone Got Wet Quiz</title>
+    <style>
+        :root {
+            --primary-green: #76ba1b;
+            --soft-yellow: #fff9c4;
+            --accent-orange: #ff9800;
+            --error-red: #ffebee;
+            --correct-green: #e8f5e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            background-color: var(--primary-green);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            background-color: var(--soft-yellow);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-orange);
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        .question-card {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #eee;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #fdfdfd;
+            padding: 15px;
+            border: 2px dashed var(--accent-orange);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .word-item {
+            background: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-weight: bold;
+            color: var(--accent-orange);
+        }
+
+        .incorrect { background-color: var(--error-red) !important; border-color: #ef9a9a !important; }
+        .correct { background-color: var(--correct-green) !important; border-color: #a5d6a7 !important; }
+
+        .feedback { font-weight: bold; margin-left: 10px; }
+        .correct-answer-box { 
+            display: none; 
+            margin-top: 10px; 
+            padding: 10px; 
+            background: #fff; 
+            border-radius: 8px; 
+            font-size: 0.9em;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 150px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 60px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+        }
+
+        button.audio-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            vertical-align: middle;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+
+        #score-display {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2rem;
+            display: none;
+        }
+
+        .options label { display: block; margin: 10px 0; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>💦 Everyone Got Wet!</h1>
+    <p>Help Biff, Chip, and Kipper solve the water troubles!</p>
+</div>
+
+<div class="quiz-container" id="quizForm">
+    
+    <div class="section-title">Part 1: Choose the Best Answer (選擇題)</div>
+    
+    <div class="question-card" id="q1">
+        <p>1. Why did Dad look at the water butt? <button class="audio-btn" onclick="speak('Why did Dad look at the water butt?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A. It was empty.</label>
+            <label><input type="radio" name="q1" value="B"> B. It was leaking.</label>
+            <label><input type="radio" name="q1" value="C"> C. It was new.</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: B. It was leaking.</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <p>2. What did Mum put on the hose to fix it? <button class="audio-btn" onclick="speak('What did Mum put on the hose to fix it?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A. A patch.</label>
+            <label><input type="radio" name="q2" value="B"> B. A tap.</label>
+            <label><input type="radio" name="q2" value="C"> C. A brick.</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: A. A patch.</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <p>3. What happened when Mum put the hose on the tap? <button class="audio-btn" onclick="speak('What happened when Mum put the hose on the tap?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> A. The hose burst.</label>
+            <label><input type="radio" name="q3" value="B"> B. The children got wet.</label>
+            <label><input type="radio" name="q3" value="C"> C. The top of the tap came off.</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: C. The top of the tap came off.</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <p>4. Where did Dad put the new water butt? <button class="audio-btn" onclick="speak('Where did Dad put the new water butt?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A. On the grass.</label>
+            <label><input type="radio" name="q4" value="B"> B. On the bricks.</label>
+            <label><input type="radio" name="q4" value="C"> C. In the pool.</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: B. On the bricks.</div>
+    </div>
+
+    <div class="section-title">Part 2: Fill in the Blanks (選填題)</div>
+    <div class="word-bank">
+        <span class="word-item">burst</span>
+        <span class="word-item">poured</span>
+        <span class="word-item">turned</span>
+        <span class="word-item">tricky</span>
+        <span class="word-item">joined</span>
+    </div>
+
+    <div class="question-card" id="q5">
+        <p>5. Dad said, "What a <input type="text" id="ans5"> job!" <button class="audio-btn" onclick="speak('Dad said, What a tricky job!')">🔊</button> <span class="feedback"></span></p>
+        <div class="correct-answer-box">Correct Answer: tricky</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <p>6. The water butt <input type="text" id="ans6">. All the water came out. <button class="audio-btn" onclick="speak('The water butt burst. All the water came out.')">🔊</button> <span class="feedback"></span></p>
+        <div class="correct-answer-box">Correct Answer: burst</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <p>7. Kipper <input type="text" id="ans7"> the tap on. <button class="audio-btn" onclick="speak('Kipper turned the tap on.')">🔊</button> <span class="feedback"></span></p>
+        <div class="correct-answer-box">Correct Answer: turned</div>
+    </div>
+
+    <div class="section-title">Part 3: Answer the Questions (簡答題)</div>
+    
+    <div class="question-card" id="q8">
+        <p>8. Why did Mum join the new hose to the old hose? <button class="audio-btn" onclick="speak('Why did Mum join the new hose to the old hose?')">🔊</button> <span class="feedback"></span></p>
+        <textarea id="ans8" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: She wanted to water the roses.</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <p>9. What did the children put on the grass? <button class="audio-btn" onclick="speak('What did the children put on the grass?')">🔊</button> <span class="feedback"></span></p>
+        <textarea id="ans9" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: They put the paddling pool on the grass.</div>
+    </div>
+
+    <div class="section-title">Part 4: Read Aloud (朗讀題)</div>
+    <div class="question-card" id="q10">
+        <p>10. Read this sentence: <span class="feedback"></span></p>
+        <h3 style="color: var(--primary-green); text-align: center;">"No water came out of the hose. Funny! said Dad."</h3>
+        <button class="submit-btn" style="background-color: var(--accent-orange); margin-top: 10px;" onclick="speak('No water came out of the hose. Funny! said Dad.')">Listen to Example (範例朗讀)</button>
+        <p style="font-size: 0.8em; text-align: center;">Press the orange button to listen, then try reading it yourself! 🗣️</p>
+    </div>
+
+    <button class="submit-btn" onclick="calculateScore()">Submit Answers ✅</button>
+
+    <div id="score-display"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find a nice female voice
+        msg.voice = voices.find(v => v.name.includes('Google US English')) || 
+                    voices.find(v => v.name.includes('Female')) || 
+                    voices[0];
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function calculateScore() {
+        let score = 0;
+        const total = 10;
+
+        // Reset styles
+        document.querySelectorAll('.question-card').forEach(card => {
+            card.classList.remove('incorrect', 'correct');
+        });
+        document.querySelectorAll('.feedback').forEach(f => f.innerHTML = '');
+        document.querySelectorAll('.correct-answer-box').forEach(b => b.style.display = 'block');
+
+        // Part 1
+        const answers1 = { q1: 'B', q2: 'A', q3: 'C', q4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`)?.value;
+            const card = document.getElementById(`q${i}`);
+            if (selected === answers1[`q${i}`]) {
+                score++;
+                markCorrect(card);
+            } else {
+                markIncorrect(card);
+            }
+        }
+
+        // Part 2
+        const answers2 = { ans5: 'tricky', ans6: 'burst', ans7: 'turned' };
+        for (let i = 5; i <= 7; i++) {
+            const val = document.getElementById(`ans${i}`).value.trim().toLowerCase();
+            const card = document.getElementById(`q${i}`);
+            if (val === answers2[`ans${i}`]) {
+                score++;
+                markCorrect(card);
+            } else {
+                markIncorrect(card);
+            }
+        }
+
+        // Part 3 (Simple keyword check)
+        const val8 = document.getElementById('ans8').value.toLowerCase();
+        const card8 = document.getElementById('q8');
+        if (val8.includes('roses') || val8.includes('water')) {
+            score++;
+            markCorrect(card8);
+        } else {
+            markIncorrect(card8);
+        }
+
+        const val9 = document.getElementById('ans9').value.toLowerCase();
+        const card9 = document.getElementById('q9');
+        if (val9.includes('pool') || val9.includes('paddling')) {
+            score++;
+            markCorrect(card9);
+        } else {
+            markIncorrect(card9);
+        }
+
+        // Part 4 (Self-check mock)
+        score++; 
+        markCorrect(document.getElementById('q10'));
+
+        // Display Score
+        const display = document.getElementById('score-display');
+        display.style.display = 'block';
+        let message = score >= 8 ? "Excellent Work! 🌟" : "Good Try! Keep Reading! 📚";
+        display.innerHTML = `Score: ${score}/${total} <br><small>${message}</small>`;
+        display.scrollIntoView();
+    }
+
+    function markCorrect(el) {
+        el.classList.add('correct');
+        el.querySelector('.feedback').innerHTML = '✅ Correct';
+    }
+
+    function markIncorrect(el) {
+        el.classList.add('incorrect');
+        el.querySelector('.feedback').innerHTML = '❌ Incorrect';
+    }
+
+    // Ensure voices are loaded
+    window.speechSynthesis.onvoiceschanged = () => {};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Minibeast Zoo - Interactive Quiz</title>
+    <style>
+        :root {
+            --primary-green: #76ba1b;
+            --soft-green: #e8f5e9;
+            --accent-yellow: #ffeb3b;
+            --bright-orange: #ff9800;
+            --error-red: #ffebee;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+            background-color: #f1f8e9;
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            background: white;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-green);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-green);
+            font-size: 2.5em;
+            text-shadow: 2px 2px #fff;
+        }
+
+        .section-title {
+            background: var(--bright-orange);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 25px;
+        }
+
+        .question-block {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 15px;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        .word-bank {
+            background: var(--soft-green);
+            padding: 15px;
+            border: 2px dashed var(--primary-green);
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .speaker-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            width: 150px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 60px;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 1em;
+        }
+
+        .result-mark {
+            font-weight: bold;
+            margin-left: 10px;
+            display: none;
+        }
+
+        .correct-answer {
+            display: none;
+            color: #2e7d32;
+            font-weight: bold;
+            margin-top: 10px;
+            background: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--primary-green);
+            color: white;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 5px 0 #558b2f;
+        }
+
+        #submit-btn:active {
+            transform: translateY(3px);
+            box-shadow: none;
+        }
+
+        #score-display {
+            text-align: center;
+            font-size: 2em;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .incorrect-bg { background-color: var(--error-red) !important; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>🐞 The Minibeast Zoo Quiz 🦋</h1>
+
+    <h2 class="section-title">Part 1: Multiple Choice 🔍</h2>
+    
+    <div class="question-block" id="q1">
+        <p>1. Where were the tadpoles at the beginning of the story? <button class="speaker-btn" onclick="speak('Where were the tadpoles at the beginning of the story?')">🔊</button> <span class="result-mark"></span></p>
+        <input type="radio" name="q1" value="A"> A. In a bucket<br>
+        <input type="radio" name="q1" value="B"> B. In a pond in the garden<br>
+        <input type="radio" name="q1" value="C"> C. In a kitchen sink<br>
+        <div class="correct-answer">Correct Answer: B. In a pond in the garden</div>
+    </div>
+
+    <div class="question-block" id="q2">
+        <p>2. What did the slow-worm look like? <button class="speaker-btn" onclick="speak('What did the slow-worm look like?')">🔊</button> <span class="result-mark"></span></p>
+        <input type="radio" name="q2" value="A"> A. It has big wings<br>
+        <input type="radio" name="q2" value="B"> B. It has damp skin<br>
+        <input type="radio" name="q2" value="C"> C. It is a lizard with no legs<br>
+        <div class="correct-answer">Correct Answer: C. It is a lizard with no legs</div>
+    </div>
+
+    <div class="question-block" id="q3">
+        <p>3. Where was the toad keeping cool? <button class="speaker-btn" onclick="speak('Where was the toad keeping cool?')">🔊</button> <span class="result-mark"></span></p>
+        <input type="radio" name="q3" value="A"> A. Under a shrub<br>
+        <input type="radio" name="q3" value="B"> B. Inside a plastic tub<br>
+        <input type="radio" name="q3" value="C"> C. On a big rock<br>
+        <div class="correct-answer">Correct Answer: A. Under a shrub</div>
+    </div>
+
+    <div class="question-block" id="q4">
+        <p>4. What did Kipper see on the glass in the garden room? <button class="speaker-btn" onclick="speak('What did Kipper see on the glass in the garden room?')">🔊</button> <span class="result-mark"></span></p>
+        <input type="radio" name="q4" value="A"> A. A dragonfly<br>
+        <input type="radio" name="q4" value="B"> B. A spider's web<br>
+        <input type="radio" name="q4" value="C"> C. A slow-worm<br>
+        <div class="correct-answer">Correct Answer: B. A spider's web</div>
+    </div>
+
+    <h2 class="section-title">Part 2: Fill in the Blanks 📝</h2>
+    <div class="word-bank">Word Bank: [ snails / sign / frogs / experts / zooming ]</div>
+    
+    <div class="question-block" id="q5">
+        <p>5. Anneena said the tadpoles will soon grow into <input type="text" id="ans5">. <button class="speaker-btn" onclick="speak('Anneena said the tadpoles will soon grow into...')">🔊</button> <span class="result-mark"></span></p>
+        <div class="correct-answer">Correct Answer: frogs</div>
+    </div>
+
+    <div class="question-block" id="q6">
+        <p>6. The children put up a big <input type="text" id="ans6"> that said 'Visit the Minibeast Zoo'. <button class="speaker-btn" onclick="speak('The children put up a big something that said Visit the Minibeast Zoo')">🔊</button> <span class="result-mark"></span></p>
+        <div class="correct-answer">Correct Answer: sign</div>
+    </div>
+
+    <div class="question-block" id="q7">
+        <p>7. Kipper collected some <input type="text" id="ans7"> and kept them in a plastic tub. <button class="speaker-btn" onclick="speak('Kipper collected some insects and kept them in a plastic tub.')">🔊</button> <span class="result-mark"></span></p>
+        <div class="correct-answer">Correct Answer: snails</div>
+    </div>
+
+    <h2 class="section-title">Part 3: Short Answer ✍️</h2>
+    
+    <div class="question-block" id="q8">
+        <p>8. Why did the children look at insect books? <button class="speaker-btn" onclick="speak('Why did the children look at insect books?')">🔊</button> <span class="result-mark"></span></p>
+        <textarea id="ans8" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer">Example Answer: They wanted to be experts.</div>
+    </div>
+
+    <div class="question-block" id="q9">
+        <p>9. What happened to the dragonfly and the toad at the end? <button class="speaker-btn" onclick="speak('What happened to the dragonfly and the toad at the end?')">🔊</button> <span class="result-mark"></span></p>
+        <textarea id="ans9" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer">Example Answer: The dragonfly was gone and the toad had crept off.</div>
+    </div>
+
+    <h2 class="section-title">Part 4: Read Aloud 🗣️</h2>
+    <div class="question-block" id="q10">
+        <p>10. Please read this sentence: <br><strong>"Clearing up snail trails is a job for zookeepers!"</strong> <button class="speaker-btn" onclick="speak('Clearing up snail trails is a job for zookeepers!')">🔊 Example</button> <span class="result-mark"></span></p>
+        <p><i>(Self-check: Ask your teacher or parent to listen to you!)</i></p>
+        <div class="correct-answer">Tip: Speak clearly and loudly!</div>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit My Answers! 🌟</button>
+
+    <div id="score-display"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.volume = 1;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        // Try to find a nice female English voice
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Reset marks and styles
+        document.querySelectorAll('.question-block').forEach(block => {
+            block.classList.remove('incorrect-bg');
+            block.querySelector('.result-mark').style.display = 'none';
+            block.querySelector('.correct-answer').style.display = 'none';
+        });
+
+        // Part 1 Logic
+        const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+        if (q1 === 'B') score++; else markWrong('q1');
+
+        const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+        if (q2 === 'C') score++; else markWrong('q2');
+
+        const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+        if (q3 === 'A') score++; else markWrong('q3');
+
+        const q4 = document.querySelector('input[name="q4"]:checked')?.value;
+        if (q4 === 'B') score++; else markWrong('q4');
+
+        // Part 2 Logic
+        if (document.getElementById('ans5').value.trim().toLowerCase() === 'frogs') score++; else markWrong('q5');
+        if (document.getElementById('ans6').value.trim().toLowerCase() === 'sign') score++; else markWrong('q6');
+        if (document.getElementById('ans7').value.trim().toLowerCase() === 'snails') score++; else markWrong('q7');
+
+        // Part 3 Logic (Simple keyword check)
+        const a8 = document.getElementById('ans8').value.toLowerCase();
+        if (a8.includes('expert')) score++; else markWrong('q8');
+
+        const a9 = document.getElementById('ans9').value.toLowerCase();
+        if (a9.includes('gone') || a9.includes('crept') || a9.includes('off') || a9.includes('away')) score++; else markWrong('q9');
+
+        // Part 4 (Always check for effort)
+        score++; 
+        const q10Mark = document.querySelector('#q10 .result-mark');
+        q10Mark.innerText = '✅ Done';
+        q10Mark.style.color = 'green';
+        q10Mark.style.display = 'inline';
+
+        // Show Marks
+        document.querySelectorAll('.result-mark').forEach(m => {
+            if (m.innerText === "") {
+                m.innerText = "✅ Correct";
+                m.style.color = "green";
+                m.style.display = "inline";
+            }
+        });
+
+        // Display Score
+        const display = document.getElementById('score-display');
+        display.style.display = 'block';
+        let feedback = score >= 8 ? "Amazing work! 🏆" : "Good try! Let's read again! 📚";
+        display.innerHTML = `Score: ${score}/${total}<br><span style="font-size: 0.7em">${feedback}</span>`;
+        
+        document.querySelectorAll('.correct-answer').forEach(ca => ca.style.display = 'block');
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function markWrong(id) {
+        const block = document.getElementById(id);
+        block.classList.add('incorrect-bg');
+        const mark = block.querySelector('.result-mark');
+        mark.innerText = '❌ Incorrect';
+        mark.style.color = 'red';
+        mark.style.display = 'inline';
+    }
+
+    // Load voices
+    window.speechSynthesis.onvoiceschanged = () => {};
+</script>
+
+</body>
+</html>

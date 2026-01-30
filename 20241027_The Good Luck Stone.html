@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club Quiz: The Good Luck Stone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #76ba1b;
+            --soft-yellow: #fff9c4;
+            --accent-orange: #ff9800;
+            --error-red: #ffebee;
+            --correct-green: #e8f5e9;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--soft-yellow);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            background: white;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 8px solid var(--primary-green);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-green);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: var(--accent-orange);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            margin-top: 40px;
+            display: inline-block;
+        }
+
+        .question-card {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px solid #eee;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .incorrect-bg {
+            background-color: var(--error-red) !important;
+            border-color: #f44336 !important;
+        }
+
+        .correct-answer-box {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 10px;
+            border: 2px dashed var(--primary-green);
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .feedback-icon {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .word-bank {
+            background: #f0f4f8;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid #d1d9e6;
+        }
+
+        .word-item {
+            display: inline-block;
+            background: white;
+            padding: 5px 15px;
+            margin: 5px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        button.audio-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+            font-size: 1rem;
+            width: 150px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            border-radius: 15px;
+            border: 2px solid #ccc;
+            padding: 10px;
+            font-family: inherit;
+        }
+
+        .submit-area {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #submitBtn {
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #e68a00;
+        }
+
+        #submitBtn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #e68a00;
+        }
+
+        #resultScore {
+            display: none;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-top: 30px;
+            color: var(--primary-green);
+        }
+
+        .encouragement {
+            font-size: 1.2rem;
+            color: var(--accent-orange);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🪨 The Good Luck Stone 🍀</h1>
+    <p class="subtitle">Can you help Biff find her lucky stone? Let's take the quiz!</p>
+
+    <h2 class="section-title">Part 1: Multiple Choice (選擇題)</h2>
+    
+    <div class="question-card" id="q1">
+        <p>1. Where did Biff find the stone? <button class="audio-btn" onclick="playText('Where did Biff find the stone?')">🔊</button></p>
+        <input type="radio" name="q1" value="A"> A. At home<br>
+        <input type="radio" name="q1" value="B"> B. In the park<br>
+        <input type="radio" name="q1" value="C"> C. At school
+        <div class="correct-answer-box">Correct Answer: B. In the park</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <p>2. What was special about the stone? <button class="audio-btn" onclick="playText('What was special about the stone?')">🔊</button></p>
+        <input type="radio" name="q2" value="A"> A. It had a hole in it<br>
+        <input type="radio" name="q2" value="B"> B. It was very big<br>
+        <input type="radio" name="q2" value="C"> C. It was blue
+        <div class="correct-answer-box">Correct Answer: A. It had a hole in it</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <p>3. Which activity did Biff NOT do in the park? <button class="audio-btn" onclick="playText('Which activity did Biff NOT do in the park?')">🔊</button></p>
+        <input type="radio" name="q3" value="A"> A. A cartwheel<br>
+        <input type="radio" name="q3" value="B"> B. A handstand<br>
+        <input type="radio" name="q3" value="C"> C. A soccer game
+        <div class="correct-answer-box">Correct Answer: C. A soccer game</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <p>4. Who was visiting the children? <button class="audio-btn" onclick="playText('Who was visiting the children?')">🔊</button></p>
+        <input type="radio" name="q4" value="A"> A. Mum<br>
+        <input type="radio" name="q4" value="B"> B. Gran<br>
+        <input type="radio" name="q4" value="C"> C. Dad
+        <div class="correct-answer-box">Correct Answer: B. Gran</div>
+    </div>
+
+    <h2 class="section-title">Part 2: Fill in the Blanks (選填題)</h2>
+    <div class="word-bank">
+        <strong>Word Bank:</strong> 
+        <span class="word-item">stung</span>
+        <span class="word-item">dirty</span>
+        <span class="word-item">torn</span>
+        <span class="word-item">grin</span>
+        <span class="word-item">pocket</span>
+    </div>
+
+    <div class="question-card" id="q5">
+        <p>5. Biff said the stone was her lucky stone with a big <input type="text" id="ans5">. <button class="audio-btn" onclick="playText('Biff said the stone was her lucky stone with a big...')">🔊</button></p>
+        <div class="correct-answer-box">Correct Answer: grin</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <p>6. Chip looked under a shrub and became all <input type="text" id="ans6">. <button class="audio-btn" onclick="playText('Chip looked under a shrub and became all...')">🔊</button></p>
+        <div class="correct-answer-box">Correct Answer: dirty</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <p>7. A branch <input type="text" id="ans7"> Kipper's shirt. <button class="audio-btn" onclick="playText('A branch... Kipper\'s shirt.')">🔊</button></p>
+        <div class="correct-answer-box">Correct Answer: torn</div>
+    </div>
+
+    <h2 class="section-title">Part 3: Short Answer (簡答題)</h2>
+    
+    <div class="question-card" id="q8">
+        <p>8. What happened to Gran when she looked near the flowers? <button class="audio-btn" onclick="playText('What happened to Gran when she looked near the flowers?')">🔊</button></p>
+        <textarea id="ans8" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: She was stung by a stinging nettle.</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <p>9. Where did Biff finally find the stone? <button class="audio-btn" onclick="playText('Where did Biff finally find the stone?')">🔊</button></p>
+        <textarea id="ans9" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: She found it in her right pocket.</div>
+    </div>
+
+    <h2 class="section-title">Part 4: Reading Out Loud (朗讀題)</h2>
+    <div class="question-card" id="q10">
+        <p>10. Please read this sentence out loud: <button class="audio-btn" onclick="playText('See? I said it was a lucky stone!')">🔊 (Listen to Example)</button></p>
+        <p style="font-size: 1.5rem; text-align: center; color: var(--accent-orange);">"See? I said it was a lucky stone!"</p>
+        <p style="font-size: 0.9rem; color: #666;">(Tick the box after you finish reading)</p>
+        <input type="checkbox" id="ans10"> I have finished reading! 🗣️
+        <div class="correct-answer-box">Correct Answer: Reading completed! Great job!</div>
+    </div>
+
+    <div class="submit-area">
+        <button id="submitBtn" onclick="submitQuiz()">Submit Quiz! ✨</button>
+    </div>
+
+    <div id="resultScore"></div>
+</div>
+
+<script>
+    function playText(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.lang = 'en-US';
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+
+        // Try to find a natural female voice
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Female') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Pre-load voices
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+
+    function submitQuiz() {
+        let score = 0;
+        const total = 10;
+
+        // Reset styles
+        document.querySelectorAll('.question-card').forEach(card => {
+            card.classList.remove('incorrect-bg');
+            const icon = card.querySelector('.feedback-icon');
+            if (icon) icon.remove();
+        });
+
+        // 1-4 Choice
+        const answers1_4 = { q1: 'B', q2: 'A', q3: 'C', q4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const card = document.getElementById(`q${i}`);
+            if (selected && selected.value === answers1_4[`q${i}`]) {
+                score++;
+                addFeedback(card, true);
+            } else {
+                card.classList.add('incorrect-bg');
+                addFeedback(card, false);
+            }
+        }
+
+        // 5-7 Fill in
+        const answers5_7 = { ans5: 'grin', ans6: 'dirty', ans7: 'torn' };
+        for (let i = 5; i <= 7; i++) {
+            const input = document.getElementById(`ans${i}`);
+            const card = document.getElementById(`q${i}`);
+            if (input.value.toLowerCase().trim() === answers5_7[`ans${i}`]) {
+                score++;
+                addFeedback(card, true);
+            } else {
+                card.classList.add('incorrect-bg');
+                addFeedback(card, false);
+            }
+        }
+
+        // 8-9 Short Answer (Manual/Keywords)
+        const keywords = {
+            ans8: ['stung', 'nettle', 'ow'],
+            ans9: ['pocket', 'right', 'never lost']
+        };
+        for (let i = 8; i <= 9; i++) {
+            const text = document.getElementById(`ans${i}`).value.toLowerCase();
+            const card = document.getElementById(`q${i}`);
+            const isCorrect = keywords[`ans${i}`].some(k => text.includes(k));
+            if (isCorrect) {
+                score++;
+                addFeedback(card, true);
+            } else {
+                card.classList.add('incorrect-bg');
+                addFeedback(card, false);
+            }
+        }
+
+        // 10 Reading
+        const q10Checked = document.getElementById('ans10').checked;
+        const card10 = document.getElementById('q10');
+        if (q10Checked) {
+            score++;
+            addFeedback(card10, true);
+        } else {
+            card10.classList.add('incorrect-bg');
+            addFeedback(card10, false);
+        }
+
+        // Show all correct answers
+        document.querySelectorAll('.correct-answer-box').forEach(box => box.style.display = 'block');
+
+        // Show Score
+        const resultDiv = document.getElementById('resultScore');
+        resultDiv.style.display = 'block';
+        let encourage = score >= 8 ? "You're a Super Star! 🌟" : "Good job! Keep reading! 📚";
+        resultDiv.innerHTML = `Score: ${score}/${total}<br><span class="encouragement">${encourage}</span>`;
+        
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function addFeedback(element, isCorrect) {
+        const span = document.createElement('span');
+        span.className = 'feedback-icon';
+        span.innerHTML = isCorrect ? '✅ Correct' : '❌ Incorrect';
+        span.style.color = isCorrect ? '#2e7d32' : '#d32f2f';
+        element.querySelector('p').appendChild(span);
+    }
+</script>
+
+</body>
+</html>

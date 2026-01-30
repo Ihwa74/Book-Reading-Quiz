@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dragon Dance - Interactive Quiz</title>
+    <style>
+        :root {
+            --primary-pink: #ff69b4;
+            --secondary-yellow: #ffeb3b;
+            --soft-green: #c8e6c9;
+            --error-red: #ffcdd2;
+            --correct-green: #4caf50;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+            background-color: #fff5f8;
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quiz-container {
+            background-color: white;
+            max-width: 800px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 5px solid var(--secondary-yellow);
+        }
+
+        h1 {
+            color: var(--primary-pink);
+            text-align: center;
+            font-size: 2.5em;
+            text-shadow: 2px 2px #fff;
+        }
+
+        .section-title {
+            background-color: var(--primary-pink);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            display: inline-block;
+        }
+
+        .question-block {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .word-bank {
+            background: #f0f0f0;
+            padding: 15px;
+            border: 2px dashed var(--primary-pink);
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+
+        .feedback {
+            display: none;
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .correct-answer-display {
+            display: none;
+            color: #d32f2f;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .speaker-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        button#submit-btn {
+            background-color: var(--correct-green);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto;
+            box-shadow: 0 5px 0 #388e3c;
+        }
+
+        button#submit-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #388e3c;
+        }
+
+        #result-area {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 20px;
+            color: var(--primary-pink);
+        }
+
+        .incorrect-bg {
+            background-color: var(--error-red) !important;
+        }
+
+        .status-icon {
+            margin-left: 10px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>🐲 The Dragon Dance Quiz 🐲</h1>
+
+    <h2 class="section-title">Part 1: Multiple Choice 🔘</h2>
+    
+    <div class="question-block" id="q1">
+        <p>1. Who made the first dragon? <button class="speaker-btn" onclick="speak('1. Who made the first dragon?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A. The mums and dads</label>
+            <label><input type="radio" name="q1" value="B"> B. Mrs May</label>
+            <label><input type="radio" name="q1" value="C"> C. Anneena</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Correct Answer: B. Mrs May</div>
+    </div>
+
+    <div class="question-block" id="q2">
+        <p>2. What was the first dragon made of? <button class="speaker-btn" onclick="speak('2. What was the first dragon made of?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A. Wood</label>
+            <label><input type="radio" name="q2" value="B"> B. Fabric</label>
+            <label><input type="radio" name="q2" value="C"> C. Paper</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Correct Answer: C. Paper</div>
+    </div>
+
+    <div class="question-block" id="q3">
+        <p>3. Who was inside the dragon's head at the school? <button class="speaker-btn" onclick="speak('3. Who was inside the dragons head at the school?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> A. Anneena</label>
+            <label><input type="radio" name="q3" value="B"> B. Chip</label>
+            <label><input type="radio" name="q3" value="C"> C. Kipper</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Correct Answer: A. Anneena</div>
+    </div>
+
+    <div class="question-block" id="q4">
+        <p>4. What happened to the first dragon during the dance? <button class="speaker-btn" onclick="speak('4. What happened to the first dragon during the dance?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A. It got wet</label>
+            <label><input type="radio" name="q4" value="B"> B. It tore in half</label>
+            <label><input type="radio" name="q4" value="C"> C. It flew away</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Correct Answer: B. It tore in half</div>
+    </div>
+
+    <h2 class="section-title">Part 2: Word Bank Fill-in ✍️</h2>
+    <div class="word-bank">
+        Word Bank: paper | upset | idea | town | wonderful
+    </div>
+
+    <div class="question-block" id="q5">
+        <p>5. The dragon tore, and the children were <input type="text" id="ans5" style="width:120px;">. <button class="speaker-btn" onclick="speak('5. The dragon tore, and the children were...')">🔊</button></p>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Correct Answer: upset</div>
+    </div>
+
+    <div class="question-block" id="q6">
+        <p>6. Anneena's mum had an <input type="text" id="ans6" style="width:120px;"> to make a new dragon. <button class="speaker-btn" onclick="speak('6. Anneenas mum had an... to make a new dragon.')">🔊</button></p>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Correct Answer: idea</div>
+    </div>
+
+    <div class="question-block" id="q7">
+        <p>7. The children went into <input type="text" id="ans7" style="width:120px;"> to do the dance. <button class="speaker-btn" onclick="speak('7. The children went into... to do the dance.')">🔊</button></p>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Correct Answer: town</div>
+    </div>
+
+    <h2 class="section-title">Part 3: Short Answer 📝</h2>
+    
+    <div class="question-block" id="q8">
+        <p>8. Why did Mrs. May tell the children to be careful? <button class="speaker-btn" onclick="speak('8. Why did Mrs. May tell the children to be careful?')">🔊</button></p>
+        <textarea id="ans8" rows="2" placeholder="Because it was..."></textarea>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Example Answer: Because it was only made of paper.</div>
+    </div>
+
+    <div class="question-block" id="q9">
+        <p>9. What did Chip say to the people in town? <button class="speaker-btn" onclick="speak('9. What did Chip say to the people in town?')">🔊</button></p>
+        <textarea id="ans9" rows="2" placeholder="He said..."></textarea>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Example Answer: Come to the school fair.</div>
+    </div>
+
+    <h2 class="section-title">Part 4: Read Aloud 🗣️</h2>
+    <div class="question-block" id="q10">
+        <p>10. Read the following sentence: <br><strong>"The dragon looked wonderful. The children were pleased."</strong></p>
+        <button class="speaker-btn" style="background:#fff; border:2px solid var(--primary-pink); padding:5px 15px; border-radius:10px; font-size:1em;" onclick="speak('The dragon looked wonderful. The children were pleased.')">▶️ Listen to Example</button>
+        <p><i>(Ask your teacher or parent to check your pronunciation!)</i></p>
+        <div class="feedback"></div>
+        <div class="correct-answer-display">Task: Read with energy!</div>
+    </div>
+
+    <button id="submit-btn" onclick="calculateScore()">Submit My Answers! ✨</button>
+    <div id="result-area"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find a nice female voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Initialize voices
+    window.speechSynthesis.onvoiceschanged = () => {};
+
+    function calculateScore() {
+        let score = 0;
+        const total = 10;
+
+        // Part 1 Logic
+        const answers1 = { q1: 'B', q2: 'C', q3: 'A', q4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const qBlock = document.getElementById(`q${i}`);
+            const feedback = qBlock.querySelector('.feedback');
+            const display = qBlock.querySelector('.correct-answer-display');
+
+            feedback.style.display = 'inline-block';
+            display.style.display = 'block';
+
+            if (selected && selected.value === answers1[`q${i}`]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'var(--correct-green)';
+                qBlock.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'red';
+                qBlock.classList.add('incorrect-bg');
+            }
+        }
+
+        // Part 2 Logic
+        const answers2 = { ans5: 'upset', ans6: 'idea', ans7: 'town' };
+        for (let i = 5; i <= 7; i++) {
+            const val = document.getElementById(`ans${i}`).value.trim().toLowerCase();
+            const qBlock = document.getElementById(`q${i}`);
+            const feedback = qBlock.querySelector('.feedback');
+            const display = qBlock.querySelector('.correct-answer-display');
+
+            feedback.style.display = 'inline-block';
+            display.style.display = 'block';
+
+            if (val === answers2[`ans${i}`]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'var(--correct-green)';
+                qBlock.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'red';
+                qBlock.classList.add('incorrect-bg');
+            }
+        }
+
+        // Part 3 Logic (Manual/Keyword Check)
+        const q8Val = document.getElementById('ans8').value.toLowerCase();
+        if (q8Val.includes('paper')) score++;
+        document.getElementById('q8').querySelector('.feedback').style.display = 'block';
+        document.getElementById('q8').querySelector('.feedback').innerHTML = '✅ Thank you for your answer!';
+        document.getElementById('q8').querySelector('.correct-answer-display').style.display = 'block';
+
+        const q9Val = document.getElementById('ans9').value.toLowerCase();
+        if (q9Val.includes('fair')) score++;
+        document.getElementById('q9').querySelector('.feedback').style.display = 'block';
+        document.getElementById('q9').querySelector('.feedback').innerHTML = '✅ Great effort!';
+        document.getElementById('q9').querySelector('.correct-answer-display').style.display = 'block';
+
+        // Part 4 Logic (Always bonus point if clicked submit)
+        score++;
+        document.getElementById('q10').querySelector('.feedback').style.display = 'block';
+        document.getElementById('q10').querySelector('.feedback').innerHTML = '✅ Well done, superstar!';
+
+        // Final Result
+        const resultArea = document.getElementById('result-area');
+        let encouragement = "";
+        if (score >= 9) encouragement = "Excellent! You are a Dragon Master! 🐉✨";
+        else if (score >= 7) encouragement = "Good job! You read very carefully! 👏";
+        else encouragement = "Nice try! Let's read the story again! 📚";
+
+        resultArea.innerHTML = `Score: ${score}/10 <br> <span style="font-size: 0.6em">${encouragement}</span>`;
+        
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
