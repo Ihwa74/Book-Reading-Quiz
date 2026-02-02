@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mummy Chase - Interactive Quiz</title>
+    <style>
+        :root {
+            --desert-yellow: #f4d03f;
+            --pyramid-brown: #a0522d;
+            --sky-blue: #3498db;
+            --sand-light: #fdf2e9;
+            --correct-green: #27ae60;
+            --wrong-red: #e74c3c;
+            --wrong-bg: #fdedec;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--sand-light);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 5px solid var(--desert-yellow);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--pyramid-brown);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header-img {
+            display: block;
+            margin: 0 auto 20px;
+            font-size: 50px;
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-bottom: 2px dashed var(--desert-yellow);
+        }
+
+        h2 {
+            color: var(--sky-blue);
+            background: #ebf5fb;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .word-bank {
+            background: #fef9e7;
+            border: 2px solid var(--desert-yellow);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 10px;
+            color: var(--pyramid-brown);
+        }
+
+        input[type="text"], textarea {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 1em;
+            width: 150px;
+        }
+
+        textarea { width: 100%; height: 60px; }
+
+        .btn-speak {
+            background: var(--sky-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        .btn-speak:hover { background: #2980b9; }
+
+        .submit-area {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        #submit-btn {
+            background: var(--correct-green);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #submit-btn:hover { transform: scale(1.1); }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+            display: none;
+        }
+
+        .correct-answer {
+            display: none;
+            color: var(--pyramid-brown);
+            background: #fcf3cf;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        #score-display {
+            display: none;
+            text-align: center;
+            font-size: 2em;
+            margin-top: 20px;
+            color: var(--pyramid-brown);
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+
+        .incorrect-bg { background-color: var(--wrong-bg) !important; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-img">🏺🏃‍♂️🏜️</div>
+    <h1>The Mummy Chase</h1>
+    <p style="text-align:center;">Can you escape the pyramid? Let's test your memory!</p>
+
+    <div class="section">
+        <h2>Part 1: Story Check ✅</h2>
+        
+        <div class="question-block" id="q1">
+            <p>1. Why did Seb and Neema go into the pyramid? <button class="btn-speak" onclick="speak('Why did Seb and Neema go into the pyramid?')">🔊</button></p>
+            <input type="radio" name="q1" value="A"> A. To find gold.<br>
+            <input type="radio" name="q1" value="B"> B. To get cool because it was too hot.<br>
+            <input type="radio" name="q1" value="C"> C. To find a lost cat.<br>
+            <div class="feedback" id="f1"></div>
+            <div class="correct-answer" id="a1">Correct Answer: B. To get cool because it was too hot.</div>
+        </div>
+
+        <div class="question-block" id="q2">
+            <p>2. Who told Neema "Do not press that!"? <button class="btn-speak" onclick="speak('Who told Neema Do not press that?')">🔊</button></p>
+            <input type="radio" name="q2" value="A"> A. Seb<br>
+            <input type="radio" name="q2" value="B"> B. Mum<br>
+            <input type="radio" name="q2" value="C"> C. The guide<br>
+            <div class="feedback" id="f2"></div>
+            <div class="correct-answer" id="a2">Correct Answer: C. The guide</div>
+        </div>
+
+        <div class="question-block" id="q3">
+            <p>3. What did the mummy do after Neema pressed the stone? <button class="btn-speak" onclick="speak('What did the mummy do after Neema pressed the stone?')">🔊</button></p>
+            <input type="radio" name="q3" value="A"> A. It started to moan and chase them.<br>
+            <input type="radio" name="q3" value="B"> B. It gave them a gift.<br>
+            <input type="radio" name="q3" value="C"> C. It ran away from the children.<br>
+            <div class="feedback" id="f3"></div>
+            <div class="correct-answer" id="a3">Correct Answer: A. It started to moan and chase them.</div>
+        </div>
+
+        <div class="question-block" id="q4">
+            <p>4. How did the children stop the mummy? <button class="btn-speak" onclick="speak('How did the children stop the mummy?')">🔊</button></p>
+            <input type="radio" name="q4" value="A"> A. They hit it with a stick.<br>
+            <input type="radio" name="q4" value="B"> B. They tickled it.<br>
+            <input type="radio" name="q4" value="C"> C. They gave it a fan.<br>
+            <div class="feedback" id="f4"></div>
+            <div class="correct-answer" id="a4">Correct Answer: B. They tickled it.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 2: Word Fun 📝</h2>
+        <div class="word-bank">
+            Word Bank: <span class="word-item">chase</span>, <span class="word-item">stone</span>, <span class="word-item">mummy</span>, <span class="word-item">ticklish</span>, <span class="word-item">steps</span>
+        </div>
+
+        <div class="question-block" id="q5">
+            <p>5. Neema looked at a <input type="text" id="ans5"> in the pyramid. <button class="btn-speak" onclick="speak('Neema looked at a blank in the pyramid.')">🔊</button></p>
+            <div class="feedback" id="f5"></div>
+            <div class="correct-answer" id="a5">Correct Answer: stone</div>
+        </div>
+
+        <div class="question-block" id="q6">
+            <p>6. They ran up the <input type="text" id="ans6"> and up. <button class="btn-speak" onclick="speak('They ran up the blank and up.')">🔊</button></p>
+            <div class="feedback" id="f6"></div>
+            <div class="correct-answer" id="a6">Correct Answer: steps</div>
+        </div>
+
+        <div class="question-block" id="q7">
+            <p>7. Neema said, "Look! It is <input type="text" id="ans7">!" <button class="btn-speak" onclick="speak('Neema said, Look! It is blank!')">🔊</button></p>
+            <div class="feedback" id="f7"></div>
+            <div class="correct-answer" id="a7">Correct Answer: ticklish</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 3: Think and Write 💡</h2>
+        <div class="question-block" id="q8">
+            <p>8. What sound did the mummy make? <button class="btn-speak" onclick="speak('What sound did the mummy make?')">🔊</button></p>
+            <textarea id="ans8" placeholder="Type your answer here..."></textarea>
+            <div class="feedback" id="f8"></div>
+            <div class="correct-answer" id="a8">Example Answer: It started to moan. (Hee-hee-hee when tickled)</div>
+        </div>
+
+        <div class="question-block" id="q9">
+            <p>9. Where did Seb want to put the mummy back? <button class="btn-speak" onclick="speak('Where did Seb want to put the mummy back?')">🔊</button></p>
+            <textarea id="ans9" placeholder="Type your answer here..."></textarea>
+            <div class="feedback" id="f9"></div>
+            <div class="correct-answer" id="a9">Example Answer: He wanted to get the mummy back on its box.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 4: Read Aloud 🗣️</h2>
+        <div class="question-block" id="q10">
+            <p>10. Please read this sentence aloud: <br><br><strong>"It's good to see Mum, but not a mummy!"</strong></p>
+            <button id="model-read" style="background:var(--pyramid-brown); color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer;" onclick="speak('It is good to see Mum, but not a mummy!')">Listen to Example 🔊</button>
+            <p><small>(Ask your teacher or parent to check your pronunciation!)</small></p>
+            <div class="feedback" id="f10"></div>
+            <div class="correct-answer" id="a10">Great job reading! This was a joke about two types of 'mummies'.</div>
+        </div>
+    </div>
+
+    <div class="submit-area">
+        <button id="submit-btn" onclick="checkQuiz()">Submit My Answers! 🚀</button>
+    </div>
+
+    <div id="score-display"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        msg.lang = 'en-US';
+        
+        // Try to find a nice female voice
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkQuiz() {
+        let score = 0;
+        const total = 10;
+
+        // Part 1
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        if (q1 && q1.value === "B") { score++; markCorrect(1); } else { markWrong(1); }
+
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        if (q2 && q2.value === "C") { score++; markCorrect(2); } else { markWrong(2); }
+
+        const q3 = document.querySelector('input[name="q3"]:checked');
+        if (q3 && q3.value === "A") { score++; markCorrect(3); } else { markWrong(3); }
+
+        const q4 = document.querySelector('input[name="q4"]:checked');
+        if (q4 && q4.value === "B") { score++; markCorrect(4); } else { markWrong(4); }
+
+        // Part 2
+        const ans5 = document.getElementById('ans5').value.toLowerCase().trim();
+        if (ans5 === "stone") { score++; markCorrect(5); } else { markWrong(5); }
+
+        const ans6 = document.getElementById('ans6').value.toLowerCase().trim();
+        if (ans6 === "steps") { score++; markCorrect(6); } else { markWrong(6); }
+
+        const ans7 = document.getElementById('ans7').value.toLowerCase().trim();
+        if (ans7 === "ticklish") { score++; markCorrect(7); } else { markWrong(7); }
+
+        // Part 3 (Simplified check for keywords)
+        const ans8 = document.getElementById('ans8').value.toLowerCase();
+        if (ans8.includes("moan") || ans8.includes("hee")) { score++; markCorrect(8); } else { markWrong(8); }
+
+        const ans9 = document.getElementById('ans9').value.toLowerCase();
+        if (ans9.includes("box")) { score++; markCorrect(9); } else { markWrong(9); }
+
+        // Part 4 (Always mark complete if they tried)
+        score++; markCorrect(10);
+
+        // Display Score
+        const scoreDiv = document.getElementById('score-display');
+        scoreDiv.style.display = "block";
+        let message = score >= 8 ? "Excellent! You are an Egypt Expert! 🌟" : "Good job! Let's read it one more time! 📖";
+        scoreDiv.innerHTML = `Your Score: ${score}/${total}<br><span style="font-size:0.6em">${message}</span>`;
+        
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function markCorrect(num) {
+        const block = document.getElementById('q' + num);
+        const fb = document.getElementById('f' + num);
+        const ans = document.getElementById('a' + num);
+        block.classList.remove('incorrect-bg');
+        fb.innerHTML = "✅ Correct";
+        fb.style.color = "var(--correct-green)";
+        fb.style.display = "inline";
+        ans.style.display = "block";
+    }
+
+    function markWrong(num) {
+        const block = document.getElementById('q' + num);
+        const fb = document.getElementById('f' + num);
+        const ans = document.getElementById('a' + num);
+        block.classList.add('incorrect-bg');
+        fb.innerHTML = "❌ Incorrect";
+        fb.style.color = "var(--wrong-red)";
+        fb.style.display = "inline";
+        ans.style.display = "block";
+    }
+
+    // Load voices
+    window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+
+</body>
+</html>

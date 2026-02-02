@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club: An Important Case Quiz</title>
+    <style>
+        :root {
+            --primary-green: #76b82a;
+            --light-green: #f1f8e9;
+            --accent-yellow: #ffeb3b;
+            --soft-red: #ffebee;
+            --dark-text: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-green);
+            color: var(--dark-text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-green);
+        }
+
+        h1 {
+            color: var(--primary-green);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-img {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+        }
+
+        h2 {
+            background-color: var(--accent-yellow);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            background: #fafafa;
+        }
+
+        .incorrect-bg {
+            background-color: var(--soft-red) !important;
+            border-color: #ef5350 !important;
+        }
+
+        .word-bank {
+            background-color: #fffde7;
+            border: 2px dashed #fbc02d;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 10px;
+            color: #f57f17;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+            display: none;
+        }
+
+        .correct-ans {
+            display: none;
+            color: #2e7d32;
+            margin-top: 8px;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
+            font-size: 1rem;
+        }
+
+        .speaker-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        button#submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 5px #558b2f;
+        }
+
+        button#submit-btn:active {
+            box-shadow: 0 2px #558b2f;
+            transform: translateY(3px);
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        .encouragement {
+            font-size: 1.5rem;
+            color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌲 An Important Case 🌲</h1>
+    <p style="text-align:center; font-weight:bold;">Let's test your reading skills!</p>
+
+    <h2>Part 1: Multiple Choice (選擇題) 📚</h2>
+    
+    <div class="question-block" id="q1">
+        <p>1. What were the children playing outside at the beginning? <button class="speaker-btn" onclick="speak('What were the children playing outside at the beginning?')">🔊</button></p>
+        <input type="radio" name="q1" value="A"> A. Basketball<br>
+        <input type="radio" name="q1" value="B"> B. Football<br>
+        <input type="radio" name="q1" value="C"> C. Tag<br>
+        <span class="feedback"></span>
+        <div class="correct-ans">Correct Answer: B. Football</div>
+    </div>
+
+    <div class="question-block" id="q2">
+        <p>2. Who kicked the ball into the bush? <button class="speaker-btn" onclick="speak('Who kicked the ball into the bush?')">🔊</button></p>
+        <input type="radio" name="q2" value="A"> A. Kipper<br>
+        <input type="radio" name="q2" value="B"> B. Wilma<br>
+        <input type="radio" name="q2" value="C"> C. Wilf<br>
+        <span class="feedback"></span>
+        <div class="correct-ans">Correct Answer: C. Wilf</div>
+    </div>
+
+    <div class="question-block" id="q3">
+        <p>3. What did Kipper find in the bush? <button class="speaker-btn" onclick="speak('What did Kipper find in the bush?')">🔊</button></p>
+        <input type="radio" name="q3" value="A"> A. A red case<br>
+        <input type="radio" name="q3" value="B"> B. A lost puppy<br>
+        <input type="radio" name="q3" value="C"> C. A new football<br>
+        <span class="feedback"></span>
+        <div class="correct-ans">Correct Answer: A. A red case</div>
+    </div>
+
+    <div class="question-block" id="q4">
+        <p>4. Could Dad open the case? <button class="speaker-btn" onclick="speak('Could Dad open the case?')">🔊</button></p>
+        <input type="radio" name="q4" value="A"> A. Yes, he did.<br>
+        <input type="radio" name="q4" value="B"> B. No, he couldn't.<br>
+        <span class="feedback"></span>
+        <div class="correct-ans">Correct Answer: B. No, he couldn't.</div>
+    </div>
+
+    <h2>Part 2: Word Bank (選填題) ✍️</h2>
+    <div class="word-bank">
+        Word Bank: <span class="word-item">police</span> | <span class="word-item">outside</span> | <span class="word-item">stolen</span> | <span class="word-item">sorry</span> | <span class="word-item">important</span>
+    </div>
+
+    <div class="question-block" id="q5">
+        <p>5. The children were playing __________. <button class="speaker-btn" onclick="speak('The children were playing blank.')">🔊</button></p>
+        <input type="text" id="ans5" placeholder="Type here...">
+        <span class="feedback"></span>
+        <div class="correct-ans">Correct Answer: outside</div>
+    </div>
+
+    <div class="question-block" id="q6">
+        <p>6. The case looks very, very __________. <button class="speaker-btn" onclick="speak('The case looks very, very blank.')">🔊</button></p>
+        <input type="text" id="ans6" placeholder="Type here...">
+        <span class="feedback"></span>
+        <div class="correct-ans">Correct Answer: important</div>
+    </div>
+
+    <div class="question-block" id="q7">
+        <p>7. Two __________ officers came to look at the case. <button class="speaker-btn" onclick="speak('Two blank officers came to look at the case.')">🔊</button></p>
+        <input type="text" id="ans7" placeholder="Type here...">
+        <span class="feedback"></span>
+        <div class="correct-ans">Correct Answer: police</div>
+    </div>
+
+    <h2>Part 3: Short Answer (簡答題) 💬</h2>
+
+    <div class="question-block" id="q8">
+        <p>8. How did the man come to the house? <button class="speaker-btn" onclick="speak('How did the man come to the house?')">🔊</button></p>
+        <input type="text" id="ans8" placeholder="Answer in a few words...">
+        <span class="feedback"></span>
+        <div class="correct-ans">Example Answer: He came in a big car.</div>
+    </div>
+
+    <div class="question-block" id="q9">
+        <p>9. What was really inside the case at the end? <button class="speaker-btn" onclick="speak('What was really inside the case at the end?')">🔊</button></p>
+        <input type="text" id="ans9" placeholder="Answer in a few words...">
+        <span class="feedback"></span>
+        <div class="correct-ans">Example Answer: There were sandwiches (and an apple).</div>
+    </div>
+
+    <h2>Part 4: Read Aloud (朗讀題) 🎤</h2>
+    <div class="question-block" id="q10">
+        <p>10. Please read this sentence aloud: <br><br><strong>"It's my case," he said. "Thank you. It was stolen."</strong></p>
+        <button class="speaker-btn" style="background: #e1f5fe; padding: 10px; border-radius: 10px; font-size: 1rem;" onclick="speak('It\'s my case, he said. Thank you. It was stolen.')">▶️ Listen to Example (範例音檔)</button>
+        <p><small>(Self-check: Did you read it clearly?)</small></p>
+        <span class="feedback"></span>
+    </div>
+
+    <button id="submit-btn" onclick="gradeQuiz()">Submit My Answers 🚀</button>
+
+    <div id="result-area">
+        <div class="score-display" id="total-score"></div>
+        <div class="encouragement" id="message"></div>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const synth = window.speechSynthesis;
+        const utterThis = new SpeechSynthesisUtterance(text);
+        
+        // Try to find a nice female voice
+        const voices = synth.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Female') || v.name.includes('Natural'));
+        
+        if (preferredVoice) utterThis.voice = preferredVoice;
+        
+        utterThis.rate = 0.85;
+        utterUtterance = 1.1;
+        utterThis.pitch = 1.1;
+        
+        synth.speak(utterThis);
+    }
+
+    // Initialize voices
+    window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+
+    function gradeQuiz() {
+        let score = 0;
+        const totalQuestions = 10;
+
+        // Correct Answers
+        const answers = {
+            q1: 'B',
+            q2: 'C',
+            q3: 'A',
+            q4: 'B',
+            q5: 'outside',
+            q6: 'important',
+            q7: 'police'
+        };
+
+        // Reset display
+        document.querySelectorAll('.feedback').forEach(f => { f.style.display = 'inline'; f.innerHTML = ''; });
+        document.querySelectorAll('.correct-ans').forEach(a => a.style.display = 'block');
+        document.querySelectorAll('.question-block').forEach(b => b.classList.remove('incorrect-bg'));
+
+        // Part 1 Check
+        for (let i = 1; i <= 4; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const block = document.getElementById(`q${i}`);
+            const feedback = block.querySelector('.feedback');
+            
+            if (selected && selected.value === answers[`q${i}`]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'green';
+            } else {
+                block.classList.add('incorrect-bg');
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'red';
+            }
+        }
+
+        // Part 2 Check
+        for (let i = 5; i <= 7; i++) {
+            const inputVal = document.getElementById(`ans${i}`).value.trim().toLowerCase();
+            const block = document.getElementById(`q${i}`);
+            const feedback = block.querySelector('.feedback');
+
+            if (inputVal === answers[`q${i}`]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'green';
+            } else {
+                block.classList.add('incorrect-bg');
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'red';
+            }
+        }
+
+        // Part 3 Check (Manual-style: correct if not empty)
+        for (let i = 8; i <= 9; i++) {
+            const inputVal = document.getElementById(`ans${i}`).value.trim();
+            const block = document.getElementById(`q${i}`);
+            const feedback = block.querySelector('.feedback');
+
+            if (inputVal.length > 3) {
+                score++;
+                feedback.innerHTML = '✅ Done!';
+                feedback.style.color = 'green';
+            } else {
+                block.classList.add('incorrect-bg');
+                feedback.innerHTML = '❌ Please write more';
+                feedback.style.color = 'red';
+            }
+        }
+
+        // Part 4 Check (Simple credit for attempting)
+        score++; 
+        document.getElementById('q10').querySelector('.feedback').innerHTML = '✅ Awesome Reading!';
+        document.getElementById('q10').querySelector('.feedback').style.color = 'green';
+
+        // Display Score
+        document.getElementById('result-area').style.display = 'block';
+        document.getElementById('total-score').innerText = `Score: ${score}/${totalQuestions}`;
+        
+        let msg = "";
+        if (score === 10) msg = "Perfect! You are a reading superstar! 🌟";
+        else if (score >= 7) msg = "Great job! Keep up the good work! 🎈";
+        else msg = "Good try! Let's read the story again! 📖";
+        document.getElementById('message').innerText = msg;
+
+        // Scroll to results
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

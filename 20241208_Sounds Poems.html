@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sounds Poems Reading Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #FFEA00;
+            --secondary-green: #76C945;
+            --soft-red: #FFEBEE;
+            --dark-text: #333;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--primary-yellow);
+            color: var(--dark-text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--secondary-green);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-icon {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #f0f0f0;
+            border-radius: 20px;
+        }
+
+        h2 {
+            background: var(--secondary-green);
+            color: white;
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .word-bank {
+            background: #f9f9f9;
+            padding: 15px;
+            border: 2px dashed var(--secondary-green);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .word-item {
+            background: white;
+            padding: 5px 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 10px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .btn-listen {
+            background: #6200ea;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--secondary-green);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer {
+            display: none;
+            margin-top: 10px;
+            color: #2e7d32;
+            font-size: 0.9rem;
+            background: #e8f5e9;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .incorrect-bg {
+            background-color: var(--soft-red) !important;
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            color: var(--secondary-green);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-icon">🦁 🎺 ⛈️</div>
+    <h1>Sounds Poems Quiz</h1>
+    <p style="text-align: center;">Listen, read, and answer the questions!</p>
+
+    <form id="quizForm">
+        <section>
+            <h2>Part 1: Multiple Choice 🔘</h2>
+            
+            <div class="question-block" id="q1">
+                <p>1. In the poem "Sounds Like Me", which animal squeaks? <button type="button" class="btn-listen" onclick="speak('In the poem Sounds Like Me, which animal squeaks?')">🔊 Listen</button></p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="lion"> A lion</label>
+                    <label><input type="radio" name="q1" value="mouse"> A mouse</label>
+                    <label><input type="radio" name="q1" value="cat"> A cat</label>
+                </div>
+                <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: A mouse</div>
+            </div>
+
+            <div class="question-block" id="q2">
+                <p>2. In "My Big Band", what sound did the drum make? <button type="button" class="btn-listen" onclick="speak('In My Big Band, what sound did the drum make?')">🔊 Listen</button></p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="ting"> Ting</label>
+                    <label><input type="radio" name="q2" value="boom"> Boom</label>
+                    <label><input type="radio" name="q2" value="crash"> Crash</label>
+                </div>
+                <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: Boom</div>
+            </div>
+
+            <div class="question-block" id="q3">
+                <p>3. Where should you stand to hear an echo in the poem? <button type="button" class="btn-listen" onclick="speak('Where should you stand to hear an echo in the poem?')">🔊 Listen</button></p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="under the bridge"> Under the bridge</label>
+                    <label><input type="radio" name="q3" value="in the house"> In the house</label>
+                    <label><input type="radio" name="q3" value="on a drum"> On a drum</label>
+                </div>
+                <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: Under the bridge</div>
+            </div>
+
+            <div class="question-block" id="q4">
+                <p>4. What do trainers do on shiny floors? <button type="button" class="btn-listen" onclick="speak('What do trainers do on shiny floors?')">🔊 Listen</button></p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="flap"> Flap</label>
+                    <label><input type="radio" name="q4" value="slap"> Slap</label>
+                    <label><input type="radio" name="q4" value="squeak"> Squeak</label>
+                </div>
+                <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: Squeak</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Part 2: Fill in the Blanks ✏️</h2>
+            <div class="word-bank">
+                <div class="word-item">giant's</div>
+                <div class="word-item">whisper</div>
+                <div class="word-item">puddles</div>
+                <div class="word-item">shout</div>
+                <div class="word-item">paws</div>
+            </div>
+
+            <div class="question-block" id="q5">
+                <p>5. If you are near, you can <input type="text" id="ans5" placeholder="..."> and I will hear. <button type="button" class="btn-listen" onclick="speak('Fill in the blank. If you are near, you can blank and I will hear.')">🔊 Listen</button></p>
+                <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: whisper</div>
+            </div>
+
+            <div class="question-block" id="q6">
+                <p>6. Bare feet pad like <input type="text" id="ans6" placeholder="...">. <button type="button" class="btn-listen" onclick="speak('Fill in the blank. Bare feet pad like blank.')">🔊 Listen</button></p>
+                <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: paws</div>
+            </div>
+
+            <div class="question-block" id="q7">
+                <p>7. On rainy days, rain drops and plops into <input type="text" id="ans7" placeholder="...">. <button type="button" class="btn-listen" onclick="speak('Fill in the blank. On rainy days, rain drops and plops into blank.')">🔊 Listen</button></p>
+                <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: puddles</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Part 3: Short Answer 💬</h2>
+            <div class="question-block" id="q8">
+                <p>8. Who yelled "Quiet!" at the end of the band practice? <button type="button" class="btn-listen" onclick="speak('Who yelled Quiet at the end of the band practice?')">🔊 Listen</button></p>
+                <textarea id="ans8" rows="2"></textarea>
+                <span class="feedback"></span>
+                <div class="correct-answer">Example Answer: Mum yelled Quiet!</div>
+            </div>
+
+            <div class="question-block" id="q9">
+                <p>9. In the poem "Can You Hear?", what is the wind compared to? <button type="button" class="btn-listen" onclick="speak('In the poem Can You Hear, what is the wind compared to?')">🔊 Listen</button></p>
+                <textarea id="ans9" rows="2"></textarea>
+                <span class="feedback"></span>
+                <div class="correct-answer">Example Answer: The wind is compared to a giant's breath.</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Part 4: Read Aloud 🗣️</h2>
+            <div class="question-block" id="q10">
+                <p>10. Please read this sentence aloud: <br><strong>"The rain giggles and gurgles as it slurps down drains."</strong></p>
+                <button type="button" class="btn-listen" style="background:#ff5722;" onclick="speak('The rain giggles and gurgles as it slurps down drains.')">🔊 Example Reading</button>
+                <p><small>(Ask your teacher to check your pronunciation!)</small></p>
+                <div class="options">
+                    <label><input type="checkbox" id="ans10"> I have finished reading this clearly!</label>
+                </div>
+                <span class="feedback"></span>
+                <div class="correct-answer">Well done! Practice makes perfect!</div>
+            </div>
+        </section>
+
+        <button type="button" class="btn-submit" onclick="checkAnswers()">Submit My Answers! 🌟</button>
+    </form>
+
+    <div id="result-area">
+        <div class="score-display" id="scoreText"></div>
+        <p id="motivationalMessage" style="font-size: 1.2rem;"></p>
+        <button onclick="location.reload()" style="padding: 10px 20px; cursor: pointer; border-radius: 20px; border: none; background: #ddd;">Try Again</button>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        const voices = speechSynthesis.getVoices();
+        
+        // Try to find a natural English female voice
+        const preferredVoice = voices.find(v => 
+            v.name.includes('Google US English') || 
+            v.name.includes('Microsoft Zira') || 
+            v.name.includes('Female')
+        );
+
+        if (preferredVoice) utterance.voice = preferredVoice;
+        utterance.rate = 0.85;
+        utterance.pitch = 1.1;
+        speechSynthesis.speak(utterance);
+    }
+
+    // Load voices early
+    speechSynthesis.getVoices();
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Q1-Q4 Logic
+        const correctAnswers = {
+            q1: "mouse",
+            q2: "boom",
+            q3: "under the bridge",
+            q4: "squeak"
+        };
+
+        for (let i = 1; i <= 4; i++) {
+            const qBlock = document.getElementById('q' + i);
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const feedback = qBlock.querySelector('.feedback');
+            const correctDiv = qBlock.querySelector('.correct-answer');
+
+            if (selected && selected.value === correctAnswers['q' + i]) {
+                score++;
+                feedback.innerHTML = "✅ Correct";
+                feedback.style.color = "green";
+                qBlock.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = "❌ Incorrect";
+                feedback.style.color = "red";
+                qBlock.classList.add('incorrect-bg');
+            }
+            correctDiv.style.display = "block";
+        }
+
+        // Q5-Q7 Logic
+        const fillAnswers = {
+            ans5: "whisper",
+            ans6: "paws",
+            ans7: "puddles"
+        };
+
+        for (let i = 5; i <= 7; i++) {
+            const qBlock = document.getElementById('q' + i);
+            const val = document.getElementById('ans' + i).value.toLowerCase().trim();
+            const feedback = qBlock.querySelector('.feedback');
+            const correctDiv = qBlock.querySelector('.correct-answer');
+
+            if (val === fillAnswers['ans' + i]) {
+                score++;
+                feedback.innerHTML = "✅ Correct";
+                feedback.style.color = "green";
+                qBlock.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = "❌ Incorrect";
+                feedback.style.color = "red";
+                qBlock.classList.add('incorrect-bg');
+            }
+            correctDiv.style.display = "block";
+        }
+
+        // Q8-Q9 Logic (Manual/Keyword)
+        const keywords = {
+            ans8: ["mum", "mother"],
+            ans9: ["giant", "breath"]
+        };
+
+        for (let i = 8; i <= 9; i++) {
+            const qBlock = document.getElementById('q' + i);
+            const val = document.getElementById('ans' + i).value.toLowerCase();
+            const feedback = qBlock.querySelector('.feedback');
+            const correctDiv = qBlock.querySelector('.correct-answer');
+            
+            let isCorrect = keywords['ans' + i].some(kw => val.includes(kw));
+
+            if (isCorrect) {
+                score++;
+                feedback.innerHTML = "✅ Great job!";
+                feedback.style.color = "green";
+                qBlock.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = "❌ Keep trying!";
+                feedback.style.color = "red";
+                qBlock.classList.add('incorrect-bg');
+            }
+            correctDiv.style.display = "block";
+        }
+
+        // Q10 Logic
+        const q10Block = document.getElementById('q10');
+        const q10Check = document.getElementById('ans10');
+        if(q10Check.checked) {
+            score++;
+            q10Block.querySelector('.feedback').innerHTML = "✅ Amazing Reading!";
+            q10Block.classList.remove('incorrect-bg');
+        } else {
+            q10Block.querySelector('.feedback').innerHTML = "❌ Don't forget to read!";
+            q10Block.classList.add('incorrect-bg');
+        }
+        q10Block.querySelector('.correct-answer').style.display = "block";
+
+        // Final Results
+        document.getElementById('result-area').style.display = "block";
+        document.getElementById('scoreText').innerText = `Score: ${score}/${total}`;
+        
+        let msg = "";
+        if(score === 10) msg = "Perfect! You are a Sound Master! 🏆";
+        else if(score >= 7) msg = "Great job! You have very good ears! 🐱";
+        else msg = "Good effort! Let's read the poems again! 📚";
+        document.getElementById('motivationalMessage').innerText = msg;
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

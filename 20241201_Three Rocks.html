@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Rocks Reading Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #76b041;
+            --soft-yellow: #fff9c4;
+            --deep-brown: #5d4037;
+            --accent-red: #ffcdd2;
+            --correct-green: #4caf50;
+            --wrong-red: #f44336;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #f1f8e9;
+            color: var(--deep-brown);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quiz-container {
+            background-color: white;
+            max-width: 800px;
+            width: 100%;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-green);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-green);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            display: inline-block;
+        }
+
+        .question-card {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 10px;
+        }
+
+        label {
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            cursor: pointer;
+            display: block;
+        }
+
+        input[type="radio"]:checked + label {
+            background-color: var(--soft-yellow);
+            border-color: var(--primary-green);
+        }
+
+        .word-bank {
+            background: var(--soft-yellow);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 2px dashed var(--primary-green);
+        }
+
+        .word-tag {
+            background: white;
+            padding: 5px 15px;
+            margin: 5px;
+            display: inline-block;
+            border-radius: 20px;
+            border: 1px solid var(--primary-green);
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .speaker-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+            display: none;
+        }
+
+        .correct-answer-box {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            display: none;
+            font-size: 0.95rem;
+            color: #2e7d32;
+        }
+
+        .wrong-bg {
+            background-color: var(--accent-red) !important;
+        }
+
+        #submit-btn {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+
+        #submit-btn:hover {
+            transform: scale(1.05);
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 40px;
+            display: none;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        .encouragement {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        /* 隱藏原生 Radio */
+        input[type="radio"] { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>🥣 Three Rocks Quiz</h1>
+    <p style="text-align:center">Let's see how much you know about the story! 📖</p>
+
+    <h3 class="section-title">Part 1: Multiple Choice 🔘</h3>
+    
+    <div class="question-card" id="q1">
+        <div class="question-text">
+            <button class="speaker-btn" onclick="speak('1. When did the man go to the little town?')">🔊</button>
+            1. When did the man go to the little town? <span class="feedback"></span>
+        </div>
+        <div class="options-container">
+            <input type="radio" name="q1" id="q1a" value="One summer"><label for="q1a">One summer</label>
+            <input type="radio" name="q1" id="q1b" value="One winter"><label for="q1b">One winter</label>
+            <input type="radio" name="q1" id="q1c" value="One spring"><label for="q1c">One spring</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: One winter</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <div class="question-text">
+            <button class="speaker-btn" onclick="speak('2. What did the man put into the pot first?')">🔊</button>
+            2. What did the man put into the pot first? <span class="feedback"></span>
+        </div>
+        <div class="options-container">
+            <input type="radio" name="q2" id="q2a" value="Chicken"><label for="q2a">Roast chicken</label>
+            <input type="radio" name="q2" id="q2b" value="Turnips"><label for="q2b">Turnips</label>
+            <input type="radio" name="q2" id="q2c" value="Three rocks"><label for="q2c">Three big rocks</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: Three big rocks</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <div class="question-text">
+            <button class="speaker-btn" onclick="speak('3. What color was the stock the man used?')">🔊</button>
+            3. What color was the stock the man used? <span class="feedback"></span>
+        </div>
+        <div class="options-container">
+            <input type="radio" name="q3" id="q3a" value="Yellow"><label for="q3a">Yellow</label>
+            <input type="radio" name="q3" id="q3b" value="Brown"><label for="q3b">Brown</label>
+            <input type="radio" name="q3" id="q3c" value="White"><label for="q3c">White</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: Brown</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <div class="question-text">
+            <button class="speaker-btn" onclick="speak('4. Who said: But you all put the food into the pot?')">🔊</button>
+            4. Who said: "But you all put the food into the pot!"? <span class="feedback"></span>
+        </div>
+        <div class="options-container">
+            <input type="radio" name="q4" id="q4a" value="The man"><label for="q4a">The man</label>
+            <input type="radio" name="q4" id="q4b" value="The children"><label for="q4b">The children</label>
+            <input type="radio" name="q4" id="q4c" value="The horse"><label for="q4c">The horse</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: The children</div>
+    </div>
+
+    <h3 class="section-title">Part 2: Fill in the Blanks ✏️</h3>
+    <div class="word-bank">
+        Word Bank: <span class="word-tag">cook</span> <span class="word-tag">smells</span> <span class="word-tag">town</span> <span class="word-tag">pot</span> <span class="word-tag">rocks</span>
+    </div>
+
+    <div class="question-card" id="q5">
+        <div class="question-text">
+            <button class="speaker-btn" onclick="speak('5. I can blank dinner for you, said the man.')">🔊</button>
+            5. "I can <input type="text" id="ans5" style="width:100px"> dinner for you," said the man. <span class="feedback"></span>
+        </div>
+        <div class="correct-answer-box">Correct Answer: cook</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <div class="question-text">
+            <button class="speaker-btn" onclick="speak('6. He got a big blank.')">🔊</button>
+            6. He got a big <input type="text" id="ans6" style="width:100px">. <span class="feedback"></span>
+        </div>
+        <div class="correct-answer-box">Correct Answer: pot</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <div class="question-text">
+            <button class="speaker-btn" onclick="speak('7. It blank good, but it will be better.')">🔊</button>
+            7. "It <input type="text" id="ans7" style="width:100px"> good, but it will be better." <span class="feedback"></span>
+        </div>
+        <div class="correct-answer-box">Correct Answer: smells</div>
+    </div>
+
+    <h3 class="section-title">Part 3: Short Answer 💬</h3>
+    
+    <div class="question-card" id="q8">
+        <div class="question-text">
+            <button class="speaker-btn" onclick="speak('8. Name two vegetables the man put in the pot.')">🔊</button>
+            8. Name two vegetables the man put in the pot. <span class="feedback"></span>
+        </div>
+        <input type="text" id="ans8" placeholder="Type your answer here...">
+        <div class="correct-answer-box">Example Answer: Leeks and turnips.</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <div class="question-text">
+            <button class="speaker-btn" onclick="speak('9. What did the man use to travel to the town?')">🔊</button>
+            9. What did the man use to travel to the town? <span class="feedback"></span>
+        </div>
+        <input type="text" id="ans9" placeholder="Type your answer here...">
+        <div class="correct-answer-box">Example Answer: A cart and a horse.</div>
+    </div>
+
+    <h3 class="section-title">Part 4: Read Aloud 🎤</h3>
+    <div class="question-card" id="q10">
+        <div class="question-text">10. Practice reading this sentence: <span class="feedback"></span></div>
+        <p style="font-size: 1.4rem; font-style: italic; color: var(--primary-green);">
+            "Into the pot he put three big rocks."
+        </p>
+        <button class="submit-btn" style="background:#42a5f5; width:auto; padding:10px 20px" onclick="speak('Into the pot he put three big rocks.')">🔊 Listen to Example</button>
+        <p><small>Click "Submit" when you are finished practicing!</small></p>
+        <div class="correct-answer-box">Keep up the great work! 🌟</div>
+    </div>
+
+    <button id="submit-btn" onclick="gradeQuiz()">Submit ✅</button>
+
+    <div id="result-area">
+        <div class="score-display" id="final-score"></div>
+        <div class="encouragement" id="message"></div>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        // Try to find a nice female voice
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Initialize voices
+    window.speechSynthesis.getVoices();
+
+    function gradeQuiz() {
+        let score = 0;
+        const total = 10;
+
+        // --- Part 1 ---
+        const answers1 = { q1: 'One winter', q2: 'Three big rocks', q3: 'Brown', q4: 'The children' };
+        for (let i = 1; i <= 4; i++) {
+            const qId = 'q' + i;
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            const feedback = document.querySelector(`#${qId} .feedback`);
+            const card = document.getElementById(qId);
+            const ansBox = card.querySelector('.correct-answer-box');
+
+            ansBox.style.display = 'block';
+            feedback.style.display = 'inline';
+
+            if (selected && selected.value === answers1[qId]) {
+                score++;
+                feedback.innerText = ' ✅ Correct';
+                feedback.style.color = '#4caf50';
+                card.classList.remove('wrong-bg');
+            } else {
+                feedback.innerText = ' ❌ Incorrect';
+                feedback.style.color = '#f44336';
+                card.classList.add('wrong-bg');
+            }
+        }
+
+        // --- Part 2 ---
+        const answers2 = { ans5: 'cook', ans6: 'pot', ans7: 'smells' };
+        [5, 6, 7].forEach(num => {
+            const input = document.getElementById('ans' + num);
+            const feedback = document.querySelector(`#q${num} .feedback`);
+            const card = document.getElementById('q' + num);
+            const ansBox = card.querySelector('.correct-answer-box');
+
+            ansBox.style.display = 'block';
+            feedback.style.display = 'inline';
+
+            if (input.value.toLowerCase().trim() === answers2['ans' + num]) {
+                score++;
+                feedback.innerText = ' ✅ Correct';
+                feedback.style.color = '#4caf50';
+                card.classList.remove('wrong-bg');
+            } else {
+                feedback.innerText = ' ❌ Incorrect';
+                feedback.style.color = '#f44336';
+                card.classList.add('wrong-bg');
+            }
+        });
+
+        // --- Part 3 ---
+        // Basic keywords check for kids
+        const input8 = document.getElementById('ans8').value.toLowerCase();
+        const feedback8 = document.querySelector(`#q8 .feedback`);
+        const card8 = document.getElementById('q8');
+        document.querySelector('#q8 .correct-answer-box').style.display = 'block';
+        feedback8.style.display = 'inline';
+
+        if (input8.includes('leek') || input8.includes('turnip')) {
+            score++;
+            feedback8.innerText = ' ✅ Good Job!';
+            feedback8.style.color = '#4caf50';
+        } else {
+            feedback8.innerText = ' ❌ Try again';
+            feedback8.style.color = '#f44336';
+            card8.classList.add('wrong-bg');
+        }
+
+        const input9 = document.getElementById('ans9').value.toLowerCase();
+        const feedback9 = document.querySelector(`#q9 .feedback`);
+        const card9 = document.getElementById('q9');
+        document.querySelector('#q9 .correct-answer-box').style.display = 'block';
+        feedback9.style.display = 'inline';
+
+        if (input9.includes('horse') || input9.includes('cart')) {
+            score++;
+            feedback9.innerText = ' ✅ Good Job!';
+            feedback9.style.color = '#4caf50';
+        } else {
+            feedback9.innerText = ' ❌ Try again';
+            feedback9.style.color = '#f44336';
+            card9.classList.add('wrong-bg');
+        }
+
+        // --- Part 4 ---
+        // Reading is always rewarded
+        score++;
+        document.querySelector('#q10 .feedback').innerText = ' ✅ Well Done!';
+        document.querySelector('#q10 .feedback').style.display = 'inline';
+        document.querySelector('#q10 .correct-answer-box').style.display = 'block';
+
+        // --- Final Results ---
+        const resultArea = document.getElementById('result-area');
+        const scoreDisplay = document.getElementById('final-score');
+        const message = document.getElementById('message');
+
+        resultArea.style.display = 'block';
+        scoreDisplay.innerText = `Score: ${score}/${total}`;
+
+        if (score === 10) {
+            message.innerText = "🌟 Perfect! You are a reading superstar! 🌟";
+        } else if (score >= 7) {
+            message.innerText = "Great job! You really know the story! 👍";
+        } else {
+            message.innerText = "Good effort! Let's read the story one more time. 📚";
+        }
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

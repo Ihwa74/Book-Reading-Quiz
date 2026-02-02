@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>The Race - Interactive Quiz</title> <style> :root { --primary-green: #76b041; --primary-yellow: #f4d35e; --bg-color: #f9fced; --text-color: #333; --wrong-bg: #ffebee; --correct-color: #2e7d32; --incorrect-color: #c62828; }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        font-size: 18px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border: 5px solid var(--primary-yellow);
+    }
+
+    h1 {
+        text-align: center;
+        color: var(--primary-green);
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-style: italic;
+        margin-bottom: 30px;
+    }
+
+    .section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border-radius: 15px;
+        border-left: 8px solid var(--primary-green);
+        background: #fdfdfd;
+    }
+
+    h2 {
+        color: var(--primary-green);
+        border-bottom: 2px solid var(--primary-yellow);
+        padding-bottom: 10px;
+    }
+
+    .question-block {
+        margin-bottom: 25px;
+        padding: 15px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .word-bank {
+        background: var(--primary-yellow);
+        padding: 15px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .word-item {
+        background: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .options label {
+        display: block;
+        margin: 10px 0;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 8px;
+        background: #f0f0f0;
+    }
+
+    .options label:hover {
+        background: #e0e0e0;
+    }
+
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: var(--primary-green);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        display: block;
+        margin: 30px auto;
+        transition: transform 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+        background-color: #5d8e33;
+    }
+
+    .speak-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+        margin-left: 10px;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .feedback {
+        font-weight: bold;
+        margin-top: 10px;
+        display: none;
+    }
+
+    .correct-answer {
+        color: var(--correct-color);
+        font-size: 0.9em;
+        margin-top: 5px;
+        display: none;
+    }
+
+    #result-area {
+        text-align: center;
+        font-size: 2em;
+        margin-top: 30px;
+        font-weight: bold;
+    }
+
+    .incorrect-highlight {
+        background-color: var(--wrong-bg) !important;
+    }
+
+    .status-icon {
+        margin-left: 10px;
+        font-weight: bold;
+    }
+</style>
+</head> <body>
+
+<div class="container"> <h1>🏎️ The Race! 🐌</h1> <p class="subtitle">Can you beat the buggy? Let's find out! 🌟</p>
+
+<div class="section">
+    <h2>Part 1: Choose the Best Answer 📝</h2>
+    
+    <div class="question-block" id="q1">
+        <p>1. What does Tiger have to drive in the race? <button class="speak-btn" onclick="speak('What does Tiger have to drive in the race?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A. A big truck</label>
+            <label><input type="radio" name="q1" value="B"> B. A micro-buggy</label>
+            <label><input type="radio" name="q1" value="C"> C. A rocket</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: B. A micro-buggy</div>
+    </div>
+
+    <div class="question-block" id="q2">
+        <p>2. What is Cat riding on? <button class="speak-btn" onclick="speak('What is Cat riding on?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A. A snail</label>
+            <label><input type="radio" name="q2" value="B"> B. A micro-buggy</label>
+            <label><input type="radio" name="q2" value="C"> C. A dragonfly</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: A. A snail</div>
+    </div>
+
+    <div class="question-block" id="q3">
+        <p>3. Where is Tiger racing to? <button class="speak-btn" onclick="speak('Where is Tiger racing to?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> A. To the house</label>
+            <label><input type="radio" name="q3" value="B"> B. To the flower</label>
+            <label><input type="radio" name="q3" value="C"> C. To the tree</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: C. To the tree</div>
+    </div>
+
+    <div class="question-block" id="q4">
+        <p>4. What stops Tiger and makes him look up? <button class="speak-btn" onclick="speak('What stops Tiger and makes him look up?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A. A big rock</label>
+            <label><input type="radio" name="q4" value="B"> B. A dragonfly</label>
+            <label><input type="radio" name="q4" value="C"> C. Smoke</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: B. A dragonfly</div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Part 2: Word Bank Fun 🔠</h2>
+    <div class="word-bank">
+        <span class="word-item">slow</span>
+        <span class="word-item">fast</span>
+        <span class="word-item">rocket</span>
+        <span class="word-item">grin</span>
+        <span class="word-item">waiting</span>
+    </div>
+
+    <div class="question-block" id="q5">
+        <p>5. Tiger shot off like a ______. <button class="speak-btn" onclick="speak('Tiger shot off like a...')">🔊</button></p>
+        <input type="text" id="ans5" placeholder="Type word here...">
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: rocket</div>
+    </div>
+
+    <div class="question-block" id="q6">
+        <p>6. Tiger day-dreamed he was winning with a happy ______. <button class="speak-btn" onclick="speak('Tiger day-dreamed he was winning with a happy...')">🔊</button></p>
+        <input type="text" id="ans6" placeholder="Type word here...">
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: grin</div>
+    </div>
+
+    <div class="question-block" id="q7">
+        <p>7. When Tiger reached the tree, Cat was ______ for him. <button class="speak-btn" onclick="speak('When Tiger reached the tree, Cat was waiting for him.')">🔊</button></p>
+        <input type="text" id="ans7" placeholder="Type word here...">
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: waiting</div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Part 3: Short Answers ✍️</h2>
+    
+    <div class="question-block" id="q8">
+        <p>8. What did Tiger say Cat would only see because his buggy is so fast? <button class="speak-btn" onclick="speak('What did Tiger say Cat would only see because his buggy is so fast?')">🔊</button></p>
+        <input type="text" id="ans8" placeholder="Answer here...">
+        <div class="feedback"></div>
+        <div class="correct-answer">Example Answer: Smoke (He said "You will only see my smoke!")</div>
+    </div>
+
+    <div class="question-block" id="q9">
+        <p>9. Who won the race in the end? <button class="speak-btn" onclick="speak('Who won the race in the end?')">🔊</button></p>
+        <input type="text" id="ans9" placeholder="Answer here...">
+        <div class="feedback"></div>
+        <div class="correct-answer">Example Answer: Cat won the race.</div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Part 4: Read Aloud 🗣️</h2>
+    <div class="question-block" id="q10">
+        <p>10. Read the secret to winning: <br><strong>"Slow and steady is the secret. Slow and steady never fails."</strong></p>
+        <button onclick="speak('Slow and steady is the secret. Slow and steady never fails.')" style="margin: 10px 0; font-size: 16px; padding: 10px 20px;">🔊 Listen to Example</button>
+        <p><i>Practice reading this out loud!</i></p>
+        <div class="feedback"></div>
+        <div class="correct-answer">Tip: Speak clearly and follow the rhythm!</div>
+    </div>
+</div>
+
+<button id="submit-btn" onclick="checkAnswers()">Submit My Answers! 🏆</button>
+
+<div id="result-area"></div>
+</div>
+
+<script> function speak(text) { const msg = new SpeechSynthesisUtterance(); msg.text = text; msg.lang = 'en-US'; msg.rate = 0.85; msg.pitch = 1.1;
+
+    // Try to find a specific voice
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v =&gt; v.name.includes(&#39;Google US English&#39;) || v.name.includes(&#39;Natural&#39;));
+    if (preferredVoice) msg.voice = preferredVoice;
+
+    window.speechSynthesis.speak(msg);
+}
+
+// Load voices
+window.speechSynthesis.onvoiceschanged = () =&gt; {};
+
+function checkAnswers() {
+    let score = 0;
+    const total = 10;
+
+    // Part 1
+    const q1 = document.querySelector(&#39;input[name=&quot;q1&quot;]:checked&#39;);
+    if(q1 &amp;&amp; q1.value === &quot;B&quot;) score++;
+    updateFeedback(&#39;q1&#39;, q1 &amp;&amp; q1.value === &quot;B&quot;);
+
+    const q2 = document.querySelector(&#39;input[name=&quot;q2&quot;]:checked&#39;);
+    if(q2 &amp;&amp; q2.value === &quot;A&quot;) score++;
+    updateFeedback(&#39;q2&#39;, q2 &amp;&amp; q2.value === &quot;A&quot;);
+
+    const q3 = document.querySelector(&#39;input[name=&quot;q3&quot;]:checked&#39;);
+    if(q3 &amp;&amp; q3.value === &quot;C&quot;) score++;
+    updateFeedback(&#39;q3&#39;, q3 &amp;&amp; q3.value === &quot;C&quot;);
+
+    const q4 = document.querySelector(&#39;input[name=&quot;q4&quot;]:checked&#39;);
+    if(q4 &amp;&amp; q4.value === &quot;B&quot;) score++;
+    updateFeedback(&#39;q4&#39;, q4 &amp;&amp; q4.value === &quot;B&quot;);
+
+    // Part 2
+    const ans5 = document.getElementById(&#39;ans5&#39;).value.trim().toLowerCase();
+    if(ans5 === &quot;rocket&quot;) score++;
+    updateFeedback(&#39;q5&#39;, ans5 === &quot;rocket&quot;);
+
+    const ans6 = document.getElementById(&#39;ans6&#39;).value.trim().toLowerCase();
+    if(ans6 === &quot;grin&quot;) score++;
+    updateFeedback(&#39;q6&#39;, ans6 === &quot;grin&quot;);
+
+    const ans7 = document.getElementById(&#39;ans7&#39;).value.trim().toLowerCase();
+    if(ans7 === &quot;waiting&quot;) score++;
+    updateFeedback(&#39;q7&#39;, ans7 === &quot;waiting&quot;);
+
+    // Part 3
+    const ans8 = document.getElementById(&#39;ans8&#39;).value.trim().toLowerCase();
+    if(ans8.includes(&quot;smoke&quot;)) score++;
+    updateFeedback(&#39;q8&#39;, ans8.includes(&quot;smoke&quot;));
+
+    const ans9 = document.getElementById(&#39;ans9&#39;).value.trim().toLowerCase();
+    if(ans9.includes(&quot;cat&quot;)) score++;
+    updateFeedback(&#39;q9&#39;, ans9.includes(&quot;cat&quot;));
+
+    // Part 4 (Always mark correct for effort)
+    score++;
+    updateFeedback(&#39;q10&#39;, true);
+
+    // Display Total Score
+    const resultArea = document.getElementById(&#39;result-area&#39;);
+    let message = &quot;&quot;;
+    if(score === 10) message = &quot;Perfect! You are a racing champion! 🥇&quot;;
+    else if(score &gt;= 7) message = &quot;Great job! Slow and steady wins! 🥈&quot;;
+    else message = &quot;Keep reading! You can do it! 📚&quot;;
+
+    resultArea.innerHTML = `Score: ${score}/${total}<br>&lt;span style=&quot;font-size: 20px&quot;&gt;${message}&lt;/span&gt;`;
+    
+    // Disable submit button
+    document.getElementById(&#39;submit-btn&#39;).style.display = &#39;none&#39;;
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+function updateFeedback(qId, isCorrect) {
+    const qBlock = document.getElementById(qId);
+    const fb = qBlock.querySelector(&#39;.feedback&#39;);
+    const correctAns = qBlock.querySelector(&#39;.correct-answer&#39;);
+    
+    fb.style.display = &#39;block&#39;;
+    correctAns.style.display = &#39;block&#39;;
+
+    if(isCorrect) {
+        fb.innerHTML = &#39;&lt;span class=&quot;status-icon&quot;&gt;✅ Correct&lt;/span&gt;&#39;;
+        fb.style.color = &#39;var(--correct-color)&#39;;
+        qBlock.classList.remove(&#39;incorrect-highlight&#39;);
+    } else {
+        fb.innerHTML = &#39;&lt;span class=&quot;status-icon&quot;&gt;❌ Incorrect&lt;/span&gt;&#39;;
+        fb.style.color = &#39;var(--incorrect-color)&#39;;
+        qBlock.classList.add(&#39;incorrect-highlight&#39;);
+    }
+}
+</script>
+
+</body> </html>
