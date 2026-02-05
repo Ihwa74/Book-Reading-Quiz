@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club Quiz: Painting the Loft</title>
+    <style>
+        :root {
+            --primary-yellow: #FFDE59;
+            --primary-green: #7ED957;
+            --accent-red: #FF5757;
+            --soft-bg: #F9FBF7;
+            --card-white: #FFFFFF;
+            --text-dark: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--soft-bg);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-white);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 8px solid var(--primary-yellow);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-red);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 2px dashed #eee;
+        }
+
+        .section-title {
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 15px;
+            transition: background 0.3s;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-speak {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .word-bank {
+            background: #fff9c4;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border: 2px solid var(--primary-yellow);
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 15px;
+            background: white;
+            border-radius: 20px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .feedback {
+            display: none;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .correct-answer {
+            display: none;
+            color: #2e7d32;
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+
+        .incorrect-bg {
+            background-color: #ffebee !important;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #c62828;
+            margin-top: 30px;
+        }
+
+        #submit-btn:active {
+            box-shadow: none;
+            transform: translateY(5px);
+        }
+
+        #result-area {
+            display: none;
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: var(--primary-yellow);
+            border-radius: 20px;
+        }
+
+        .score-text {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎨 Painting the Loft 🖌️</h1>
+    <p class="subtitle">Oxford Reading Tree Quiz</p>
+
+    <div class="section">
+        <div class="section-title">Part 1: Multiple Choice (4 questions)</div>
+        
+        <div class="question-block" id="q1">
+            <div class="question-text">1. Who did the children go to see? <button class="btn-speak" onclick="speak('Who did the children go to see?')">🔊</button> <span class="feedback"></span></div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="Mum"> Mum</label>
+                <label><input type="radio" name="q1" value="Gran"> Gran</label>
+                <label><input type="radio" name="q1" value="Dad"> Dad</label>
+            </div>
+            <div class="correct-answer">Correct Answer: Gran</div>
+        </div>
+
+        <div class="question-block" id="q2">
+            <div class="question-text">2. Why couldn't Floppy go up to the loft? <button class="btn-speak" onclick="speak('Why couldn\'t Floppy go up to the loft?')">🔊</button> <span class="feedback"></span></div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="He was tired"> He was tired</label>
+                <label><input type="radio" name="q2" value="The door was shut"> The door was shut</label>
+                <label><input type="radio" name="q2" value="The steps were too steep"> The steps were too steep</label>
+            </div>
+            <div class="correct-answer">Correct Answer: The steps were too steep</div>
+        </div>
+
+        <div class="question-block" id="q3">
+            <div class="question-text">3. What did Gran have in the cans? <button class="btn-speak" onclick="speak('What did Gran have in the cans?')">🔊</button> <span class="feedback"></span></div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="Juice"> Juice</label>
+                <label><input type="radio" name="q3" value="Paint"> Paint</label>
+                <label><input type="radio" name="q3" value="Soup"> Soup</label>
+            </div>
+            <div class="correct-answer">Correct Answer: Paint</div>
+        </div>
+
+        <div class="question-block" id="q4">
+            <div class="question-text">4. What color of paint did Chip find lumps in? <button class="btn-speak" onclick="speak('What color of paint did Chip find lumps in?')">🔊</button> <span class="feedback"></span></div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="Pink"> Pink</label>
+                <label><input type="radio" name="q4" value="Green"> Green</label>
+                <label><input type="radio" name="q4" value="Black"> Black</label>
+            </div>
+            <div class="correct-answer">Correct Answer: Green</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Part 2: Word Bank Fill-in (3 questions)</div>
+        <div class="word-bank">
+            Word Bank: <span class="word-item">loft</span> | <span class="word-item">sink</span> | <span class="word-item">sand</span> | <span class="word-item">lamp</span> | <span class="word-item">wink</span>
+        </div>
+
+        <div class="question-block" id="q5">
+            <div class="question-text">5. Chip had to mix the paint in the ______. <button class="btn-speak" onclick="speak('Chip had to mix the paint in the...')">🔊</button> <span class="feedback"></span></div>
+            <input type="text" id="ans5" placeholder="Type here...">
+            <div class="correct-answer">Correct Answer: sink</div>
+        </div>
+
+        <div class="question-block" id="q6">
+            <div class="question-text">6. Before painting, they had to ______ it down. <button class="btn-speak" onclick="speak('Before painting, they had to... it down.')">🔊</button> <span class="feedback"></span></div>
+            <input type="text" id="ans6" placeholder="Type here...">
+            <div class="correct-answer">Correct Answer: sand</div>
+        </div>
+
+        <div class="question-block" id="q7">
+            <div class="question-text">7. They had lots of fun but did not sleep a ______. <button class="btn-speak" onclick="speak('They had lots of fun but did not sleep a...')">🔊</button> <span class="feedback"></span></div>
+            <input type="text" id="ans7" placeholder="Type here...">
+            <div class="correct-answer">Correct Answer: wink</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Part 3: Short Answer (2 questions)</div>
+        
+        <div class="question-block" id="q8">
+            <div class="question-text">8. What did Gran put on the shelf? <button class="btn-speak" onclick="speak('What did Gran put on the shelf?')">🔊</button> <span class="feedback"></span></div>
+            <textarea id="ans8" rows="2" placeholder="Write your answer..."></textarea>
+            <div class="correct-answer">Example Answer: She put a lamp on the shelf.</div>
+        </div>
+
+        <div class="question-block" id="q9">
+            <div class="question-text">9. What did Kipper use to decorate one part of the loft? <button class="btn-speak" onclick="speak('What did Kipper use to decorate one part of the loft?')">🔊</button> <span class="feedback"></span></div>
+            <textarea id="ans9" rows="2" placeholder="Write your answer..."></textarea>
+            <div class="correct-answer">Example Answer: He used silver stars (stickers).</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Part 4: Reading Aloud (1 question)</div>
+        <div class="question-block" id="q10">
+            <div class="question-text">10. Read the sentence below: <span class="feedback"></span></div>
+            <p style="font-size: 1.4rem; padding: 20px; background: #eee; border-radius: 10px; text-align: center;">
+                "I have a loft in the roof," said Gran. "You can have it as a den."
+            </p>
+            <button id="listen-example" onclick="speak('I have a loft in the roof, said Gran. You can have it as a den.')" style="padding: 10px 20px; cursor: pointer; border-radius: 10px; border: 2px solid var(--primary-green); background: white;">🎧 Listen to Example</button>
+            <p><small>* Ask your teacher or parent to check your reading!</small></p>
+            <div class="correct-answer">Activity: Read clearly and loudly!</div>
+        </div>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit My Answers!</button>
+
+    <div id="result-area">
+        <div class="score-text" id="final-score">Score: 0/10</div>
+        <p id="encouragement" style="font-size: 1.5rem;"></p>
+        <button onclick="window.location.reload()" style="margin-top: 20px; padding: 10px 20px; cursor: pointer;">Try Again</button>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.volume = 1;
+        msg.rate = 0.85; // 清晰慢速
+        msg.pitch = 1.1; // 活潑
+        
+        const voices = window.speechSynthesis.getVoices();
+        // 優先找 Google US English (Female)
+        const selectedVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural')) || voices[0];
+        if (selectedVoice) msg.voice = selectedVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // 初始化載入聲音清單
+    window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Q1-Q4 Multiple Choice
+        const solutions = { q1: "Gran", q2: "The steps were too steep", q3: "Paint", q4: "Green" };
+        for (let i = 1; i <= 4; i++) {
+            const qBlock = document.getElementById('q' + i);
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const feedback = qBlock.querySelector('.feedback');
+            const correctAnswer = qBlock.querySelector('.correct-answer');
+
+            if (selected && selected.value === solutions['q' + i]) {
+                score++;
+                feedback.innerHTML = " ✅ Correct";
+                feedback.style.color = "green";
+                qBlock.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = " ❌ Incorrect";
+                feedback.style.color = "red";
+                qBlock.classList.add('incorrect-bg');
+            }
+            feedback.style.display = "inline";
+            correctAnswer.style.display = "block";
+        }
+
+        // Q5-Q7 Fill in blanks
+        const blankSols = { ans5: "sink", ans6: "sand", ans7: "wink" };
+        for (let i = 5; i <= 7; i++) {
+            const qBlock = document.getElementById('q' + i);
+            const userAns = document.getElementById('ans' + i).value.trim().toLowerCase();
+            const feedback = qBlock.querySelector('.feedback');
+            const correctAnswer = qBlock.querySelector('.correct-answer');
+
+            if (userAns === blankSols['ans' + i]) {
+                score++;
+                feedback.innerHTML = " ✅ Correct";
+                feedback.style.color = "green";
+                qBlock.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = " ❌ Incorrect";
+                feedback.style.color = "red";
+                qBlock.classList.add('incorrect-bg');
+            }
+            feedback.style.display = "inline";
+            correctAnswer.style.display = "block";
+        }
+
+        // Q8-Q9 Short Answer (Simple keyword check for auto-grading)
+        const keywords = { ans8: ["lamp"], ans9: ["star", "sticker"] };
+        for (let i = 8; i <= 9; i++) {
+            const qBlock = document.getElementById('q' + i);
+            const userAns = document.getElementById('ans' + i).value.trim().toLowerCase();
+            const feedback = qBlock.querySelector('.feedback');
+            const correctAnswer = qBlock.querySelector('.correct-answer');
+            
+            let isCorrect = keywords['ans' + i].some(kw => userAns.includes(kw));
+
+            if (isCorrect) {
+                score++;
+                feedback.innerHTML = " ✅ Correct";
+                feedback.style.color = "green";
+                qBlock.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = " ❓ Checked (Check with teacher)";
+                feedback.style.color = "orange";
+                qBlock.classList.add('incorrect-bg');
+            }
+            feedback.style.display = "inline";
+            correctAnswer.style.display = "block";
+        }
+
+        // Q10 Reading Aloud (Self-graded)
+        score++; // Give point for attempt
+        document.getElementById('q10').querySelector('.feedback').innerHTML = " ✅ Attempted";
+        document.getElementById('q10').querySelector('.correct-answer').style.display = "block";
+
+        // Show Final Result
+        const resultArea = document.getElementById('result-area');
+        const finalScore = document.getElementById('final-score');
+        const encouragement = document.getElementById('encouragement');
+        
+        resultArea.style.display = "block";
+        finalScore.innerHTML = `Score: ${score}/${total}`;
+        
+        if (score === 10) encouragement.innerHTML = "Perfect! You are a reading superstar! 🌟";
+        else if (score >= 7) encouragement.innerHTML = "Great job! You remember the story well! 🎈";
+        else encouragement.innerHTML = "Good effort! Let's read the story again! 📖";
+
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+
+</body>
+</html>

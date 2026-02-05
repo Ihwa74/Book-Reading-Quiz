@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Cake - Interactive Quiz</title>
+    <style>
+        :root {
+            --primary-red: #e63946;
+            --planet-yellow: #ffb703;
+            --space-blue: #1d3557;
+            --light-bg: #f1faee;
+            --correct-green: #2a9d8f;
+            --wrong-red: #f1a7a7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--space-blue);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 800px;
+            width: 100%;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 8px solid var(--planet-yellow);
+        }
+
+        h1 {
+            color: var(--primary-red);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-deco {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            background-color: var(--planet-yellow);
+            color: var(--space-blue);
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            transition: background-color 0.3s;
+            position: relative;
+            border: 2px dashed #ccc;
+        }
+
+        .word-bank {
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary-red);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 15px;
+            color: var(--space-blue);
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+            width: 200px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+        }
+
+        .speaker-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .result-mark {
+            font-weight: bold;
+            margin-left: 10px;
+            display: none;
+        }
+
+        .correct-answer-box {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9f5db;
+            border-radius: 8px;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        #submit-btn {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #score-display {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            color: var(--space-blue);
+        }
+
+        .incorrect-bg {
+            background-color: var(--wrong-red) !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-deco">🚀 🍰 🌟</div>
+
+<div class="container">
+    <h1>Planet Cake Quiz</h1>
+    <p style="text-align: center; font-weight: bold;">Can you help Beth with her space adventure?</p>
+
+    <hr>
+
+    <h2>Part 1: Choose the Best Answer 🚀</h2>
+    
+    <div class="question-block" id="q1">
+        <p>1. What does Beth use to travel to a different planet? <button class="speaker-btn" onclick="speak('What does Beth use to travel to a different planet?')">🔊</button> <span class="result-mark"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A. A car</label>
+            <label><input type="radio" name="q1" value="B"> B. A rocket</label>
+            <label><input type="radio" name="q1" value="C"> C. A plane</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: B. A rocket</div>
+    </div>
+
+    <div class="question-block" id="q2">
+        <p>2. What is the planet covered in when Beth lands? <button class="speaker-btn" onclick="speak('What is the planet covered in when Beth lands?')">🔊</button> <span class="result-mark"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A. Sand</label>
+            <label><input type="radio" name="q2" value="B"> B. Water</label>
+            <label><input type="radio" name="q2" value="C"> C. Rock cakes</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: C. Rock cakes</div>
+    </div>
+
+    <div class="question-block" id="q3">
+        <p>3. What does Beth think about the cakes at first? <button class="speaker-btn" onclick="speak('What does Beth think about the cakes at first?')">🔊</button> <span class="result-mark"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> A. They are too wet</label>
+            <label><input type="radio" name="q3" value="B"> B. They are a bit dry</label>
+            <label><input type="radio" name="q3" value="C"> C. They are too small</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: B. They are a bit dry</div>
+    </div>
+
+    <div class="question-block" id="q4">
+        <p>4. Who helps Beth on the planet? <button class="speaker-btn" onclick="speak('Who helps Beth on the planet?')">🔊</button> <span class="result-mark"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A. A Cake-bot</label>
+            <label><input type="radio" name="q4" value="B"> B. An alien</label>
+            <label><input type="radio" name="q4" value="C"> C. Her mom</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: A. A Cake-bot</div>
+    </div>
+
+    <h2>Part 2: Word Bank Fun 📝</h2>
+    <div class="word-bank">
+        <span class="word-item">jam</span> | 
+        <span class="word-item">sky</span> | 
+        <span class="word-item">planet</span> | 
+        <span class="word-item">helmet</span> | 
+        <span class="word-item">visit</span>
+    </div>
+
+    <div class="question-block" id="q5">
+        <p>5. Beth wants to <input type="text" id="ans5"> a different planet. <button class="speaker-btn" onclick="speak('Beth wants to blank a different planet.')">🔊</button> <span class="result-mark"></span></p>
+        <div class="correct-answer-box">Correct Answer: visit</div>
+    </div>
+
+    <div class="question-block" id="q6">
+        <p>6. Before getting into the rocket, Beth put on her <input type="text" id="ans6">. <button class="speaker-btn" onclick="speak('Before getting into the rocket, Beth put on her blank.')">🔊</button> <span class="result-mark"></span></p>
+        <div class="correct-answer-box">Correct Answer: helmet</div>
+    </div>
+
+    <div class="question-block" id="q7">
+        <p>7. Beth and the bot use <input type="text" id="ans7"> to sandwich the cakes. <button class="speaker-btn" onclick="speak('Beth and the bot use blank to sandwich the cakes.')">🔊</button> <span class="result-mark"></span></p>
+        <div class="correct-answer-box">Correct Answer: jam</div>
+    </div>
+
+    <h2>Part 3: Think and Write ✍️</h2>
+    
+    <div class="question-block" id="q8">
+        <p>8. What happens at the end to make one huge cake? <button class="speaker-btn" onclick="speak('What happens at the end to make one huge cake?')">🔊</button> <span class="result-mark"></span></p>
+        <textarea id="ans8" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: Beth and the Cake-bot put jam on lots of cakes and stacked them up.</div>
+    </div>
+
+    <div class="question-block" id="q9">
+        <p>9. How does Beth see Planet Cake when she is back home? <button class="speaker-btn" onclick="speak('How does Beth see Planet Cake when she is back home?')">🔊</button> <span class="result-mark"></span></p>
+        <textarea id="ans9" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: She looks through her telescope and sees the big cake tower.</div>
+    </div>
+
+    <h2>Part 4: Read Aloud 🗣️</h2>
+    <div class="question-block" id="q10">
+        <p>10. Please read this sentence aloud: <br><br><strong>"That is a big cake!" said Beth.</strong> 
+        <button class="speaker-btn" onclick="speak('That is a big cake! said Beth.')">🔊 (Listen to Example)</button>
+        <span class="result-mark"></span></p>
+        <p><em>(Ask your teacher or parent to check your pronunciation!)</em></p>
+        <div class="correct-answer-box">Great job! You read it clearly! 🌟</div>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit My Answers!</button>
+
+    <div id="score-display"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.volume = 1;
+        msg.rate = 0.85; // Clarity
+        msg.pitch = 1.1; // Friendly
+        
+        const voices = speechSynthesis.getVoices();
+        // Try to find a natural female voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const totalQuestions = 10;
+
+        // Reset display
+        const marks = document.querySelectorAll('.result-mark');
+        const boxes = document.querySelectorAll('.correct-answer-box');
+        const qBlocks = document.querySelectorAll('.question-block');
+        
+        marks.forEach(m => m.style.display = 'inline');
+        boxes.forEach(b => b.style.display = 'block');
+        qBlocks.forEach(q => q.classList.remove('incorrect-bg'));
+
+        // Part 1 logic
+        const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+        if(q1 === 'B') score++; else document.getElementById('q1').classList.add('incorrect-bg');
+        document.getElementById('q1').querySelector('.result-mark').innerHTML = q1 === 'B' ? ' ✅ Correct' : ' ❌ Incorrect';
+
+        const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+        if(q2 === 'C') score++; else document.getElementById('q2').classList.add('incorrect-bg');
+        document.getElementById('q2').querySelector('.result-mark').innerHTML = q2 === 'C' ? ' ✅ Correct' : ' ❌ Incorrect';
+
+        const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+        if(q3 === 'B') score++; else document.getElementById('q3').classList.add('incorrect-bg');
+        document.getElementById('q3').querySelector('.result-mark').innerHTML = q3 === 'B' ? ' ✅ Correct' : ' ❌ Incorrect';
+
+        const q4 = document.querySelector('input[name="q4"]:checked')?.value;
+        if(q4 === 'A') score++; else document.getElementById('q4').classList.add('incorrect-bg');
+        document.getElementById('q4').querySelector('.result-mark').innerHTML = q4 === 'A' ? ' ✅ Correct' : ' ❌ Incorrect';
+
+        // Part 2 logic
+        const ans5 = document.getElementById('ans5').value.trim().toLowerCase();
+        if(ans5 === 'visit') score++; else document.getElementById('q5').classList.add('incorrect-bg');
+        document.getElementById('q5').querySelector('.result-mark').innerHTML = ans5 === 'visit' ? ' ✅ Correct' : ' ❌ Incorrect';
+
+        const ans6 = document.getElementById('ans6').value.trim().toLowerCase();
+        if(ans6 === 'helmet') score++; else document.getElementById('q6').classList.add('incorrect-bg');
+        document.getElementById('q6').querySelector('.result-mark').innerHTML = ans6 === 'helmet' ? ' ✅ Correct' : ' ❌ Incorrect';
+
+        const ans7 = document.getElementById('ans7').value.trim().toLowerCase();
+        if(ans7 === 'jam') score++; else document.getElementById('q7').classList.add('incorrect-bg');
+        document.getElementById('q7').querySelector('.result-mark').innerHTML = ans7 === 'jam' ? ' ✅ Correct' : ' ❌ Incorrect';
+
+        // Part 3 logic (Simple check if not empty for demo)
+        const ans8 = document.getElementById('ans8').value.trim();
+        if(ans8.length > 5) score++; else document.getElementById('q8').classList.add('incorrect-bg');
+        document.getElementById('q8').querySelector('.result-mark').innerHTML = ans8.length > 5 ? ' ✅ Well Done!' : ' ❌ Needs more detail';
+
+        const ans9 = document.getElementById('ans9').value.trim();
+        if(ans9.length > 5) score++; else document.getElementById('q9').classList.add('incorrect-bg');
+        document.getElementById('q9').querySelector('.result-mark').innerHTML = ans9.length > 5 ? ' ✅ Well Done!' : ' ❌ Needs more detail';
+
+        // Part 4 logic (Self-checked)
+        score++; // Give point for effort in reading
+        document.getElementById('q10').querySelector('.result-mark').innerHTML = ' ✅ Completed';
+
+        // Show Score
+        const scoreDisplay = document.getElementById('score-display');
+        let message = "";
+        if(score === 10) message = "Perfect! You are a Space Hero! 🏆";
+        else if(score >= 7) message = "Great job! Almost there! 🌈";
+        else message = "Good try! Let's read the story again! 📖";
+
+        scoreDisplay.innerHTML = `Score: ${score}/10 <br> <span style="font-size: 1.5rem">${message}</span>`;
+        scoreDisplay.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

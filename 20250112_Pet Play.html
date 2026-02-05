@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Play - Interactive Quiz</title>
+    <style>
+        :root {
+            --primary-blue: #0056b3;
+            --secondary-yellow: #ffde59;
+            --accent-green: #7ed957;
+            --light-red: #ffe5e5;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 5px solid var(--secondary-yellow);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-blue);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .intro {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .section-title {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            display: inline-block;
+        }
+
+        .question-card {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #eee;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .incorrect-bg {
+            background-color: var(--light-red) !important;
+            border-color: #ffcccc !important;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-text { color: #28a745; }
+        .incorrect-text { color: #dc3545; }
+
+        .correct-answer-display {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-left: 5px solid #28a745;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #fff9c4;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            justify-content: center;
+            border: 2px dashed #fbc02d;
+        }
+
+        .word-item {
+            background: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-weight: bold;
+        }
+
+        input[type="text"], select {
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .options input { margin-right: 10px; }
+
+        button.btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 40px;
+            box-shadow: 0 5px 0 #66b044;
+        }
+
+        button.btn-submit:active { transform: translateY(3px); box-shadow: 0 2px 0 #66b044; }
+
+        .audio-btn {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 10px;
+            font-size: 1.2rem;
+            vertical-align: middle;
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        .praise-msg {
+            font-size: 1.5rem;
+            color: #ff5722;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🐾 Pet Play Quiz 🐾</h1>
+    <p class="intro">Let's see how much you know about our pet friends!</p>
+
+    <h3 class="section-title">Part 1: Multiple Choice (4 Questions)</h3>
+    
+    <div class="question-card" id="q1">
+        <p><strong>1. Why do pets like to play?</strong> <button class="audio-btn" onclick="speak('Why do pets like to play?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A. To go to sleep</label>
+            <label><input type="radio" name="q1" value="B"> B. It keeps them fit and happy</label>
+            <label><input type="radio" name="q1" value="C"> C. To get some food</label>
+        </div>
+        <div class="correct-answer-display">Correct Answer: B. It keeps them fit and happy</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <p><strong>2. What is the name of the cat in the book?</strong> <button class="audio-btn" onclick="speak('What is the name of the cat in the book?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A. Moggy</label>
+            <label><input type="radio" name="q2" value="B"> B. Ant</label>
+            <label><input type="radio" name="q2" value="C"> C. Kitty</label>
+        </div>
+        <div class="correct-answer-display">Correct Answer: A. Moggy</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <p><strong>3. What does the dog do after you throw a ball?</strong> <button class="audio-btn" onclick="speak('What does the dog do after you throw a ball?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> A. It hides the ball</label>
+            <label><input type="radio" name="q3" value="B"> B. It eats the ball</label>
+            <label><input type="radio" name="q3" value="C"> C. It runs after it and brings it back</label>
+        </div>
+        <div class="correct-answer-display">Correct Answer: C. It runs after it and brings it back</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <p><strong>4. How does the budgie hold onto the swing?</strong> <button class="audio-btn" onclick="speak('How does the budgie hold onto the swing?')">🔊</button> <span class="feedback"></span></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A. With its wings</label>
+            <label><input type="radio" name="q4" value="B"> B. With its feet</label>
+            <label><input type="radio" name="q4" value="C"> C. With its beak</label>
+        </div>
+        <div class="correct-answer-display">Correct Answer: B. With its feet</div>
+    </div>
+
+    <h3 class="section-title">Part 2: Fill in the Blanks (3 Questions)</h3>
+    <div class="word-bank">
+        <div class="word-item">wheel</div>
+        <div class="word-item">house</div>
+        <div class="word-item">mouse</div>
+        <div class="word-item">runs</div>
+        <div class="word-item">window</div>
+    </div>
+
+    <div class="question-card" id="q5">
+        <p><strong>5. A cat loves to catch a toy _______.</strong> <button class="audio-btn" onclick="speak('A cat loves to catch a toy blank.')">🔊</button> <span class="feedback"></span></p>
+        <input type="text" id="ans5" placeholder="Type word here...">
+        <div class="correct-answer-display">Correct Answer: mouse</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <p><strong>6. A hamster _______ in and out of the door.</strong> <button class="audio-btn" onclick="speak('A hamster runs in and out of the door.')">🔊</button> <span class="feedback"></span></p>
+        <input type="text" id="ans6" placeholder="Type word here...">
+        <div class="correct-answer-display">Correct Answer: runs</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <p><strong>7. A small mouse runs on a _______.</strong> <button class="audio-btn" onclick="speak('A small mouse runs on a blank.')">🔊</button> <span class="feedback"></span></p>
+        <input type="text" id="ans7" placeholder="Type word here...">
+        <div class="correct-answer-display">Correct Answer: wheel</div>
+    </div>
+
+    <h3 class="section-title">Part 3: Short Answer (2 Questions)</h3>
+    
+    <div class="question-card" id="q8">
+        <p><strong>8. What parts does the toy house have?</strong> <button class="audio-btn" onclick="speak('What parts does the toy house have?')">🔊</button> <span class="feedback"></span></p>
+        <input type="text" id="ans8" placeholder="Answer here...">
+        <div class="correct-answer-display">Example Answer: It has a window and a door.</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <p><strong>9. According to the end of the book, what is the best fun of all?</strong> <button class="audio-btn" onclick="speak('According to the end of the book, what is the best fun of all?')">🔊</button> <span class="feedback"></span></p>
+        <input type="text" id="ans9" placeholder="Answer here...">
+        <div class="correct-answer-display">Example Answer: Playing with friends is the best fun of all!</div>
+    </div>
+
+    <h3 class="section-title">Part 4: Reading Out Loud (1 Question)</h3>
+    <div class="question-card" id="q10">
+        <p><strong>10. Please read the sentence below:</strong> <span class="feedback"></span></p>
+        <p style="font-size: 1.3rem; font-style: italic; background: #eee; padding: 15px; border-radius: 10px;">
+            "All pets like to play. It keeps them fit and happy."
+        </p>
+        <button class="btn-submit" style="background: var(--primary-blue); font-size: 1rem; padding: 10px; width: auto;" onclick="speak('All pets like to play. It keeps them fit and happy.')">🔊 Listen to Example</button>
+        <p><small>Self-check: Did you read it clearly? Click Submit to finish.</small></p>
+        <div class="correct-answer-display">Excellent! You've finished reading.</div>
+    </div>
+
+    <button class="btn-submit" onclick="gradeQuiz()">Submit My Answers! ✨</button>
+
+    <div id="result-area">
+        <div class="score-display" id="total-score"></div>
+        <div class="praise-msg" id="praise-msg"></div>
+        <button class="btn-submit" style="background: #666;" onclick="location.reload()">Try Again 🔄</button>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.lang = 'en-US';
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        // Try to find a natural female voice
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Ensure voices are loaded
+    window.speechSynthesis.onvoiceschanged = () => {};
+
+    function gradeQuiz() {
+        let score = 0;
+        const total = 10;
+
+        // Q1-Q4 Logic
+        const answers = { q1: 'B', q2: 'A', q3: 'C', q4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const card = document.getElementById('q' + i);
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const feedback = card.querySelector('.feedback');
+            const display = card.querySelector('.correct-answer-display');
+
+            if (selected && selected.value === answers['q' + i]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.className = 'feedback correct-text';
+                card.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.className = 'feedback incorrect-text';
+                card.classList.add('incorrect-bg');
+            }
+            display.style.display = 'block';
+        }
+
+        // Q5-Q7 Logic
+        const blanks = { ans5: 'mouse', ans6: 'runs', ans7: 'wheel' };
+        for (let i = 5; i <= 7; i++) {
+            const card = document.getElementById('q' + i);
+            const val = document.getElementById('ans' + i).value.toLowerCase().trim();
+            const feedback = card.querySelector('.feedback');
+            const display = card.querySelector('.correct-answer-display');
+
+            if (val === blanks['ans' + i]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.className = 'feedback correct-text';
+                card.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.className = 'feedback incorrect-text';
+                card.classList.add('incorrect-bg');
+            }
+            display.style.display = 'block';
+        }
+
+        // Q8-Q9 Logic (Keyword based check)
+        const q8Keywords = ['window', 'door'];
+        const q9Keywords = ['friend', 'playing'];
+        
+        // Q8
+        const ans8Val = document.getElementById('ans8').value.toLowerCase();
+        const card8 = document.getElementById('q8');
+        if (q8Keywords.some(k => ans8Val.includes(k))) {
+            score++;
+            card8.querySelector('.feedback').innerHTML = '✅ Good!';
+            card8.querySelector('.feedback').className = 'feedback correct-text';
+        } else {
+            card8.querySelector('.feedback').innerHTML = '❌ Check answer';
+            card8.classList.add('incorrect-bg');
+        }
+        card8.querySelector('.correct-answer-display').style.display = 'block';
+
+        // Q9
+        const ans9Val = document.getElementById('ans9').value.toLowerCase();
+        const card9 = document.getElementById('q9');
+        if (q9Keywords.some(k => ans9Val.includes(k))) {
+            score++;
+            card9.querySelector('.feedback').innerHTML = '✅ Correct!';
+            card9.querySelector('.feedback').className = 'feedback correct-text';
+        } else {
+            card9.querySelector('.feedback').innerHTML = '❌ Check answer';
+            card9.classList.add('incorrect-bg');
+        }
+        card9.querySelector('.correct-answer-display').style.display = 'block';
+
+        // Q10 Logic (Reading - Auto point)
+        score++;
+        const card10 = document.getElementById('q10');
+        card10.querySelector('.feedback').innerHTML = '✅ Well done!';
+        card10.querySelector('.correct-answer-display').style.display = 'block';
+
+        // Result Display
+        document.getElementById('result-area').style.display = 'block';
+        document.getElementById('total-score').innerText = `Score: ${score}/${total}`;
+        
+        let msg = "";
+        if (score === 10) msg = "Perfect! You are a Pet Master! 🏆";
+        else if (score >= 7) msg = "Great job! Keep it up! 🌟";
+        else msg = "Good try! Let's read it again! 📚";
+        document.getElementById('praise-msg').innerText = msg;
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

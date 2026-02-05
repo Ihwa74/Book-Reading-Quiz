@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club: Computer Games Quiz</title>
+    <style>
+        :root {
+            --primary-yellow: #FFD700;
+            --primary-blue: #007BFF;
+            --bg-color: #FFF9E1;
+            --correct-green: #28A745;
+            --wrong-red: #DC3545;
+            --light-red: #FFF0F0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-yellow);
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .question-card {
+            margin: 20px 0;
+            padding: 20px;
+            border-bottom: 2px dashed #eee;
+            border-radius: 15px;
+            transition: background 0.3s;
+        }
+
+        .word-bank {
+            background: #f0f8ff;
+            border: 2px solid var(--primary-blue);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+        }
+
+        .audio-btn {
+            background: #eee;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: 10px;
+            padding: 5px 10px;
+        }
+
+        .audio-btn:hover { background: #ddd; }
+
+        input[type="text"], select {
+            font-size: 1em;
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            outline: none;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer {
+            color: var(--correct-green);
+            display: none;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .wrong-bg { background-color: var(--light-red) !important; }
+
+        #submit-btn {
+            background: #FF5722;
+            color: white;
+            font-size: 1.5em;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 5px 15px rgba(255,87,34,0.4);
+        }
+
+        #result-display {
+            text-align: center;
+            font-size: 2em;
+            display: none;
+        }
+
+        .emoji { font-size: 1.5em; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎮 Computer Games Quiz!</h1>
+    
+    <div class="section-title">Part 1: Choose the Best Answer (选择题)</div>
+    
+    <div class="question-card" id="q1">
+        <p>1. In the past, where did people go to play computer games? <button class="audio-btn" onclick="speak('In the past, where did people go to play computer games?')">🔊</button></p>
+        <input type="radio" name="q1" value="park"> To the park<br>
+        <input type="radio" name="q1" value="arcades"> To arcades<br>
+        <input type="radio" name="q1" value="school"> To school
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: To arcades</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <p>2. What was the name of the table-tennis game? <button class="audio-btn" onclick="speak('What was the name of the table-tennis game?')">🔊</button></p>
+        <input type="radio" name="q2" value="Ping"> Ping<br>
+        <input type="radio" name="q2" value="Pong"> Pong<br>
+        <input type="radio" name="q2" value="Sonic"> Sonic
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: Pong</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <p>3. Where did people plug in the game consoles? <button class="audio-btn" onclick="speak('Where did people plug in the game consoles?')">🔊</button></p>
+        <input type="radio" name="q3" value="fridge"> A fridge<br>
+        <input type="radio" name="q3" value="radio"> A radio<br>
+        <input type="radio" name="q3" value="tv"> A TV
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: A TV</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <p>4. Which handheld console is mentioned in the book? <button class="audio-btn" onclick="speak('Which handheld console is mentioned in the book?')">🔊</button></p>
+        <input type="radio" name="q4" value="gameboy"> Game Boy<br>
+        <input type="radio" name="q4" value="xbox"> Xbox<br>
+        <input type="radio" name="q4" value="ipad"> iPad
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: Game Boy</div>
+    </div>
+
+    <div class="section-title">Part 2: Word Bank (選填題)</div>
+    <div class="word-bank">
+        Word Bank: Internet / phone / fun / fit / simple
+    </div>
+
+    <div class="question-card" id="q5">
+        <p>5. Computer games can be <input type="text" id="ans5">. <button class="audio-btn" onclick="speak('Computer games can be...')">🔊</button></p>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: fun</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <p>6. Today you can play games on a mobile <input type="text" id="ans6">. <button class="audio-btn" onclick="speak('Today you can play games on a mobile...')">🔊</button></p>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: phone</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <p>7. You can play with friends over the <input type="text" id="ans7">. <button class="audio-btn" onclick="speak('You can play with friends over the...')">🔊</button></p>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: Internet</div>
+    </div>
+
+    <div class="section-title">Part 3: Short Answer (簡答題)</div>
+    
+    <div class="question-card" id="q8">
+        <p>8. What can computer games help you to do? (List one thing) <button class="audio-btn" onclick="speak('What can computer games help you to do?')">🔊</button></p>
+        <input type="text" id="ans8" style="width: 80%;">
+        <div class="feedback"></div>
+        <div class="correct-answer">Example Answer: read / do maths</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <p>9. What can you do on a Nintendo Wii? <button class="audio-btn" onclick="speak('What can you do on a Nintendo Wii?')">🔊</button></p>
+        <input type="text" id="ans9" style="width: 80%;">
+        <div class="feedback"></div>
+        <div class="correct-answer">Example Answer: keep fit</div>
+    </div>
+
+    <div class="section-title">Part 4: Read Aloud (朗讀題)</div>
+    <div class="question-card" id="q10">
+        <p>10. Please read the following sentence: <br><strong>"Computer games keep getting better."</strong></p>
+        <button class="audio-btn" style="border-radius: 10px; width: auto; padding: 10px;" onclick="speak('Computer games keep getting better.')">🔊 Listen to Example</button>
+        <p><i>(Ask your teacher or parent to check your pronunciation!)</i></p>
+        <div class="feedback"></div>
+        <div class="correct-answer">Done! Excellent reading! 🌟</div>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit Quiz ✅</button>
+
+    <div id="result-display">
+        <div id="score-text"></div>
+        <div id="message"></div>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find Google US English Female or similar natural voice
+        const selectedVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (selectedVoice) msg.voice = selectedVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        
+        // Q1-Q4 Logic
+        const answers = {
+            q1: 'arcades',
+            q2: 'Pong',
+            q3: 'tv',
+            q4: 'gameboy'
+        };
+
+        for(let i=1; i<=4; i++) {
+            const qDiv = document.getElementById('q'+i);
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const feedback = qDiv.querySelector('.feedback');
+            const correctBox = qDiv.querySelector('.correct-answer');
+
+            if(selected && selected.value === answers['q'+i]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'green';
+                qDiv.classList.remove('wrong-bg');
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'red';
+                qDiv.classList.add('wrong-bg');
+            }
+            correctBox.style.display = 'block';
+        }
+
+        // Q5-Q7 Logic
+        const part2Answers = { ans5: 'fun', ans6: 'phone', ans7: 'internet' };
+        for(let i=5; i<=7; i++) {
+            const qDiv = document.getElementById('q'+i);
+            const val = document.getElementById('ans'+i).value.toLowerCase().trim();
+            const feedback = qDiv.querySelector('.feedback');
+            const correctBox = qDiv.querySelector('.correct-answer');
+
+            if(val === part2Answers['ans'+i]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'green';
+                qDiv.classList.remove('wrong-bg');
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'red';
+                qDiv.classList.add('wrong-bg');
+            }
+            correctBox.style.display = 'block';
+        }
+
+        // Q8-Q9 Logic (Simple keyword check)
+        const q8Val = document.getElementById('ans8').value.toLowerCase();
+        const q8Div = document.getElementById('q8');
+        if(q8Val.includes('read') || q8Val.includes('math')) {
+            score++;
+            q8Div.querySelector('.feedback').innerHTML = '✅ Correct';
+            q8Div.classList.remove('wrong-bg');
+        } else {
+            q8Div.querySelector('.feedback').innerHTML = '❌ Incorrect';
+            q8Div.classList.add('wrong-bg');
+        }
+        q8Div.querySelector('.correct-answer').style.display = 'block';
+
+        const q9Val = document.getElementById('ans9').value.toLowerCase();
+        const q9Div = document.getElementById('q9');
+        if(q9Val.includes('fit')) {
+            score++;
+            q9Div.querySelector('.feedback').innerHTML = '✅ Correct';
+            q9Div.classList.remove('wrong-bg');
+        } else {
+            q9Div.querySelector('.feedback').innerHTML = '❌ Incorrect';
+            q9Div.classList.add('wrong-bg');
+        }
+        q9Div.querySelector('.correct-answer').style.display = 'block';
+
+        // Q10 (Self-check points)
+        score++; 
+        document.getElementById('q10').querySelector('.feedback').innerHTML = '✅ Done';
+        document.getElementById('q10').querySelector('.correct-answer').style.display = 'block';
+
+        // Final Score
+        const resultDisplay = document.getElementById('result-display');
+        const scoreText = document.getElementById('score-text');
+        const message = document.getElementById('message');
+        
+        resultDisplay.style.display = 'block';
+        scoreText.innerHTML = `Your Score: ${score}/10`;
+        
+        if(score >= 8) {
+            message.innerHTML = "Amazing job! You are a Game Master! 🏆✨";
+        } else {
+            message.innerHTML = "Good try! Read again to find more secrets! 📖🎈";
+        }
+
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hans in Luck - Reading Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #FFD700;
+            --soft-green: #90EE90;
+            --dark-brown: #5D4037;
+            --incorrect-bg: #FFEBEB;
+            --correct-color: #2E7D32;
+            --error-color: #D32F2F;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #FFF9C4;
+            color: var(--dark-brown);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-yellow);
+        }
+
+        h1 {
+            text-align: center;
+            color: #FFA000;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            background: var(--soft-green);
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        .question-card {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 15px;
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .word-bank {
+            background: #E3F2FD;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 2px dashed #2196F3;
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 15px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .feedback-icon {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer-box {
+            display: none;
+            margin-top: 10px;
+            padding: 8px;
+            background: #E8F5E9;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--correct-color);
+        }
+
+        .incorrect-bg {
+            background-color: var(--incorrect-bg) !important;
+        }
+
+        button.audio-btn {
+            background: #FFECB3;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        button.audio-btn:hover { background: var(--primary-yellow); }
+
+        .submit-area {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        #submit-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #result-display {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #DDD;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-top: 10px;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌟 Hans in Luck Quiz 🌟</h1>
+    <p style="text-align: center;">Help Hans find his way home! 🏠</p>
+
+    <div class="section-title">Part 1: Multiple Choice (選擇題)</div>
+    
+    <div class="question-card" id="q1">
+        <button class="audio-btn" onclick="speak('Question 1. What did Hans have in his big bag at the start?')">🔊</button>
+        <strong>1. What did Hans have in his big bag at the start?</strong>
+        <div class="options">
+            <label><input type="radio" name="q1" value="Gold"> Gold</label>
+            <label><input type="radio" name="q1" value="Silver"> Silver</label>
+            <label><input type="radio" name="q1" value="Apples"> Apples</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: Silver</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <button class="audio-btn" onclick="speak('Question 2. Why did Hans want the horse?')">🔊</button>
+        <strong>2. Why did Hans want the horse?</strong>
+        <div class="options">
+            <label><input type="radio" name="q2" value="He looks quick"> He looks quick</label>
+            <label><input type="radio" name="q2" value="He is beautiful"> He is beautiful</label>
+            <label><input type="radio" name="q2" value="He is big"> He is big</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: He looks quick</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <button class="audio-btn" onclick="speak('Question 3. What happened when Hans sat on the cow?')">🔊</button>
+        <strong>3. What happened when Hans tried to milk the cow?</strong>
+        <div class="options">
+            <label><input type="radio" name="q3" value="He got lots of milk"> He got lots of milk</label>
+            <label><input type="radio" name="q3" value="The cow had no milk"> The cow had no milk</label>
+            <label><input type="radio" name="q3" value="The cow ran away"> The cow ran away</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: The cow had no milk</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <button class="audio-btn" onclick="speak('Question 4. Where did the mill rocks fall?')">🔊</button>
+        <strong>4. Where did the mill rocks fall?</strong>
+        <div class="options">
+            <label><input type="radio" name="q4" value="In a deep pond"> In a deep pond</label>
+            <label><input type="radio" name="q4" value="On the road"> On the road</label>
+            <label><input type="radio" name="q4" value="In the garden"> In the garden</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: In a deep pond</div>
+    </div>
+
+    <div class="section-title">Part 2: Fill in the Blanks (選填題)</div>
+    <div class="word-bank">
+        🔠 Word Bank: <span class="word-item">peck</span> <span class="word-item">luck</span> <span class="word-item">eggs</span> <span class="word-item">off</span> <span class="word-item">mum</span>
+    </div>
+
+    <div class="question-card" id="q5">
+        <button class="audio-btn" onclick="speak('Question 5. Hans set out to visit his blank.')">🔊</button>
+        <strong>5. Hans set out to visit his <input type="text" id="ans5" placeholder="...">.</strong>
+        <div class="correct-answer-box">Correct Answer: mum</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <button class="audio-btn" onclick="speak('Question 6. Hans said What luck! I like blank.')">🔊</button>
+        <strong>6. Hans said, "What luck! I like <input type="text" id="ans6" placeholder="...">" when he saw the chicken.</strong>
+        <div class="correct-answer-box">Correct Answer: eggs</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <button class="audio-btn" onclick="speak('Question 7. But Hans got a blank from the chicken.')">🔊</button>
+        <strong>7. But Hans got a <input type="text" id="ans7" placeholder="...">. Ow!</strong>
+        <div class="correct-answer-box">Correct Answer: peck</div>
+    </div>
+
+    <div class="section-title">Part 3: Short Answer (簡答題)</div>
+    
+    <div class="question-card" id="q8">
+        <button class="audio-btn" onclick="speak('Question 8. What happened after Hans got on the horse?')">🔊</button>
+        <strong>8. What happened after Hans got on the horse?</strong>
+        <textarea id="ans8" rows="2" placeholder="Write your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: Hans fell off.</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <button class="audio-btn" onclick="speak('Question 9. Why was Hans quick at the end of the story?')">🔊</button>
+        <strong>9. Why was Hans quick at the end of the story?</strong>
+        <textarea id="ans9" rows="2" placeholder="Write your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: He had no rocks.</div>
+    </div>
+
+    <div class="section-title">Part 4: Read Aloud (朗讀題)</div>
+    <div class="question-card" id="q10">
+        <p>Please read this sentence aloud:</p>
+        <p style="font-size: 1.3rem; color: #E65100; font-weight: bold;">"What luck!" said Hans.</p>
+        <button class="audio-btn" style="width: auto; border-radius: 10px; padding: 0 10px;" onclick="speak('What luck! said Hans.')">Listen to Example 🔊</button>
+        <div class="correct-answer-box" style="display:block; background: #FFF3E0;">Practice saying it with a happy voice!</div>
+    </div>
+
+    <div class="submit-area">
+        <button id="submit-btn" onclick="checkAnswers()">Submit My Answers! ✅</button>
+    </div>
+
+    <div id="result-display"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find a natural female voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Female') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Load voices for speak function
+    window.speechSynthesis.onvoiceschanged = () => {};
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 9; // Excluding the Read Aloud task from auto-score
+
+        // Part 1 logic
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        if(q1 && q1.value === "Silver") { markCorrect('q1'); score++; } else { markIncorrect('q1'); }
+
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        if(q2 && q2.value === "He looks quick") { markCorrect('q2'); score++; } else { markIncorrect('q2'); }
+
+        const q3 = document.querySelector('input[name="q3"]:checked');
+        if(q3 && q3.value === "The cow had no milk") { markCorrect('q3'); score++; } else { markIncorrect('q3'); }
+
+        const q4 = document.querySelector('input[name="q4"]:checked');
+        if(q4 && q4.value === "In a deep pond") { markCorrect('q4'); score++; } else { markIncorrect('q4'); }
+
+        // Part 2 logic
+        const ans5 = document.getElementById('ans5').value.trim().toLowerCase();
+        if(ans5 === "mum") { markCorrect('q5'); score++; } else { markIncorrect('q5'); }
+
+        const ans6 = document.getElementById('ans6').value.trim().toLowerCase();
+        if(ans6 === "eggs") { markCorrect('q6'); score++; } else { markIncorrect('q6'); }
+
+        const ans7 = document.getElementById('ans7').value.trim().toLowerCase();
+        if(ans7 === "peck") { markCorrect('q7'); score++; } else { markIncorrect('q7'); }
+
+        // Part 3 logic (Simple Keyword Check)
+        const ans8 = document.getElementById('ans8').value.toLowerCase();
+        if(ans8.includes('fell') || ans8.includes('off')) { markCorrect('q8'); score++; } else { markIncorrect('q8'); }
+
+        const ans9 = document.getElementById('ans9').value.toLowerCase();
+        if(ans9.includes('no rocks') || ans9.includes('nothing') || ans9.includes('lost')) { markCorrect('q9'); score++; } else { markIncorrect('q9'); }
+
+        // Show Results
+        const resultDiv = document.getElementById('result-display');
+        resultDiv.style.display = 'block';
+        let message = score > 6 ? "Great Job! You are a reading star! ⭐" : "Keep trying! You can do it! 💪";
+        resultDiv.innerHTML = `Score: ${score}/${total} <br> <span style="font-size: 1.2rem">${message}</span>`;
+        
+        // Show all correct answers
+        document.querySelectorAll('.correct-answer-box').forEach(box => box.style.display = 'block');
+        
+        // Disable submit button after use
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').style.backgroundColor = '#ccc';
+        
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function markCorrect(id) {
+        const el = document.getElementById(id);
+        if (!el.querySelector('.feedback-icon')) {
+            const icon = document.createElement('span');
+            icon.className = 'feedback-icon';
+            icon.innerHTML = '✅ Correct';
+            icon.style.color = 'var(--correct-color)';
+            el.querySelector('strong').appendChild(icon);
+        }
+    }
+
+    function markIncorrect(id) {
+        const el = document.getElementById(id);
+        el.classList.add('incorrect-bg');
+        if (!el.querySelector('.feedback-icon')) {
+            const icon = document.createElement('span');
+            icon.className = 'feedback-icon';
+            icon.innerHTML = '❌ Incorrect';
+            icon.style.color = 'var(--error-color)';
+            el.querySelector('strong').appendChild(icon);
+        }
+    }
+</script>
+
+</body>
+</html>
