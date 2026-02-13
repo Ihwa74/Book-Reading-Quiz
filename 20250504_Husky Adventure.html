@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Husky Adventure Interactive Quiz</title>
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --secondary-yellow: #f1c40f;
+            --accent-blue: #3498db;
+            --soft-red: #ffebed;
+            --text-color: #2c3e50;
+            --bg-color: #f7f9f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 8px solid var(--secondary-yellow);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-green);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px #fff;
+        }
+
+        h2 {
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            font-size: 1.2em;
+        }
+
+        .section { margin-bottom: 40px; }
+        
+        .question-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid #eee;
+            position: relative;
+        }
+
+        .incorrect-bg { background-color: var(--soft-red) !important; border-color: #ff7675 !important; }
+
+        .word-bank {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            border: 2px dashed var(--primary-green);
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 15px;
+            background: white;
+            border-radius: 10px;
+            color: var(--primary-green);
+        }
+
+        .feedback { font-weight: bold; margin-left: 10px; }
+        .correct-ans { color: #d35400; font-size: 0.9em; margin-top: 8px; display: none; }
+        
+        button.speak-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+        select, input[type="text"] {
+            font-size: 1em;
+            padding: 8px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px var(--secondary-yellow);
+            transition: all 0.1s;
+        }
+
+        #submit-btn:active { transform: translateY(4px); box-shadow: 0 2px var(--secondary-yellow); }
+
+        #result-display {
+            text-align: center;
+            font-size: 2em;
+            margin-top: 30px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .read-aloud-box {
+            background: #fff9db;
+            padding: 20px;
+            border-radius: 15px;
+            font-style: italic;
+            border-left: 5px solid var(--secondary-yellow);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🛷 Husky Adventure 🐾</h1>
+    <p style="text-align:center; font-weight: bold;">Let's test your adventure memory! ❄️</p>
+
+    <div class="section">
+        <h2>Part 1: Multiple Choice 🔘</h2>
+        
+        <div class="question-block" id="q1">
+            <p>1. Why did Floppy run to Biff's bedroom to hide? <button class="speak-btn" onclick="speak('Why did Floppy run to Biffs bedroom to hide?')">🔊</button></p>
+            <input type="radio" name="r1" value="A"> A. He was cold. <br>
+            <input type="radio" name="r1" value="B"> B. He didn't want to pull the sled. <br>
+            <input type="radio" name="r1" value="C"> C. He wanted to sleep.
+            <div class="feedback"></div>
+            <div class="correct-ans">Correct Answer: B. He didn't want to pull the sled.</div>
+        </div>
+
+        <div class="question-block" id="q2">
+            <p>2. What did the wolves in the forest look like? <button class="speak-btn" onclick="speak('What did the wolves in the forest look like?')">🔊</button></p>
+            <input type="radio" name="r2" value="A"> A. Yellow eyes and small teeth. <br>
+            <input type="radio" name="r2" value="B"> B. Red eyes and long white teeth. <br>
+            <input type="radio" name="r2" value="C"> C. Green eyes and no teeth.
+            <div class="feedback"></div>
+            <div class="correct-ans">Correct Answer: B. Red eyes and long white teeth.</div>
+        </div>
+
+        <div class="question-block" id="q3">
+            <p>3. What happened after Floppy hit a tree? <button class="speak-btn" onclick="speak('What happened after Floppy hit a tree?')">🔊</button></p>
+            <input type="radio" name="r3" value="A"> A. He barked loudly. <br>
+            <input type="radio" name="r3" value="B"> B. He ran away from a man. <br>
+            <input type="radio" name="r3" value="C"> C. He lay in the snow with his eyes shut.
+            <div class="feedback"></div>
+            <div class="correct-ans">Correct Answer: C. He lay in the snow with his eyes shut.</div>
+        </div>
+
+        <div class="question-block" id="q4">
+            <p>4. Where did the man need to take his sick boy? <button class="speak-btn" onclick="speak('Where did the man need to take his sick boy?')">🔊</button></p>
+            <input type="radio" name="r4" value="A"> A. To the forest. <br>
+            <input type="radio" name="r4" value="B"> B. To the hospital. <br>
+            <input type="radio" name="r4" value="C"> C. To Biff's house.
+            <div class="feedback"></div>
+            <div class="correct-ans">Correct Answer: B. To the hospital.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 2: Word Bank 📝</h2>
+        <div class="word-bank">
+            Word Bank: <span class="word-item">hospital</span> | <span class="word-item">faster</span> | <span class="word-item">husky</span> | <span class="word-item">cross</span> | <span class="word-item">magic</span>
+        </div>
+
+        <div class="question-block" id="q5">
+            <p>5. The dogs at the sled were not wolves, they were _________ dogs. <button class="speak-btn" onclick="speak('The dogs at the sled were not wolves, they were what dogs?')">🔊</button></p>
+            <input type="text" id="t5" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="correct-ans">Correct Answer: husky</div>
+        </div>
+
+        <div class="question-block" id="q6">
+            <p>6. Floppy was _________ when the big dog called him a "floppy dog." <button class="speak-btn" onclick="speak('Floppy was what when the big dog called him a floppy dog?')">🔊</button></p>
+            <input type="text" id="t6" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="correct-ans">Correct Answer: cross</div>
+        </div>
+
+        <div class="question-block" id="q7">
+            <p>7. The sled went _________ and faster until the other dogs panted. <button class="speak-btn" onclick="speak('The sled went what and faster until the other dogs panted?')">🔊</button></p>
+            <input type="text" id="t7" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="correct-ans">Correct Answer: faster</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 3: Short Answer ✍️</h2>
+        
+        <div class="question-block" id="q8">
+            <p>8. What did the man say to Floppy after they reached the hospital? <button class="speak-btn" onclick="speak('What did the man say to Floppy after they reached the hospital?')">🔊</button></p>
+            <input type="text" id="t8" style="width: 90%;" placeholder="Write the man's words...">
+            <div class="feedback"></div>
+            <div class="correct-ans">Example Answer: "Thank you! You've saved my son."</div>
+        </div>
+
+        <div class="question-block" id="q9">
+            <p>9. Why did Floppy feel happy when the magic key began to glow at the end? <button class="speak-btn" onclick="speak('Why did Floppy feel happy when the magic key began to glow at the end?')">🔊</button></p>
+            <input type="text" id="t9" style="width: 90%;" placeholder="Write your reason...">
+            <div class="feedback"></div>
+            <div class="correct-ans">Example Answer: Because he thought, "I need a rest."</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 4: Read Aloud 🗣️</h2>
+        <div class="question-block" id="q10">
+            <p>10. Read the following sentence loudly: <button class="speak-btn" onclick="speak('Slow down! panted the husky dogs. We cant keep up with you.')">🔊 (Example Audio)</button></p>
+            <div class="read-aloud-box">
+                "Slow down!" panted the husky dogs. "We can't keep up with you."
+            </div>
+            <p><small>*Check the box after you finish reading.*</small></p>
+            <input type="checkbox" id="c10"> I have read this sentence!
+            <div class="feedback"></div>
+            <div class="correct-ans">Excellent reading! You sound like a pro!</div>
+        </div>
+    </div>
+
+    <button id="submit-btn" onclick="gradeQuiz()">Submit My Answers! 🏆</button>
+
+    <div id="result-display"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = speechSynthesis.getVoices();
+        // Try to find a nice female English voice
+        const selectedVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira') || v.name.includes('Female'));
+        if (selectedVoice) msg.voice = selectedVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Load voices on start
+    speechSynthesis.onvoiceschanged = () => {};
+
+    function gradeQuiz() {
+        let score = 0;
+        const total = 10;
+
+        // Reset styles
+        document.querySelectorAll('.question-block').forEach(b => b.classList.remove('incorrect-bg'));
+        document.querySelectorAll('.feedback').forEach(f => f.innerHTML = '');
+        document.querySelectorAll('.correct-ans').forEach(a => a.style.display = 'block');
+
+        // Q1-Q4 (Radio)
+        const answers = { r1: 'B', r2: 'B', r3: 'C', r4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const qBlock = document.getElementById('q' + i);
+            const selected = document.querySelector(`input[name="r${i}"]:checked`);
+            if (selected && selected.value === answers['r' + i]) {
+                score++;
+                qBlock.querySelector('.feedback').innerHTML = '✅ Correct';
+                qBlock.querySelector('.feedback').style.color = 'green';
+            } else {
+                qBlock.classList.add('incorrect-bg');
+                qBlock.querySelector('.feedback').innerHTML = '❌ Incorrect';
+                qBlock.querySelector('.feedback').style.color = 'red';
+            }
+        }
+
+        // Q5-Q7 (Fill in)
+        const fillAnswers = { t5: 'husky', t6: 'cross', t7: 'faster' };
+        for (let i = 5; i <= 7; i++) {
+            const qBlock = document.getElementById('q' + i);
+            const val = document.getElementById('t' + i).value.toLowerCase().trim();
+            if (val === fillAnswers['t' + i]) {
+                score++;
+                qBlock.querySelector('.feedback').innerHTML = '✅ Correct';
+                qBlock.querySelector('.feedback').style.color = 'green';
+            } else {
+                qBlock.classList.add('incorrect-bg');
+                qBlock.querySelector('.feedback').innerHTML = '❌ Incorrect';
+                qBlock.querySelector('.feedback').style.color = 'red';
+            }
+        }
+
+        // Q8-Q9 (Short Answer - simple check if not empty)
+        for (let i = 8; i <= 9; i++) {
+            const qBlock = document.getElementById('q' + i);
+            const val = document.getElementById('t' + i).value.trim();
+            if (val.length > 5) {
+                score++;
+                qBlock.querySelector('.feedback').innerHTML = '✅ Great effort!';
+                qBlock.querySelector('.feedback').style.color = 'green';
+            } else {
+                qBlock.classList.add('incorrect-bg');
+                qBlock.querySelector('.feedback').innerHTML = '❌ Please write a bit more!';
+                qBlock.querySelector('.feedback').style.color = 'red';
+            }
+        }
+
+        // Q10 (Reading)
+        const q10 = document.getElementById('q10');
+        if (document.getElementById('c10').checked) {
+            score++;
+            q10.querySelector('.feedback').innerHTML = '✅ Awesome reading!';
+            q10.querySelector('.feedback').style.color = 'green';
+        } else {
+            q10.classList.add('incorrect-bg');
+            q10.querySelector('.feedback').innerHTML = '❌ Remember to read it!';
+            q10.querySelector('.feedback').style.color = 'red';
+        }
+
+        // Final Score
+        const display = document.getElementById('result-display');
+        display.style.display = 'block';
+        let message = score >= 8 ? "You are a Husky Hero! 🌟" : "Good job! Let's read it again! 📖";
+        display.innerHTML = `Score: ${score}/${total}<br><span style="font-size: 0.5em; color: var(--primary-green);">${message}</span>`;
+        display.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

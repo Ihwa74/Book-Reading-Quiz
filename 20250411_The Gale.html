@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club: The Gale Quiz</title>
+    <style>
+        :root {
+            --primary-color: #ffcc00; /* 陽光黃 */
+            --secondary-color: #4CAF50; /* 草地綠 */
+            --bg-color: #f9fbf2;
+            --wrong-bg: #ffebee;
+            --correct-text: #2e7d32;
+            --incorrect-text: #c62828;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            background-color: var(--primary-color);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 { margin: 0; color: #444; font-size: 2rem; }
+        h2 { color: var(--secondary-color); border-bottom: 2px solid var(--secondary-color); padding-bottom: 5px; }
+
+        .question-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .incorrect-bg { background-color: var(--wrong-bg) !important; }
+
+        .word-bank {
+            background: #eee;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .word-item { background: white; padding: 5px 15px; border-radius: 20px; border: 1px dashed var(--secondary-color); }
+
+        .feedback-icon { font-weight: bold; margin-left: 10px; }
+        .correct-ans-box { 
+            display: none; 
+            margin-top: 10px; 
+            padding: 10px; 
+            background: #e8f5e9; 
+            border-left: 5px solid var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        button.speak-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .submit-area { text-align: center; margin-top: 40px; }
+        #submit-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #388E3C;
+        }
+
+        #submit-btn:active { transform: translateY(4px); box-shadow: none; }
+
+        #result-display {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            border: 4px solid var(--primary-color);
+        }
+
+        .score-text { font-size: 3rem; font-weight: bold; color: var(--secondary-color); }
+        input[type="text"] { border: 1px solid #ccc; padding: 8px; border-radius: 5px; width: 80%; }
+        select { padding: 8px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🌪️ The Gale: Reading Quiz 📚</h1>
+    <p>Let's see how much you remember from the story!</p>
+</div>
+
+<h2>Part 1: Multiple Choice (選擇題)</h2>
+<div class="question-card" id="q1">
+    <p>1. What did Phil use to talk to the people on the beach? <button class="speak-btn" onclick="speak('What did Phil use to talk to the people on the beach?')">🔊</button></p>
+    <input type="radio" name="q1" value="A"> A. A telephone<br>
+    <input type="radio" name="q1" value="B"> B. A loud hailer<br>
+    <input type="radio" name="q1" value="C"> C. A whistle
+    <div class="correct-ans-box">Correct Answer: B. A loud hailer</div>
+</div>
+
+<div class="question-card" id="q2">
+    <p>2. How many extra pegs did the family put in the tent? <button class="speak-btn" onclick="speak('How many extra pegs did the family put in the tent?')">🔊</button></p>
+    <input type="radio" name="q2" value="A"> A. Six<br>
+    <input type="radio" name="q2" value="B"> B. Ten<br>
+    <input type="radio" name="q2" value="C"> C. Eight
+    <div class="correct-ans-box">Correct Answer: C. Eight</div>
+</div>
+
+<div class="question-card" id="q3">
+    <p>3. Who was afraid and began to howl during the storm? <button class="speak-btn" onclick="speak('Who was afraid and began to howl during the storm?')">🔊</button></p>
+    <input type="radio" name="q3" value="A"> A. Floppy<br>
+    <input type="radio" name="q3" value="B"> B. Chip<br>
+    <input type="radio" name="q3" value="C"> C. Biff
+    <div class="correct-ans-box">Correct Answer: A. Floppy</div>
+</div>
+
+<div class="question-card" id="q4">
+    <p>4. What game did the children play inside the tent? <button class="speak-btn" onclick="speak('What game did the children play inside the tent?')">🔊</button></p>
+    <input type="radio" name="q4" value="A"> A. Cards<br>
+    <input type="radio" name="q4" value="B"> B. Snakes and ladders<br>
+    <input type="radio" name="q4" value="C"> C. Tag
+    <div class="correct-ans-box">Correct Answer: B. Snakes and ladders</div>
+</div>
+
+<h2>Part 2: Fill in the Blanks (選填題)</h2>
+<div class="word-bank">
+    <span class="word-item">hail</span>
+    <span class="word-item">snug</span>
+    <span class="word-item">starfish</span>
+    <span class="word-item">tape</span>
+    <span class="word-item">wail</span>
+</div>
+
+<div class="question-card" id="q5">
+    <p>5. Mum had some ________ to fix the rip in the tent. <button class="speak-btn" onclick="speak('Mum had some blank to fix the rip in the tent.')">🔊</button></p>
+    <input type="text" id="ans5" placeholder="Type word here...">
+    <div class="correct-ans-box">Correct Answer: tape</div>
+</div>
+
+<div class="question-card" id="q6">
+    <p>6. It was a bad storm. Some ________ came down. <button class="speak-btn" onclick="speak('It was a bad storm. Some blank came down.')">🔊</button></p>
+    <input type="text" id="ans6" placeholder="Type word here...">
+    <div class="correct-ans-box">Correct Answer: hail</div>
+</div>
+
+<div class="question-card" id="q7">
+    <p>7. After the storm, there were lots of ________ on the sand. <button class="speak-btn" onclick="speak('After the storm, there were lots of blank on the sand.')">🔊</button></p>
+    <input type="text" id="ans7" placeholder="Type word here...">
+    <div class="correct-ans-box">Correct Answer: starfish</div>
+</div>
+
+<h2>Part 3: Short Answer (簡答題)</h2>
+<div class="question-card" id="q8">
+    <p>8. What did Dad get to catch the rain drips? <button class="speak-btn" onclick="speak('What did Dad get to catch the rain drips?')">🔊</button></p>
+    <input type="text" id="ans8" style="width: 90%;">
+    <div class="correct-ans-box">Example Answer: He got a plastic pail.</div>
+</div>
+
+<div class="question-card" id="q9">
+    <p>9. What happened to other people's tents after the gale? <button class="speak-btn" onclick="speak('What happened to other people\'s tents after the gale?')">🔊</button></p>
+    <input type="text" id="ans9" style="width: 90%;">
+    <div class="correct-ans-box">Example Answer: Lots of tents had come down.</div>
+</div>
+
+<h2>Part 4: Read Aloud (朗讀題)</h2>
+<div class="question-card" id="q10">
+    <p>10. Please read this sentence clearly: <br><strong>"But it was snug in their tent. The children played a game."</strong></p>
+    <button id="model-read" onclick="speak('But it was snug in their tent. The children played a game.')" style="padding: 10px 20px; border-radius: 10px; cursor: pointer;">🎵 Listen to Example</button>
+    <p><small>(Teacher will check this manually during class! ✅)</small></p>
+</div>
+
+<div class="submit-area">
+    <button id="submit-btn" onclick="checkAnswers()">Submit Quiz</button>
+</div>
+
+<div id="result-display">
+    <p>Your Total Score:</p>
+    <div class="score-text" id="final-score">0/10</div>
+    <p id="encouragement"></p>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = speechSynthesis.getVoices();
+        // 嘗試尋找 Google US English (Female) 或類似的自然語音
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Reset display
+        document.querySelectorAll('.correct-ans-box').forEach(box => box.style.display = 'block');
+        document.querySelectorAll('.feedback-icon').forEach(icon => icon.remove());
+
+        // Part 1
+        const answers = {
+            q1: 'B', q2: 'C', q3: 'A', q4: 'B',
+            ans5: 'tape', ans6: 'hail', ans7: 'starfish'
+        };
+
+        // Q1-Q4
+        for (let i = 1; i <= 4; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const qCard = document.getElementById(`q${i}`);
+            if (selected && selected.value === answers[`q${i}`]) {
+                score++;
+                markCorrect(qCard);
+            } else {
+                markIncorrect(qCard);
+            }
+        }
+
+        // Q5-Q7
+        for (let i = 5; i <= 7; i++) {
+            const input = document.getElementById(`ans${i}`);
+            const qCard = document.getElementById(`q${i}`);
+            if (input.value.trim().toLowerCase() === answers[`ans${i}`]) {
+                score++;
+                markCorrect(qCard);
+            } else {
+                markIncorrect(qCard);
+            }
+        }
+
+        // Q8-Q9 (Keywords check)
+        const q8Input = document.getElementById('ans8').value.toLowerCase();
+        if (q8Input.includes('pail') || q8Input.includes('bucket')) { score++; markCorrect(document.getElementById('q8')); } 
+        else markIncorrect(document.getElementById('q8'));
+
+        const q9Input = document.getElementById('ans9').value.toLowerCase();
+        if (q9Input.includes('down') || q9Input.includes('wet') || q9Input.includes('upset')) { score++; markCorrect(document.getElementById('q9')); } 
+        else markIncorrect(document.getElementById('q9'));
+
+        // Q10 is a free point for submitting the effort!
+        score++;
+        markCorrect(document.getElementById('q10'));
+
+        // Final Score Display
+        document.getElementById('result-display').style.display = 'block';
+        document.getElementById('final-score').innerText = score + " / " + total;
+        
+        let message = "";
+        if (score === 10) message = "🌟 Perfect! You are a reading superstar!";
+        else if (score >= 7) message = "🎈 Great job! You remembered a lot!";
+        else message = "👍 Good effort! Let's read the book together again!";
+        document.getElementById('encouragement').innerText = message;
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function markCorrect(element) {
+        element.classList.remove('incorrect-bg');
+        const icon = document.createElement('span');
+        icon.className = 'feedback-icon';
+        icon.style.color = 'var(--correct-text)';
+        icon.innerText = ' ✅ Correct';
+        element.querySelector('p').appendChild(icon);
+    }
+
+    function markIncorrect(element) {
+        element.classList.add('incorrect-bg');
+        const icon = document.createElement('span');
+        icon.className = 'feedback-icon';
+        icon.style.color = 'var(--incorrect-text)';
+        icon.innerText = ' ❌ Incorrect';
+        element.querySelector('p').appendChild(icon);
+    }
+
+    // Initialize voices
+    speechSynthesis.onvoiceschanged = () => {};
+</script>
+
+</body>
+</html>

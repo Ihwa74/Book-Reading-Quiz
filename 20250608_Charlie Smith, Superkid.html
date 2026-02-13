@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charlie Smith, Superkid - Reading Quiz</title>
+    <style>
+        :root {
+            --primary-green: #4CAF50;
+            --secondary-yellow: #FFEB3B;
+            --accent-red: #F44336;
+            --bg-blue: #E3F2FD;
+            --card-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background-color: var(--bg-blue);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-white);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-green);
+        }
+
+        h1 {
+            color: var(--accent-red);
+            text-align: center;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px var(--secondary-yellow);
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px dashed #ccc;
+        }
+
+        h2 {
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .word-bank {
+            background: #fff9c4;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+            border: 2px solid var(--secondary-yellow);
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 15px;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .options input {
+            margin-right: 10px;
+        }
+
+        button.speak-btn {
+            background: var(--secondary-yellow);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 10px;
+        }
+
+        .submit-area {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        #submit-btn {
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px #c62828;
+        }
+
+        #submit-btn:active {
+            box-shadow: 0 2px #c62828;
+            transform: translateY(3px);
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-ans {
+            color: #2e7d32;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+            background: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .incorrect-bg {
+            background-color: #ffebee !important;
+        }
+
+        #result-display {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 20px;
+            background: var(--secondary-yellow);
+        }
+
+        .score-text {
+            font-size: 3rem;
+            color: var(--accent-red);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🦸‍♂️ Charlie Smith Quiz! 🥦</h1>
+
+    <div class="section">
+        <h2>Part 1: Choose the Best Answer 🧐</h2>
+        
+        <div class="question-block" id="q1">
+            <div class="question-text">1. What were the Smith family eating for teatime? <button class="speak-btn" onclick="speak('What were the Smith family eating for teatime?')">🔊</button> <span class="feedback"></span></div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="Pizza"> Pizza</label>
+                <label><input type="radio" name="q1" value="Sprouts"> Sprouts</label>
+                <label><input type="radio" name="q1" value="Burgers"> Burgers</label>
+            </div>
+            <div class="correct-ans">Correct Answer: Sprouts</div>
+        </div>
+
+        <div class="question-block" id="q2">
+            <div class="question-text">2. What did Charlie say he saved a boy from? <button class="speak-btn" onclick="speak('What did Charlie say he saved a boy from?')">🔊</button> <span class="feedback"></span></div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A tower"> Falling from a tower</label>
+                <label><input type="radio" name="q2" value="A dog"> A big dog</label>
+                <label><input type="radio" name="q2" value="A river"> A cold river</label>
+            </div>
+            <div class="correct-ans">Correct Answer: Falling from a tower</div>
+        </div>
+
+        <div class="question-block" id="q3">
+            <div class="question-text">3. What did Mr. Smith do while Charlie was talking? <button class="speak-btn" onclick="speak('What did Mr. Smith do while Charlie was talking?')">🔊</button> <span class="feedback"></span></div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="He watched TV"> He watched TV</label>
+                <label><input type="radio" name="q3" value="He read a newspaper"> He read a newspaper</label>
+                <label><input type="radio" name="q3" value="He slept"> He slept</label>
+            </div>
+            <div class="correct-ans">Correct Answer: He read a newspaper</div>
+        </div>
+
+        <div class="question-block" id="q4">
+            <div class="question-text">4. What lit up to tell Charlie there was trouble? <button class="speak-btn" onclick="speak('What lit up to tell Charlie there was trouble?')">🔊</button> <span class="feedback"></span></div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="His watch"> His watch</label>
+                <label><input type="radio" name="q4" value="His belt"> His belt</label>
+                <label><input type="radio" name="q4" value="His shoes"> His shoes</label>
+            </div>
+            <div class="correct-ans">Correct Answer: His belt</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 2: Word Bank 🔠</h2>
+        <div class="word-bank">
+            <span class="word-item">bugs</span>
+            <span class="word-item">rock</span>
+            <span class="word-item">house</span>
+            <span class="word-item">mask</span>
+            <span class="word-item">volcano</span>
+        </div>
+
+        <div class="question-block" id="q5">
+            <div class="question-text">5. Mrs. Smith asked Charlie to take off his ________. <button class="speak-btn" onclick="speak('Mrs. Smith asked Charlie to take off his blank')">🔊</button> <span class="feedback"></span></div>
+            <input type="text" id="ans5" placeholder="Type here...">
+            <div class="correct-ans">Correct Answer: mask</div>
+        </div>
+
+        <div class="question-block" id="q6">
+            <div class="question-text">6. Giant ________ were attacking a big city! <button class="speak-btn" onclick="speak('Giant blank were attacking a big city!')">🔊</button> <span class="feedback"></span></div>
+            <input type="text" id="ans6" placeholder="Type here...">
+            <div class="correct-ans">Correct Answer: bugs</div>
+        </div>
+
+        <div class="question-block" id="q7">
+            <div class="question-text">7. Charlie saved the world from a giant ________. <button class="speak-btn" onclick="speak('Charlie saved the world from a giant blank')">🔊</button> <span class="feedback"></span></div>
+            <input type="text" id="ans7" placeholder="Type here...">
+            <div class="correct-ans">Correct Answer: rock</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 3: Think and Write ✍️</h2>
+        <div class="question-block" id="q8">
+            <div class="question-text">8. What does Charlie think gives him superpowers? <button class="speak-btn" onclick="speak('What does Charlie think gives him superpowers?')">🔊</button> <span class="feedback"></span></div>
+            <textarea id="ans8" rows="2" placeholder="Write your answer..."></textarea>
+            <div class="correct-ans">Example Answer: He thinks sprouts give him superpowers.</div>
+        </div>
+
+        <div class="question-block" id="q9">
+            <div class="question-text">9. Where did Charlie find for the bugs to live? <button class="speak-btn" onclick="speak('Where did Charlie find for the bugs to live?')">🔊</button> <span class="feedback"></span></div>
+            <textarea id="ans9" rows="2" placeholder="Write your answer..."></textarea>
+            <div class="correct-ans">Example Answer: He found a planet for the bugs to live on.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 4: Super Reader 📣</h2>
+        <div class="question-block" id="q10">
+            <div class="question-text">10. Read this out loud: <br>"I must save the city! I flew to the big city." <span class="feedback"></span></div>
+            <p style="font-style: italic; color: #666;">Click the button to hear how to say it!</p>
+            <button class="speak-btn" style="width: auto; border-radius: 10px; padding: 0 15px;" onclick="speak('I must save the city! I flew to the big city.')">🔊 Listen to Example</button>
+            <div class="options">
+                <label><input type="checkbox" id="ans10"> I finished reading this out loud! ✅</label>
+            </div>
+            <div class="correct-ans">Great job reading like a hero!</div>
+        </div>
+    </div>
+
+    <div class="submit-area">
+        <button id="submit-btn" onclick="gradeQuiz()">Submit My Answers! 🚀</button>
+    </div>
+
+    <div id="result-display">
+        <div class="score-text" id="final-score">Score: 0/10</div>
+        <p id="congrats-msg" style="font-size: 1.5rem;"></p>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = speechSynthesis.getVoices();
+        // Try to find a nice female voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function gradeQuiz() {
+        let score = 0;
+        const answers = {
+            q1: "Sprouts",
+            q2: "A tower",
+            q3: "He read a newspaper",
+            q4: "His belt",
+            q5: "mask",
+            q6: "bugs",
+            q7: "rock"
+        };
+
+        // Reset styles
+        document.querySelectorAll('.question-block').forEach(block => {
+            block.classList.remove('incorrect-bg');
+            block.querySelector('.feedback').innerHTML = '';
+            block.querySelector('.correct-ans').style.display = 'none';
+        });
+
+        // Check Q1-Q4 (Radio)
+        for (let i = 1; i <= 4; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const block = document.getElementById(`q${i}`);
+            if (selected && selected.value === answers[`q${i}`]) {
+                score++;
+                block.querySelector('.feedback').innerHTML = '✅ Correct';
+                block.querySelector('.feedback').style.color = 'green';
+            } else {
+                block.classList.add('incorrect-bg');
+                block.querySelector('.feedback').innerHTML = '❌ Incorrect';
+                block.querySelector('.feedback').style.color = 'red';
+                block.querySelector('.correct-ans').style.display = 'block';
+            }
+        }
+
+        // Check Q5-Q7 (Fill in blanks)
+        for (let i = 5; i <= 7; i++) {
+            const val = document.getElementById(`ans${i}`).value.trim().toLowerCase();
+            const block = document.getElementById(`q${i}`);
+            if (val === answers[`q${i}`]) {
+                score++;
+                block.querySelector('.feedback').innerHTML = '✅ Correct';
+                block.querySelector('.feedback').style.color = 'green';
+            } else {
+                block.classList.add('incorrect-bg');
+                block.querySelector('.feedback').innerHTML = '❌ Incorrect';
+                block.querySelector('.feedback').style.color = 'red';
+                block.querySelector('.correct-ans').style.display = 'block';
+            }
+        }
+
+        // Check Q8-Q9 (Short Answer - simple check for keywords)
+        const keywords = {
+            q8: ["sprout", "eat"],
+            q9: ["planet"]
+        };
+        for (let i = 8; i <= 9; i++) {
+            const val = document.getElementById(`ans${i}`).value.trim().toLowerCase();
+            const block = document.getElementById(`q${i}`);
+            let isCorrect = false;
+            keywords[`q${i}`].forEach(k => { if(val.includes(k)) isCorrect = true; });
+
+            if (isCorrect) {
+                score++;
+                block.querySelector('.feedback').innerHTML = '✅ Good Answer!';
+                block.querySelector('.feedback').style.color = 'green';
+            } else {
+                block.classList.add('incorrect-bg');
+                block.querySelector('.feedback').innerHTML = '❌ Try again!';
+                block.querySelector('.feedback').style.color = 'red';
+                block.querySelector('.correct-ans').style.display = 'block';
+            }
+        }
+
+        // Check Q10 (Checkmark)
+        const q10Checked = document.getElementById('ans10').checked;
+        const block10 = document.getElementById('q10');
+        if (q10Checked) {
+            score++;
+            block10.querySelector('.feedback').innerHTML = '✅ Super Reading!';
+            block10.querySelector('.feedback').style.color = 'green';
+        } else {
+            block10.classList.add('incorrect-bg');
+            block10.querySelector('.feedback').innerHTML = '❌ Please read aloud';
+            block10.querySelector('.feedback').style.color = 'red';
+            block10.querySelector('.correct-ans').style.display = 'block';
+        }
+
+        // Final Score display
+        const resultDisplay = document.getElementById('result-display');
+        const scoreText = document.getElementById('final-score');
+        const congrats = document.getElementById('congrats-msg');
+        
+        resultDisplay.style.display = 'block';
+        scoreText.innerHTML = `Score: ${score}/10`;
+        
+        if (score >= 8) congrats.innerHTML = "Amazing! You are a Superkid too! 🌟";
+        else if (score >= 5) congrats.innerHTML = "Great job! Eat more sprouts and try again! 🥦";
+        else congrats.innerHTML = "Keep practicing! You can do it! 💪";
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+    
+    // Initialize voices
+    window.speechSynthesis.getVoices();
+</script>
+
+</body>
+</html>

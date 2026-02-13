@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rowing Boats - Reading Club Quiz</title>
+    <style>
+        :root {
+            --primary-yellow: #FFD200;
+            --primary-green: #4CAF50;
+            --primary-blue: #1E88E5;
+            --bg-color: #FFF9E6;
+            --card-bg: #FFFFFF;
+            --error-bg: #FFEBEE;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border: 8px solid var(--primary-yellow);
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0px #EEE;
+        }
+
+        .section-title {
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 30px 0 20px 0;
+            font-size: 1.4rem;
+        }
+
+        .question-card {
+            background: #fdfdfd;
+            border: 2px solid #EEE;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .word-bank {
+            background: #FFFDE7;
+            border: 3px dashed var(--primary-yellow);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .speak-btn {
+            background: #E3F2FD;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            margin-left: 10px;
+            transition: transform 0.2s;
+        }
+
+        .speak-btn:hover { transform: scale(1.1); background: var(--primary-blue); color: white; }
+
+        .options label {
+            display: block;
+            background: #F5F5F5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: 0.2s;
+        }
+
+        .options label:hover { background: #E0E0E0; }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #CCC;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 40px;
+            box-shadow: 0 8px 0px #2E7D32;
+        }
+
+        .submit-btn:active { transform: translateY(4px); box-shadow: 0 4px 0px #2E7D32; }
+
+        /* 結果回饋系統 */
+        .feedback-label { display: none; font-weight: bold; margin-top: 10px; font-size: 1.2rem; }
+        .correct-ans-box { display: none; background: #E8F5E9; color: #2E7D32; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 0.95rem; }
+        .wrong-bg { background-color: var(--error-bg) !important; border-color: #E57373 !important; }
+
+        #final-result {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 30px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>🛶 Rowing Boats Quiz 🐶</h1>
+    <p style="text-align:center; font-size:1.2rem;">Let's test your reading skills! Have fun!</p>
+
+    <div class="section-title">Part 1: Multiple Choice (4 Questions)</div>
+
+    <div class="question-card" id="q1">
+        <p>1. Who said, "We will take those rowing boats"? <button class="speak-btn" onclick="playText('Who said, We will take those rowing boats?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="r1" value="A"> A. Wilf</label>
+            <label><input type="radio" name="r1" value="B"> B. Dad</label>
+            <label><input type="radio" name="r1" value="C"> C. Craig</label>
+        </div>
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Correct Answer: B. Dad</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <p>2. Where did the family stop for the picnic? <button class="speak-btn" onclick="playText('Where did the family stop for the picnic?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="r2" value="A"> A. By some big stones</label>
+            <label><input type="radio" name="r2" value="B"> B. At Joy's shop</label>
+            <label><input type="radio" name="r2" value="C"> C. On a grassy bank (but not by the stones)</label>
+        </div>
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Correct Answer: C. On a grassy bank (but not by the stones)</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <p>3. What was the loud noise Wilf heard while eating? <button class="speak-btn" onclick="playText('What was the loud noise Wilf heard while eating?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="r3" value="A"> A. Floppy barking</label>
+            <label><input type="radio" name="r3" value="B"> B. Voices of Roy and Joe</label>
+            <label><input type="radio" name="r3" value="C"> C. The boat hitting a rock</label>
+        </div>
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Correct Answer: B. Voices of Roy and Joe</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <p>4. How did Joe fall into the river? <button class="speak-btn" onclick="playText('How did Joe fall into the river?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="r4" value="A"> A. He was jumping</label>
+            <label><input type="radio" name="r4" value="B"> B. He was trying to throw a rope</label>
+            <label><input type="radio" name="r4" value="C"> C. Floppy pushed him</label>
+        </div>
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Correct Answer: B. He was trying to throw a rope</div>
+    </div>
+
+    <div class="section-title">Part 2: Word Bank (3 Questions)</div>
+    <div class="word-bank">Word Bank: floating | soaking | teeth | home-grown | coats</div>
+
+    <div class="question-card" id="q5">
+        <p>5. Dad said the plums were ______. <button class="speak-btn" onclick="playText('Dad said the plums were...')">🔊</button></p>
+        <input type="text" id="i5" placeholder="Type here...">
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Correct Answer: home-grown</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <p>6. When Roy and Joe fell in, the boat was ______ away. <button class="speak-btn" onclick="playText('When Roy and Joe fell in, the boat was blank away.')">🔊</button></p>
+        <input type="text" id="i6" placeholder="Type here...">
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Correct Answer: floating</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <p>7. Floppy got the rope in his ______. <button class="speak-btn" onclick="playText('Floppy got the rope in his...')">🔊</button></p>
+        <input type="text" id="i7" placeholder="Type here...">
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Correct Answer: teeth</div>
+    </div>
+
+    <div class="section-title">Part 3: Short Answer (2 Questions)</div>
+
+    <div class="question-card" id="q8">
+        <p>8. Why did Roy say "Too late!"? <button class="speak-btn" onclick="playText('Why did Roy say Too late?')">🔊</button></p>
+        <textarea id="i8" rows="2" placeholder="Look at page 14-15..."></textarea>
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Example Answer: Because the boat was floating away and he couldn't catch it.</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <p>9. What did Roy and Joe lose in the river? <button class="speak-btn" onclick="playText('What did Roy and Joe lose in the river?')">🔊</button></p>
+        <textarea id="i9" rows="2" placeholder="Look at the picture on page 23..."></textarea>
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Example Answer: They lost one of their oars.</div>
+    </div>
+
+    <div class="section-title">Part 4: Read Aloud (1 Question)</div>
+
+    <div class="question-card" id="q10">
+        <p>10. Read this clearly: <br><strong>"Floppy had got a good soaking. He shook himself all over the boys."</strong></p>
+        <button class="submit-btn" style="width:auto; padding:10px 30px; font-size:1.2rem;" onclick="playText('Floppy had got a good soaking. He shook himself all over the boys.')">Example Reading 🔊</button>
+        <div class="feedback-label"></div>
+        <div class="correct-ans-box">Check: Did you read it with energy? ⭐</div>
+    </div>
+
+    <button class="submit-btn" onclick="checkAnswers()">Submit Results! 🏁</button>
+
+    <div id="final-result">
+        <h2 id="score-text" style="font-size: 3.5rem; margin:0;">Score: 0/10</h2>
+        <p id="comment" style="font-size: 1.5rem;"></p>
+        <button onclick="location.reload()" style="background:white; color:var(--primary-blue); border:none; padding:10px 20px; border-radius:10px; cursor:pointer;">Retry Quiz</button>
+    </div>
+</div>
+
+<script>
+    let synth = window.speechSynthesis;
+    let voices = [];
+
+    // 初始化語音
+    function initVoices() {
+        voices = synth.getVoices();
+    }
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = initVoices;
+    }
+
+    function playText(text) {
+        if (synth.speaking) synth.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        // 優先選擇 Google US English 或 Microsoft Zira (女性)
+        const targetVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Zira') || v.name.includes('Female'));
+        if (targetVoice) utter.voice = targetVoice;
+        utter.rate = 0.85;
+        utter.pitch = 1.1;
+        synth.speak(utter);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const answers = {
+            r1: 'B', r2: 'C', r3: 'B', r4: 'B',
+            i5: 'home-grown', i6: 'floating', i7: 'teeth'
+        };
+
+        // Part 1
+        for (let i = 1; i <= 4; i++) {
+            const selected = document.querySelector(`input[name="r${i}"]:checked`);
+            const qCard = document.getElementById(`q${i}`);
+            const fb = qCard.querySelector('.feedback-label');
+            fb.style.display = "block";
+            qCard.querySelector('.correct-ans-box').style.display = "block";
+
+            if (selected && selected.value === answers[`r${i}`]) {
+                score++;
+                fb.innerHTML = "✅ Correct!";
+                fb.style.color = "#2E7D32";
+                qCard.classList.remove('wrong-bg');
+            } else {
+                fb.innerHTML = "❌ Incorrect";
+                fb.style.color = "#D32F2F";
+                qCard.classList.add('wrong-bg');
+            }
+        }
+
+        // Part 2
+        for (let i = 5; i <= 7; i++) {
+            const val = document.getElementById(`i${i}`).value.trim().toLowerCase();
+            const qCard = document.getElementById(`q${i}`);
+            const fb = qCard.querySelector('.feedback-label');
+            fb.style.display = "block";
+            qCard.querySelector('.correct-ans-box').style.display = "block";
+
+            if (val === answers[`i${i}`]) {
+                score++;
+                fb.innerHTML = "✅ Correct!";
+                fb.style.color = "#2E7D32";
+                qCard.classList.remove('wrong-bg');
+            } else {
+                fb.innerHTML = "❌ Incorrect";
+                fb.style.color = "#D32F2F";
+                qCard.classList.add('wrong-bg');
+            }
+        }
+
+        // Part 3 (Keyword based)
+        const q8 = document.getElementById('i8').value.toLowerCase();
+        if (q8.includes('float') || q8.includes('away') || q8.includes('catch')) score++;
+        document.getElementById('q8').querySelector('.feedback-label').style.display = "block";
+        document.getElementById('q8').querySelector('.feedback-label').innerHTML = "📝 Checked!";
+        document.getElementById('q8').querySelector('.correct-ans-box').style.display = "block";
+
+        const q9 = document.getElementById('i9').value.toLowerCase();
+        if (q9.includes('oar')) score++;
+        document.getElementById('q9').querySelector('.feedback-label').style.display = "block";
+        document.getElementById('q9').querySelector('.feedback-label').innerHTML = "📝 Checked!";
+        document.getElementById('q9').querySelector('.correct-ans-box').style.display = "block";
+
+        // Part 4 (Participation)
+        score++; 
+        document.getElementById('q10').querySelector('.feedback-label').style.display = "block";
+        document.getElementById('q10').querySelector('.feedback-label').innerHTML = "📢 Nice Effort!";
+        document.getElementById('q10').querySelector('.correct-ans-box').style.display = "block";
+
+        // Final Result
+        const resultDiv = document.getElementById('final-result');
+        resultDiv.style.display = "block";
+        document.getElementById('score-text').innerHTML = `Score: ${score}/10`;
+        
+        let msg = "";
+        if (score === 10) msg = "Excellent! You are a master rower! 🏆🥇";
+        else if (score >= 7) msg = "Great job! Floppy is proud of you! 🐶✨";
+        else msg = "Good try! Let's read the story again! 📖🌈";
+        document.getElementById('comment').innerHTML = msg;
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+    
+    // 初始化呼叫一次
+    initVoices();
+</script>
+
+</body>
+</html>

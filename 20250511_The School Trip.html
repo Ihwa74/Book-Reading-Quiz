@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club: The School Trip Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #76ba1b;
+            --soft-yellow: #fff9c4;
+            --dark-blue: #4a148c;
+            --accent-orange: #ff9800;
+            --error-red: #ffebee;
+            --correct-green: #e8f5e9;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--soft-yellow);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 8px solid var(--primary-green);
+        }
+
+        h1 {
+            color: var(--dark-blue);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-deco {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 2px dashed #ccc;
+        }
+
+        h2 {
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .question-box {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .word-bank {
+            background: #f0f4c3;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            border: 2px solid var(--primary-green);
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 15px;
+            background: white;
+            border-radius: 20px;
+            color: var(--dark-blue);
+        }
+
+        input[type="text"], textarea {
+            width: 90%;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .audio-btn {
+            background: var(--accent-orange);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-right: 10px;
+            color: white;
+            vertical-align: middle;
+        }
+
+        .audio-btn:hover { transform: scale(1.1); }
+
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .correct-answer {
+            color: #2e7d32;
+            background: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+
+        #submit-btn {
+            background: var(--dark-blue);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            transition: 0.3s;
+        }
+
+        #submit-btn:hover { background: #6a1b9a; transform: translateY(-3px); }
+
+        #score-display {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dark-blue);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .incorrect-bg { background-color: var(--error-red) !important; }
+        .correct-text { color: #2e7d32; }
+        .incorrect-text { color: #d32f2f; }
+    </style>
+</head>
+<body>
+
+    <div class="header-deco">🚌 🚜 🐔</div>
+    
+    <div class="container">
+        <h1>The School Trip Quiz</h1>
+        <p style="text-align: center;">Let's see how much you remember about the farm trip!</p>
+
+        <div class="section">
+            <h2>Part 1: Multiple Choice 🔘</h2>
+            
+            <div class="question-box" id="q1">
+                <button class="audio-btn" onclick="speak('Question 1. Who is the teacher?')">🔊</button>
+                1. Who is the teacher? <span class="feedback"></span>
+                <div class="options">
+                    <br><input type="radio" name="q1" value="Mrs Hood"> Mrs Hood
+                    <br><input type="radio" name="q1" value="Mr Bell"> Mr Bell
+                    <br><input type="radio" name="q1" value="Tom"> Tom
+                </div>
+                <div class="correct-answer">Correct Answer: Mr Bell</div>
+            </div>
+
+            <div class="question-box" id="q2">
+                <button class="audio-btn" onclick="speak('Question 2. How did the children go to the farm?')">🔊</button>
+                2. How did the children go to the farm? <span class="feedback"></span>
+                <div class="options">
+                    <br><input type="radio" name="q2" value="By car"> By car
+                    <br><input type="radio" name="q2" value="On a horse"> On a horse
+                    <br><input type="radio" name="q2" value="In the school bus"> In the school bus
+                </div>
+                <div class="correct-answer">Correct Answer: In the school bus</div>
+            </div>
+
+            <div class="question-box" id="q3">
+                <button class="audio-btn" onclick="speak('Question 3. What were the names of the two horses?')">🔊</button>
+                3. What were the names of the two horses? <span class="feedback"></span>
+                <div class="options">
+                    <br><input type="radio" name="q3" value="Star and Poppy"> Star and Poppy
+                    <br><input type="radio" name="q3" value="Hen and Duck"> Hen and Duck
+                    <br><input type="radio" name="q3" value="Sun and Moon"> Sun and Moon
+                </div>
+                <div class="correct-answer">Correct Answer: Star and Poppy</div>
+            </div>
+
+            <div class="question-box" id="q4">
+                <button class="audio-btn" onclick="speak('Question 4. What did the sign by the pond say?')">🔊</button>
+                4. What did the sign by the pond say? <span class="feedback"></span>
+                <div class="options">
+                    <br><input type="radio" name="q4" value="Feed the ducks"> Feed the ducks
+                    <br><input type="radio" name="q4" value="Do not feed the ducks"> Do not feed the ducks
+                    <br><input type="radio" name="q4" value="No swimming"> No swimming
+                </div>
+                <div class="correct-answer">Correct Answer: Do not feed the ducks</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Part 2: Fill in the Blanks ✍️</h2>
+            <div class="word-bank">
+                Word Bank: <span class="word-item">noise</span> <span class="word-item">cross</span> <span class="word-item">hands</span> <span class="word-item">geese</span> <span class="word-item">shout</span>
+            </div>
+
+            <div class="question-box" id="q5">
+                <button class="audio-btn" onclick="speak('Question 5. The farmer said, do not run or blank at the animals.')">🔊</button>
+                5. The farmer said, "Do not run or <input type="text" id="ans5" placeholder="..."> at the animals." <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: shout</div>
+            </div>
+
+            <div class="question-box" id="q6">
+                <button class="audio-btn" onclick="speak('Question 6. Aneesa made so much noise that the horses ran away. Mr Bell was blank.')">🔊</button>
+                6. Aneesa made so much noise that the horses ran away. Mr Bell was <input type="text" id="ans6" placeholder="...">. <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: cross</div>
+            </div>
+
+            <div class="question-box" id="q7">
+                <button class="audio-btn" onclick="speak('Question 7. After feeding the hens, the sign said, Wash your blank.')">🔊</button>
+                7. After feeding the hens, the sign said, "Wash your <input type="text" id="ans7" placeholder="...">!" <span class="feedback"></span>
+                <div class="correct-answer">Correct Answer: hands</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Part 3: Short Answer 💬</h2>
+            
+            <div class="question-box" id="q8">
+                <button class="audio-btn" onclick="speak('Question 8. Why did the geese run after Tom?')">🔊</button>
+                8. Why did the geese run after Tom? <span class="feedback"></span>
+                <br><textarea id="ans8" rows="2" placeholder="Write your answer here..."></textarea>
+                <div class="correct-answer">Example Answer: Because he was feeding the ducks and the geese wanted his lunch too.</div>
+            </div>
+
+            <div class="question-box" id="q9">
+                <button class="audio-btn" onclick="speak('Question 9. How did Aneesa help Tom?')">🔊</button>
+                9. How did Aneesa help Tom? <span class="feedback"></span>
+                <br><textarea id="ans9" rows="2" placeholder="Write your answer here..."></textarea>
+                <div class="correct-answer">Example Answer: She made a lot of noise and frightened the geese away.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Part 4: Reading Aloud 🎤</h2>
+            <div class="question-box" id="q10">
+                <p>10. Read this sentence from the story with expression:</p>
+                <p style="font-style: italic; font-size: 1.2rem; color: var(--dark-blue);">"Aneesa made so much noise that the geese ran away!"</p>
+                <button class="audio-btn" style="width: auto; border-radius: 20px; padding: 0 15px;" onclick="speak('Aneesa made so much noise that the geese ran away!')">🔊 Listen to Example</button>
+                <span class="feedback"></span>
+                <div class="correct-answer">Practice makes perfect! You did a great job!</div>
+            </div>
+        </div>
+
+        <button id="submit-btn" onclick="checkAnswers()">Submit My Answers! ✨</button>
+        
+        <div id="score-display"></div>
+    </div>
+
+    <script>
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voices = speechSynthesis.getVoices();
+            
+            // Try to find a natural female English voice
+            const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+            if (preferredVoice) utterance.voice = preferredVoice;
+
+            utterance.rate = 0.85;
+            utterance.pitch = 1.1;
+            speechSynthesis.speak(utterance);
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            const totalQuestions = 10;
+
+            // Part 1 Logic
+            const answers = {
+                q1: "Mr Bell",
+                q2: "In the school bus",
+                q3: "Star and Poppy",
+                q4: "Do not feed the ducks",
+                ans5: "shout",
+                ans6: "cross",
+                ans7: "hands"
+            };
+
+            // Reset styles
+            document.querySelectorAll('.question-box').forEach(box => box.classList.remove('incorrect-bg'));
+
+            // Check MCQ
+            for(let i=1; i<=4; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const feedback = document.querySelector(`#q${i} .feedback`);
+                const qBox = document.getElementById(`q${i}`);
+                
+                if(selected && selected.value === answers[`q${i}`]) {
+                    score++;
+                    feedback.innerHTML = " ✅ Correct";
+                    feedback.className = "feedback correct-text";
+                } else {
+                    feedback.innerHTML = " ❌ Incorrect";
+                    feedback.className = "feedback incorrect-text";
+                    qBox.classList.add('incorrect-bg');
+                }
+            }
+
+            // Check Blanks
+            for(let i=5; i<=7; i++) {
+                const val = document.getElementById(`ans${i}`).value.trim().toLowerCase();
+                const feedback = document.querySelector(`#q${i} .feedback`);
+                const qBox = document.getElementById(`q${i}`);
+
+                if(val === answers[`ans${i}`]) {
+                    score++;
+                    feedback.innerHTML = " ✅ Correct";
+                    feedback.className = "feedback correct-text";
+                } else {
+                    feedback.innerHTML = " ❌ Incorrect";
+                    feedback.className = "feedback incorrect-text";
+                    qBox.classList.add('incorrect-bg');
+                }
+            }
+
+            // Part 3 & 4 (Manual check simulation for young learners)
+            for(let i=8; i<=10; i++) {
+                const val = (i < 10) ? document.getElementById(`ans${i}`).value.trim() : "done";
+                const feedback = document.querySelector(`#q${i} .feedback`);
+                if(val.length > 3) {
+                    score++;
+                    feedback.innerHTML = " ✅ Well Done!";
+                    feedback.className = "feedback correct-text";
+                } else {
+                    feedback.innerHTML = " ❌ Please try to write more!";
+                    feedback.className = "feedback incorrect-text";
+                    document.getElementById(`q${i}`).classList.add('incorrect-bg');
+                }
+            }
+
+            // Show feedback and correct answers
+            document.querySelectorAll('.feedback').forEach(f => f.style.display = 'inline');
+            document.querySelectorAll('.correct-answer').forEach(a => a.style.display = 'block');
+
+            // Display Score
+            const scoreDisplay = document.getElementById('score-display');
+            scoreDisplay.style.display = 'block';
+            let comment = score >= 8 ? "You are a Super Reader! 🌟" : "Good job! Keep practicing! 📚";
+            scoreDisplay.innerHTML = `Score: ${score}/${totalQuestions}<br><span style="font-size: 1.5rem">${comment}</span>`;
+            
+            scoreDisplay.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Pre-load voices
+        speechSynthesis.onvoiceschanged = () => { speechSynthesis.getVoices(); };
+    </script>
+</body>
+</html>

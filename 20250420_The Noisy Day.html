@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club: The Noisy Day Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #76ba1b;
+            --secondary-color: #ffde59;
+            --bg-color: #f9fbf2;
+            --wrong-bg: #ffe6e6;
+            --correct-color: #2d5a27;
+            --error-color: #d8000c;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 { color: #444; margin: 0; font-size: 2.5rem; }
+        h2 { color: var(--primary-color); border-bottom: 3px solid var(--secondary-color); padding-bottom: 10px; margin-top: 40px; }
+
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            transition: all 0.3s;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .word-bank {
+            background: #eee;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 2px dashed var(--primary-color);
+        }
+
+        .word-bank span {
+            display: inline-block;
+            margin: 5px 15px;
+            color: #444;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            background: #f8f8f8;
+        }
+
+        .options input { margin-right: 10px; }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        button:hover { transform: scale(1.05); }
+
+        .tts-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .feedback { display: none; font-weight: bold; margin-top: 10px; }
+        .correct-answer { display: none; color: var(--correct-color); font-size: 0.9rem; margin-top: 5px; }
+        
+        #score-display {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 20px;
+        }
+
+        .incorrect-bg { background-color: var(--wrong-bg) !important; border-left: 5px solid var(--error-color) !important; }
+
+        .recording-box {
+            text-align: center;
+            padding: 20px;
+            background: #fff9e6;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🔊 The Noisy Day</h1>
+    <p>Can you help Cat find some quiet? 🤫</p>
+</div>
+
+<div class="quiz-container" id="quizForm">
+    
+    <h2>Part 1: Choose the Best Answer 📝</h2>
+    
+    <div class="question-block" id="q1">
+        <p>1. What time did Cat's clock go BEEP BEEP BEEP? <button class="tts-btn" onclick="speak('What time did Cat\'s clock go BEEP BEEP BEEP?')">📢</button></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="07:25AM"> 07:25AM</label>
+            <label><input type="radio" name="q1" value="07:30AM"> 07:30AM</label>
+            <label><input type="radio" name="q1" value="08:30PM"> 08:30PM</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: 07:30AM</div>
+    </div>
+
+    <div class="question-block" id="q2">
+        <p>2. How many sisters does Cat have? <button class="tts-btn" onclick="speak('How many sisters does Cat have?')">📢</button></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="Two"> Two</label>
+            <label><input type="radio" name="q2" value="Three"> Three</label>
+            <label><input type="radio" name="q2" value="Four"> Four</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: Three</div>
+    </div>
+
+    <div class="question-block" id="q3">
+        <p>3. Where did Cat go to hide during "break" time at school? <button class="tts-btn" onclick="speak('Where did Cat go to hide during break time at school?')">📢</button></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="In the classroom"> In the classroom</label>
+            <label><input type="radio" name="q3" value="In the car"> In the car</label>
+            <label><input type="radio" name="q3" value="In the hall"> In the hall</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: In the hall</div>
+    </div>
+
+    <div class="question-block" id="q4">
+        <p>4. What were the boys doing in the playground? <button class="tts-btn" onclick="speak('What were the boys doing in the playground?')">📢</button></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="Singing songs"> Singing songs</label>
+            <label><input type="radio" name="q4" value="Playing football"> Playing football</label>
+            <label><input type="radio" name="q4" value="Reading books"> Reading books</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: Playing football</div>
+    </div>
+
+    <h2>Part 2: Fill in the Blanks 🔠</h2>
+    <div class="word-bank">
+        <span>[ quiet ]</span> <span>[ tiny ]</span> <span>[ shake ]</span> <span>[ loud ]</span> <span>[ ears ]</span>
+    </div>
+
+    <div class="question-block" id="q5">
+        <p>5. Suddenly the band came in and soon the floor began to ______. <button class="tts-btn" onclick="speak('Suddenly the band came in and soon the floor began to blank.')">📢</button></p>
+        <input type="text" id="ans5" placeholder="Type your answer here...">
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: shake</div>
+    </div>
+
+    <div class="question-block" id="q6">
+        <p>6. Being ______ was a problem, loud noise hurt her little ______! <button class="tts-btn" onclick="speak('Being blank was a problem, loud noise hurt her little blank!')">📢</button></p>
+        <input type="text" id="ans6" placeholder="Type two words, e.g., tiny, ears">
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: tiny, ears</div>
+    </div>
+
+    <div class="question-block" id="q7">
+        <p>7. At last the house was very ______. <button class="tts-btn" onclick="speak('At last the house was very blank.')">📢</button></p>
+        <input type="text" id="ans7" placeholder="Type your answer here...">
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: quiet</div>
+    </div>
+
+    <h2>Part 3: Short Answer ✍️</h2>
+    
+    <div class="question-block" id="q8">
+        <p>8. What did Cat do at dinner time to get away from the noise? <button class="tts-btn" onclick="speak('What did Cat do at dinner time to get away from the noise?')">📢</button></p>
+        <textarea id="ans8" rows="2"></textarea>
+        <div class="feedback"></div>
+        <div class="correct-answer">Example Answer: She went off to have a read / She read a book.</div>
+    </div>
+
+    <div class="question-block" id="q9">
+        <p>9. What happened right after the house became quiet at the end? <button class="tts-btn" onclick="speak('What happened right after the house became quiet at the end?')">📢</button></p>
+        <textarea id="ans9" rows="2"></textarea>
+        <div class="feedback"></div>
+        <div class="correct-answer">Example Answer: Cat began to snore! / She made a ZZZZZZ noise.</div>
+    </div>
+
+    <h2>Part 4: Read Aloud 🗣️</h2>
+    <div class="question-block" id="q10">
+        <p>10. Please read this sentence with your best voice: <br><br>
+        <strong>"Time for bed you girls," said Mother. Now Cat smiled and closed her door.</strong></p>
+        <div class="recording-box">
+            <button class="tts-btn" style="font-size: 1rem; border: 1px solid #ccc; padding: 5px 15px; border-radius: 10px;" onclick="speak('Time for bed you girls, said Mother. Now Cat smiled and closed her door.')">▶️ Listen to Example</button>
+            <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">(Record yourself and check your pronunciation! 🎤)</p>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-answer">Excellent reading! 🌟</div>
+    </div>
+
+    <button onclick="submitQuiz()">Submit My Answers! 🚀</button>
+    <div id="score-display"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        // Try to find a nice female voice
+        const voices = window.speechSynthesis.getVoices();
+        const selectedVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Female') || v.name.includes('Natural'));
+        if (selectedVoice) msg.voice = selectedVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        const total = 10;
+
+        // Reset styles
+        document.querySelectorAll('.question-block').forEach(block => block.classList.remove('incorrect-bg'));
+        document.querySelectorAll('.feedback').forEach(f => f.style.display = 'block');
+        document.querySelectorAll('.correct-answer').forEach(c => c.style.display = 'block');
+
+        // Q1
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        if (q1 && q1.value === "07:30AM") {
+            score++;
+            showFeedback('q1', true);
+        } else {
+            showFeedback('q1', false);
+        }
+
+        // Q2
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        if (q2 && q2.value === "Three") {
+            score++;
+            showFeedback('q2', true);
+        } else {
+            showFeedback('q2', false);
+        }
+
+        // Q3
+        const q3 = document.querySelector('input[name="q3"]:checked');
+        if (q3 && q3.value === "In the hall") {
+            score++;
+            showFeedback('q3', true);
+        } else {
+            showFeedback('q3', false);
+        }
+
+        // Q4
+        const q4 = document.querySelector('input[name="q4"]:checked');
+        if (q4 && q4.value === "Playing football") {
+            score++;
+            showFeedback('q4', true);
+        } else {
+            showFeedback('q4', false);
+        }
+
+        // Q5
+        const ans5 = document.getElementById('ans5').value.trim().toLowerCase();
+        if (ans5 === "shake") {
+            score++;
+            showFeedback('q5', true);
+        } else {
+            showFeedback('q5', false);
+        }
+
+        // Q6
+        const ans6 = document.getElementById('ans6').value.trim().toLowerCase();
+        if (ans6.includes("tiny") && ans6.includes("ears")) {
+            score++;
+            showFeedback('q6', true);
+        } else {
+            showFeedback('q6', false);
+        }
+
+        // Q7
+        const ans7 = document.getElementById('ans7').value.trim().toLowerCase();
+        if (ans7 === "quiet") {
+            score++;
+            showFeedback('q7', true);
+        } else {
+            showFeedback('q7', false);
+        }
+
+        // Q8 (Short answer - manual/keyword check)
+        const ans8 = document.getElementById('ans8').value.trim().toLowerCase();
+        if (ans8.includes("read") || ans8.includes("book")) {
+            score++;
+            showFeedback('q8', true);
+        } else {
+            showFeedback('q8', false);
+        }
+
+        // Q9
+        const ans9 = document.getElementById('ans9').value.trim().toLowerCase();
+        if (ans9.includes("snore") || ans9.includes("zzzz")) {
+            score++;
+            showFeedback('q9', true);
+        } else {
+            showFeedback('q9', false);
+        }
+
+        // Q10 (Oral - auto-correct for demo)
+        score++; 
+        showFeedback('q10', true);
+
+        // Display Total
+        const display = document.getElementById('score-display');
+        let comment = score > 7 ? "Excellent! You are a superstar! 🌟" : "Good job! Let's read it again! 📚";
+        display.innerHTML = `Score: ${score}/${total} <br><span style="font-size: 1.5rem">${comment}</span>`;
+        
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function showFeedback(id, isCorrect) {
+        const block = document.getElementById(id);
+        const fb = block.querySelector('.feedback');
+        if (isCorrect) {
+            fb.innerHTML = "✅ Correct";
+            fb.style.color = "var(--correct-color)";
+        } else {
+            fb.innerHTML = "❌ Incorrect";
+            fb.style.color = "var(--error-color)";
+            block.classList.add('incorrect-bg');
+        }
+    }
+    
+    // Load voices
+    window.speechSynthesis.onvoiceschanged = () => {};
+</script>
+
+</body>
+</html>

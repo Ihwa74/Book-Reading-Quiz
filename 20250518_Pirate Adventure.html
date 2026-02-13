@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏴‍☠️ Pirate Adventure Quiz!</title>
+    <style>
+        :root {
+            --primary-green: #76b82a;
+            --primary-yellow: #fdd000;
+            --light-bg: #fdfdfd;
+            --wrong-red: #ffebeb;
+            --correct-green: #e9f7ef;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-yellow);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px dashed var(--primary-green);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        h1 { color: #d32f2f; font-size: 2.5em; margin-bottom: 10px; }
+        h2 { color: var(--primary-green); border-left: 8px solid var(--primary-yellow); padding-left: 15px; }
+
+        .section { margin-bottom: 40px; }
+        .question-card {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #eee;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .word-bank {
+            background: #fff9c4;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 2px dashed #fbc02d;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .word-item { background: white; padding: 5px 15px; border-radius: 20px; color: #555; }
+
+        .options label {
+            display: block;
+            background: #f8f9fa;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .options label:hover { background: #eef; }
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 80%;
+        }
+
+        .feedback { font-weight: bold; margin-top: 10px; display: none; }
+        .correct-answer { color: var(--primary-green); font-size: 0.9em; margin-top: 5px; display: none; }
+        
+        .incorrect-bg { background-color: var(--wrong-red) !important; border-color: #ffcdd2 !important; }
+        .correct-bg { background-color: var(--correct-green) !important; border-color: #c8e6c9 !important; }
+
+        .btn-speak {
+            background: #e1f5fe;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            margin-left: 10px;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .score-display { font-size: 3em; color: var(--primary-green); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🏴‍☠️ Pirate Adventure! 🦜</h1>
+        <p>Help Biff, Chip, Wilf, and Wilma on their magic journey!</p>
+    </header>
+
+    <div class="section">
+        <h2>Part 1: Choose the Best Answer 🔍</h2>
+        
+        <div class="question-card" id="q1">
+            <p>1. At the beginning, what does Biff think about pirates? <button class="btn-speak" onclick="speak('At the beginning, what does Biff think about pirates?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> She loves them.</label>
+                <label><input type="radio" name="q1" value="B"> She doesn't like them.</label>
+                <label><input type="radio" name="q1" value="C"> She wants to be one.</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: She doesn't like them.</div>
+        </div>
+
+        <div class="question-card" id="q2">
+            <p>2. What happens to the children when the magic key glows? <button class="btn-speak" onclick="speak('What happens to the children when the magic key glows?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> They get bigger and bigger.</label>
+                <label><input type="radio" name="q2" value="B"> They turn into pirates.</label>
+                <label><input type="radio" name="q2" value="C"> They get smaller and smaller.</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: They get smaller and smaller.</div>
+        </div>
+
+        <div class="question-card" id="q3">
+            <p>3. Where do the children find themselves after going through the magic door? <button class="btn-speak" onclick="speak('Where do the children find themselves after going through the magic door?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> In a dark forest.</label>
+                <label><input type="radio" name="q3" value="B"> On a sandy beach with the sea.</label>
+                <label><input type="radio" name="q3" value="C"> Inside a big castle.</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: On a sandy beach with the sea.</div>
+        </div>
+
+        <div class="question-card" id="q4">
+            <p>4. Why did the pirates take the children to their ship? <button class="btn-speak" onclick="speak('Why did the pirates take the children to their ship?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> To make them work.</label>
+                <label><input type="radio" name="q4" value="B"> To have a party because nobody else came.</label>
+                <label><input type="radio" name="q4" value="C"> To steal their magic key.</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: To have a party because nobody else came.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 2: Word Bank Fun 📝</h2>
+        <div class="word-bank">
+            <span class="word-item">coconut</span>
+            <span class="word-item">climb</span>
+            <span class="word-item">shell</span>
+            <span class="word-item">hat</span>
+            <span class="word-item">sand</span>
+        </div>
+
+        <div class="question-card" id="q5">
+            <p>5. On the beach, Wilf picked up a _______. <button class="btn-speak" onclick="speak('On the beach, Wilf picked up a...')">🔊</button></p>
+            <input type="text" id="ans5" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: shell</div>
+        </div>
+
+        <div class="question-card" id="q6">
+            <p>6. Chip picked up a _______ while playing on the island. <button class="btn-speak" onclick="speak('Chip picked up a... while playing on the island.')">🔊</button></p>
+            <input type="text" id="ans6" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: coconut</div>
+        </div>
+
+        <div class="question-card" id="q7">
+            <p>7. At the very end of the story, Wilf looked at the little _______. <button class="btn-speak" onclick="speak('At the very end of the story, Wilf looked at the little...')">🔊</button></p>
+            <input type="text" id="ans7" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: hat</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 3: Think and Write ✍️</h2>
+        <div class="question-card" id="q8">
+            <p>8. What was the name written on the side of the pirate ship? <button class="btn-speak" onclick="speak('What was the name written on the side of the pirate ship?')">🔊</button></p>
+            <input type="text" id="ans8" style="width: 90%;">
+            <div class="feedback"></div>
+            <div class="correct-answer">Example Answer: DINA</div>
+        </div>
+
+        <div class="question-card" id="q9">
+            <p>9. How did the party on the ship feel? Was it good or bad? <button class="btn-speak" onclick="speak('How did the party on the ship feel? Was it good or bad?')">🔊</button></p>
+            <input type="text" id="ans9" style="width: 90%;">
+            <div class="feedback"></div>
+            <div class="correct-answer">Example Answer: It was a good party.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 4: Read Aloud 🗣️</h2>
+        <div class="question-card" id="q10">
+            <p>10. Please read this sentence loudly: <br><br><strong>"I like pirates," said Biff. "What an adventure!"</strong></p>
+            <button onclick="speak('I like pirates, said Biff. What an adventure!')" style="background: var(--primary-yellow); border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold;">Listen to Example 👂</button>
+            <p><small>(Ask your teacher or parent to check your reading!)</small></p>
+            <div class="feedback">✅ Ready for checking!</div>
+        </div>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit My Adventure! 🚀</button>
+
+    <div id="result-area">
+        <div class="score-display" id="final-score"></div>
+        <p id="encouragement" style="font-size: 1.5em;"></p>
+        <button onclick="location.reload()" style="margin-top:20px; padding:10px 20px; cursor:pointer;">Try Again 🔄</button>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find a natural female voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Female') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Pre-load voices
+    window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Q1-Q4 Logic
+        const answers = { q1: 'B', q2: 'C', q3: 'B', q4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const q = document.querySelector(`input[name="q${i}"]:checked`);
+            const card = document.getElementById(`q${i}`);
+            const feedback = card.querySelector('.feedback');
+            const correct = card.querySelector('.correct-answer');
+            
+            feedback.style.display = 'block';
+            correct.style.display = 'block';
+
+            if (q && q.value === answers[`q${i}`]) {
+                score++;
+                feedback.innerHTML = "✅ Correct";
+                card.classList.add('correct-bg');
+            } else {
+                feedback.innerHTML = "❌ Incorrect";
+                card.classList.add('incorrect-bg');
+            }
+        }
+
+        // Q5-Q7 Logic (Fill in blanks)
+        const fillAnswers = { ans5: 'shell', ans6: 'coconut', ans7: 'hat' };
+        for (let i = 5; i <= 7; i++) {
+            const val = document.getElementById(`ans${i}`).value.toLowerCase().trim();
+            const card = document.getElementById(`q${i}`);
+            const feedback = card.querySelector('.feedback');
+            const correct = card.querySelector('.correct-answer');
+
+            feedback.style.display = 'block';
+            correct.style.display = 'block';
+
+            if (val === fillAnswers[`ans${i}`]) {
+                score++;
+                feedback.innerHTML = "✅ Correct";
+                card.classList.add('correct-bg');
+            } else {
+                feedback.innerHTML = "❌ Incorrect";
+                card.classList.add('incorrect-bg');
+            }
+        }
+
+        // Q8-Q9 Logic (Short answer - basic check)
+        const q8Val = document.getElementById('ans8').value.toUpperCase().trim();
+        const card8 = document.getElementById('q8');
+        card8.querySelector('.feedback').style.display = 'block';
+        card8.querySelector('.correct-answer').style.display = 'block';
+        if (q8Val.includes('DINA')) {
+            score++;
+            card8.querySelector('.feedback').innerHTML = "✅ Correct";
+            card8.classList.add('correct-bg');
+        } else {
+            card8.querySelector('.feedback').innerHTML = "❌ Incorrect";
+            card8.classList.add('incorrect-bg');
+        }
+
+        const q9Val = document.getElementById('ans9').value.toLowerCase();
+        const card9 = document.getElementById('q9');
+        card9.querySelector('.feedback').style.display = 'block';
+        card9.querySelector('.correct-answer').style.display = 'block';
+        if (q9Val.includes('good')) {
+            score++;
+            card9.querySelector('.feedback').innerHTML = "✅ Correct";
+            card9.classList.add('correct-bg');
+        } else {
+            card9.querySelector('.feedback').innerHTML = "❌ Incorrect";
+            card9.classList.add('incorrect-bg');
+        }
+
+        // Q10 Logic (Always "Correct" as it's oral)
+        score++;
+        document.getElementById('q10').classList.add('correct-bg');
+
+        // Results
+        document.getElementById('submit-btn').style.display = 'none';
+        const resultArea = document.getElementById('result-area');
+        resultArea.style.display = 'block';
+        document.getElementById('final-score').innerText = `Score: ${score}/${total}`;
+        
+        const encour = document.getElementById('encouragement');
+        if (score >= 9) encour.innerText = "Amazing! You are a Pirate King! 👑";
+        else if (score >= 7) encour.innerText = "Great job! Ready for the next adventure! 🚢";
+        else encour.innerText = "Good effort! Let's read the story again! 📖";
+        
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

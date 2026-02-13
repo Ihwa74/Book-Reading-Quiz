@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club Quiz: Please Do Not Sneeze</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #FFDE59;
+            --primary-green: #7ED957;
+            --soft-red: #FFD2D2;
+            --text-dark: #333;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #FFF9E3;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-yellow);
+        }
+
+        h1 {
+            text-align: center;
+            color: #6A1B9A;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-deco {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .incorrect-bg {
+            background-color: var(--soft-red) !important;
+        }
+
+        .word-bank {
+            background: #E1F5FE;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px dashed #03A9F4;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .option-label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        input[type="text"] {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+            font-size: 1rem;
+            width: 200px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border-radius: 15px;
+            border: 2px solid #ccc;
+            font-family: inherit;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer {
+            display: none;
+            margin-top: 10px;
+            color: #2E7D32;
+            font-weight: bold;
+            background: #E8F5E9;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: #6A1B9A;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 40px;
+            transition: transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            background: #8E24AA;
+        }
+
+        #result-section {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 30px;
+            border-top: 3px solid var(--primary-yellow);
+        }
+
+        .score-text {
+            font-size: 3rem;
+            color: #6A1B9A;
+            margin-bottom: 10px;
+        }
+
+        .encourage-text {
+            font-size: 1.5rem;
+            color: #FF7043;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-deco">🏖️🤧🏰</div>
+    <h1>Please Do Not Sneeze Quiz</h1>
+
+    <h2>Part 1: Multiple Choice 🧐</h2>
+    
+    <div class="question-block" id="q1">
+        <button class="audio-btn" onclick="speak('1. Why was it too chilly to swim?')">🔊</button>
+        <strong>1. Why was it too chilly to swim?</strong>
+        <label class="option-label"><input type="radio" name="q1" value="A"> A) It was raining on the beach.</label>
+        <label class="option-label"><input type="radio" name="q1" value="B"> B) The sea was chilly.</label>
+        <label class="option-label"><input type="radio" name="q1" value="C"> C) It was a cloudy day.</label>
+        <div class="correct-answer">Correct Answer: B) The sea was chilly.</div>
+    </div>
+
+    <div class="question-block" id="q2">
+        <button class="audio-btn" onclick="speak('2. What did Wilf have on the beach?')">🔊</button>
+        <strong>2. What did Wilf have on the beach?</strong>
+        <label class="option-label"><input type="radio" name="q2" value="A"> A) A bucket and spade.</label>
+        <label class="option-label"><input type="radio" name="q2" value="B"> B) A soccer ball.</label>
+        <label class="option-label"><input type="radio" name="q2" value="C"> C) A frisbee.</label>
+        <div class="correct-answer">Correct Answer: C) A frisbee.</div>
+    </div>
+
+    <div class="question-block" id="q3">
+        <button class="audio-btn" onclick="speak('3. Where did Anneena and Wilma take the lost children?')">🔊</button>
+        <strong>3. Where did Anneena and Wilma take the lost children?</strong>
+        <label class="option-label"><input type="radio" name="q3" value="A"> A) To the Lost Children\'s Hut.</label>
+        <label class="option-label"><input type="radio" name="q3" value="B"> B) To the swimming pool.</label>
+        <label class="option-label"><input type="radio" name="q3" value="C"> C) Back to their home.</label>
+        <div class="correct-answer">Correct Answer: A) To the Lost Children's Hut.</div>
+    </div>
+
+    <div class="question-block" id="q4">
+        <button class="audio-btn" onclick="speak('4. What was Princess Sophie\'s problem?')">🔊</button>
+        <strong>4. What was Princess Sophie\'s problem?</strong>
+        <label class="option-label"><input type="radio" name="q4" value="A"> A) She could not sing.</label>
+        <label class="option-label"><input type="radio" name="q4" value="B"> B) She has a loud sneeze.</label>
+        <label class="option-label"><input type="radio" name="q4" value="C"> C) She did not like the king.</label>
+        <div class="correct-answer">Correct Answer: B) She has a loud sneeze.</div>
+    </div>
+
+    <h2>Part 2: Word Bank Fill-in ✍️</h2>
+    <div class="word-bank">
+        Word Bank: [ sneeze | head | leaves | forest | dust ]
+    </div>
+
+    <div class="question-block" id="q5">
+        <button class="audio-btn" onclick="speak('5. Sophie was so unhappy that she ran off into the...')">🔊</button>
+        <strong>5. Sophie was so unhappy that she ran off into the <input type="text" id="ans5" placeholder="...">.</strong>
+        <div class="correct-answer">Correct Answer: forest</div>
+    </div>
+
+    <div class="question-block" id="q6">
+        <button class="audio-btn" onclick="speak('6. She sat down on a bed of...')">🔊</button>
+        <strong>6. She sat down on a bed of <input type="text" id="ans6" placeholder="...">.</strong>
+        <div class="correct-answer">Correct Answer: leaves</div>
+    </div>
+
+    <div class="question-block" id="q7">
+        <button class="audio-btn" onclick="speak('7. The donkey said there is too much something in houses.')">🔊</button>
+        <strong>7. The donkey said there is too much <input type="text" id="ans7" placeholder="..."> in their houses.</strong>
+        <div class="correct-answer">Correct Answer: dust</div>
+    </div>
+
+    <h2>Part 3: Short Answer 📝</h2>
+    
+    <div class="question-block" id="q8">
+        <button class="audio-btn" onclick="speak('8. What funny things did Sophie\'s sneeze sound like? Name one.')">🔊</button>
+        <strong>8. What funny things did Sophie's sneeze sound like? (Name one)</strong>
+        <textarea id="ans8" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer">Example Answer: Cheesy feet / Stinky socks / Chimney sweep / Mossy teeth.</div>
+    </div>
+
+    <div class="question-block" id="q9">
+        <button class="audio-btn" onclick="speak('9. Who found the children on the beach at the end?')">🔊</button>
+        <strong>9. Who found the children on the beach at the end?</strong>
+        <textarea id="ans9" placeholder="Type your answer here..."></textarea>
+        <div class="correct-answer">Example Answer: Their mummy found them.</div>
+    </div>
+
+    <h2>Part 4: Read Aloud 🎙️</h2>
+    <div class="question-block" id="q10">
+        <p style="font-size: 1.3rem; background: #FFF; padding: 15px; border-radius: 10px; border: 2px solid var(--primary-green);">
+            "We must get rid of the dust," said the king.
+        </p>
+        <button class="submit-btn" style="background: var(--primary-green); margin-top: 10px; font-size: 1.1rem; padding: 10px;" onclick="speak('We must get rid of the dust, said the king.')">🔊 Listen to Example</button>
+        <p><em>Practice reading this sentence aloud to your teacher or parent!</em></p>
+        <div class="correct-answer" style="display:block; background: #FFFDE7;">Check: Did you say "dust" and "king" clearly? 🌟</div>
+    </div>
+
+    <button class="submit-btn" onclick="checkAnswers()">Submit My Quiz! 🚀</button>
+
+    <div id="result-section">
+        <div class="score-text" id="score-display">Score: 0/10</div>
+        <div class="encourage-text" id="encourage-msg">Great job! Keep reading!</div>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        // Try to find a nice female voice
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Part 1
+        const answers1 = { q1: 'B', q2: 'C', q3: 'A', q4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const qId = 'q' + i;
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const block = document.getElementById(qId);
+            
+            if (selected && selected.value === answers1['q' + i]) {
+                score++;
+                markResult(block, true);
+            } else {
+                markResult(block, false);
+            }
+        }
+
+        // Part 2
+        const answers2 = { ans5: 'forest', ans6: 'leaves', ans7: 'dust' };
+        for (let i = 5; i <= 7; i++) {
+            const qId = 'q' + i;
+            const val = document.getElementById('ans' + i).value.toLowerCase().trim();
+            const block = document.getElementById(qId);
+            if (val === answers2['ans' + i]) {
+                score++;
+                markResult(block, true);
+            } else {
+                markResult(block, false);
+            }
+        }
+
+        // Part 3 (Keyword check)
+        const val8 = document.getElementById('ans8').value.toLowerCase();
+        const block8 = document.getElementById('q8');
+        if (val8.includes('feet') || val8.includes('socks') || val8.includes('sweep') || val8.includes('teeth')) {
+            score++;
+            markResult(block8, true);
+        } else {
+            markResult(block8, false);
+        }
+
+        const val9 = document.getElementById('ans9').value.toLowerCase();
+        const block9 = document.getElementById('q9');
+        if (val9.includes('mummy') || val9.includes('mother') || val9.includes('mom')) {
+            score++;
+            markResult(block9, true);
+        } else {
+            markResult(block9, false);
+        }
+
+        // Part 4 (Self-check completion)
+        score++; // Give 1 point for attempting the reading
+        markResult(document.getElementById('q10'), true);
+
+        // Show Score
+        document.getElementById('result-section').style.display = 'block';
+        document.getElementById('score-display').innerText = `Score: ${score}/10`;
+        
+        const msgs = ["Keep trying! You can do it! 🌈", "Good job! You're getting better! 🌟", "Excellent! You are a reading superstar! 🏆"];
+        let msg = msgs[0];
+        if (score >= 5) msg = msgs[1];
+        if (score >= 9) msg = msgs[2];
+        document.getElementById('encourage-msg').innerText = msg;
+
+        // Reveal answers
+        const correctBoxes = document.querySelectorAll('.correct-answer');
+        correctBoxes.forEach(box => box.style.display = 'block');
+        
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function markResult(element, isCorrect) {
+        // Remove existing markers
+        const oldMarker = element.querySelector('.feedback');
+        if (oldMarker) oldMarker.remove();
+
+        const marker = document.createElement('span');
+        marker.className = 'feedback';
+        if (isCorrect) {
+            marker.innerText = ' ✅ Correct';
+            marker.style.color = 'green';
+            element.classList.remove('incorrect-bg');
+        } else {
+            marker.innerText = ' ❌ Incorrect';
+            marker.style.color = 'red';
+            element.classList.add('incorrect-bg');
+        }
+        element.querySelector('strong').appendChild(marker);
+    }
+</script>
+
+</body>
+</html>

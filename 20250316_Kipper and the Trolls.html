@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kipper and the Trolls Reading Quiz</title>
+    <style>
+        :root {
+            --primary-green: #7DBA28;
+            --secondary-yellow: #FFD700;
+            --light-bg: #F9FBE7;
+            --wrong-red: #FFEBEE;
+            --correct-green: #E8F5E9;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-green);
+        }
+
+        h1 {
+            color: var(--primary-green);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            background-color: var(--secondary-yellow);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+
+        .question-card {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 15px;
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .word-bank {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #FFF9C4;
+            border: 2px dashed #FBC02D;
+            border-radius: 10px;
+            justify-content: center;
+        }
+
+        .word-item {
+            background: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid #FBC02D;
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea {
+            font-family: inherit;
+            font-size: 1.1em;
+            padding: 8px;
+            border: 2px solid #DDD;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            background: #f0f0f0;
+        }
+
+        .options input {
+            margin-right: 10px;
+        }
+
+        .btn-speak {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: 10px;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-green);
+            color: white;
+            font-size: 1.5em;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 30px auto;
+            display: block;
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.05);
+            background-color: #689F38;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #E3F2FD;
+            border-radius: 8px;
+            color: #1565C0;
+            font-size: 0.9em;
+        }
+
+        #result-area {
+            text-align: center;
+            display: none;
+        }
+
+        .score-display {
+            font-size: 3em;
+            color: var(--primary-green);
+            margin: 20px 0;
+        }
+
+        .incorrect-bg { background-color: var(--wrong-red) !important; }
+        .correct-bg { background-color: var(--correct-green) !important; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>👹 Kipper and the Trolls Quiz 🎂</h1>
+
+    <div class="section-title">Part 1: Multiple Choice (選擇題)</div>
+    
+    <div class="question-card" id="q1">
+        <p>1. What did Mum want to make in the kitchen? <button class="btn-speak" onclick="speak('What did Mum want to make in the kitchen?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A. A sandwich</label>
+            <label><input type="radio" name="q1" value="B"> B. A cake</label>
+            <label><input type="radio" name="q1" value="C"> C. Bug pie</label>
+        </div>
+        <div class="correct-answer">Correct Answer: B. A cake</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <p>2. Why did Kipper run out of the room? <button class="btn-speak" onclick="speak('Why did Kipper run out of the room?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A. He was hungry</label>
+            <label><input type="radio" name="q2" value="B"> B. He wanted to play with Biff</label>
+            <label><input type="radio" name="q2" value="C"> C. He didn't want Mum to cut his nails</label>
+        </div>
+        <div class="correct-answer">Correct Answer: C. He didn't want Mum to cut his nails</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <p>3. Where did the magic take Biff and Kipper? <button class="btn-speak" onclick="speak('Where did the magic take Biff and Kipper?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> A. To a stream with a bridge</label>
+            <label><input type="radio" name="q3" value="B"> B. To a dark forest</label>
+            <label><input type="radio" name="q3" value="C"> C. To Gran's house</label>
+        </div>
+        <div class="correct-answer">Correct Answer: A. To a stream with a bridge</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <p>4. What was the color of the key when it glowed? <button class="btn-speak" onclick="speak('What was the color of the key when it glowed?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A. Blue</label>
+            <label><input type="radio" name="q4" value="B"> B. Green</label>
+            <label><input type="radio" name="q4" value="C"> C. Golden/Yellow (Glow)</label>
+        </div>
+        <div class="correct-answer">Correct Answer: C. Golden/Yellow (Glow)</div>
+    </div>
+
+    <div class="section-title">Part 2: Fill in the Blanks (選填題)</div>
+    <div class="word-bank">
+        <span class="word-item">troll</span>
+        <span class="word-item">dirty</span>
+        <span class="word-item">slug</span>
+        <span class="word-item">party</span>
+        <span class="word-item">slime</span>
+    </div>
+
+    <div class="question-card" id="q5">
+        <p>5. Biff looked at Kipper and said, "Yuk! You look like a ______." <button class="btn-speak" onclick="speak('Biff looked at Kipper and said, Yuk! You look like a troll.')">🔊</button></p>
+        <input type="text" id="ans5" placeholder="Type word here...">
+        <div class="correct-answer">Correct Answer: troll</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <p>6. The trolls wanted to have a ______ but nobody wanted to come. <button class="btn-speak" onclick="speak('The trolls wanted to have a party but nobody wanted to come.')">🔊</button></p>
+        <input type="text" id="ans6" placeholder="Type word here...">
+        <div class="correct-answer">Correct Answer: party</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <p>7. The trolls had ______ jelly and ______ buns for food. <button class="btn-speak" onclick="speak('The trolls had slime jelly and slug buns for food.')">🔊</button></p>
+        <input type="text" id="ans7" placeholder="Type two words (e.g., slime, slug)">
+        <div class="correct-answer">Correct Answer: slime, slug</div>
+    </div>
+
+    <div class="section-title">Part 3: Short Answer (簡答題)</div>
+    
+    <div class="question-card" id="q8">
+        <p>8. What did Kipper do first when the magic took him home? <button class="btn-speak" onclick="speak('What did Kipper do first when the magic took him home?')">🔊</button></p>
+        <textarea id="ans8" rows="2"></textarea>
+        <div class="correct-answer">Example Answer: He washed his hands.</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <p>9. Describe the trolls' nails. <button class="btn-speak" onclick="speak('Describe the trolls nails.')">🔊</button></p>
+        <textarea id="ans9" rows="2"></textarea>
+        <div class="correct-answer">Example Answer: They were long and dirty.</div>
+    </div>
+
+    <div class="section-title">Part 4: Reading Aloud (朗讀題)</div>
+    <div class="question-card" id="q10">
+        <p>10. Please read this sentence aloud: <br><strong>"I'm not a troll. Trolls have dirty hands and long nails! Yuk!"</strong></p>
+        <button class="btn-submit" style="font-size: 1em; padding: 10px 20px;" onclick="speak('I am not a troll. Trolls have dirty hands and long nails! Yuk!')">▶️ Listen to Example</button>
+        <p><i>(Self-check: Did you read it clearly?)</i></p>
+        <div class="correct-answer" style="display:block;">Practice reading this to finish the quiz!</div>
+    </div>
+
+    <button class="btn-submit" onclick="submitQuiz()">Submit My Answers! ✨</button>
+
+    <div id="result-area">
+        <div class="score-display" id="final-score"></div>
+        <div id="cheer-message" style="font-size: 1.5em; margin-bottom: 20px;"></div>
+        <button class="btn-submit" style="background: #555;" onclick="window.location.reload()">Restart Quiz 🔄</button>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find a nice female English voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Fix for Chrome voices loading
+    window.speechSynthesis.onvoiceschanged = () => {};
+
+    function submitQuiz() {
+        let score = 0;
+        const total = 10;
+
+        // Part 1 logic
+        const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+        if(q1 === 'B') { markCorrect('q1'); score++; } else { markWrong('q1'); }
+
+        const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+        if(q2 === 'C') { markCorrect('q2'); score++; } else { markWrong('q2'); }
+
+        const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+        if(q3 === 'A') { markCorrect('q3'); score++; } else { markWrong('q3'); }
+
+        const q4 = document.querySelector('input[name="q4"]:checked')?.value;
+        if(q4 === 'C') { markCorrect('q4'); score++; } else { markWrong('q4'); }
+
+        // Part 2 logic
+        const ans5 = document.getElementById('ans5').value.toLowerCase().trim();
+        if(ans5 === 'troll') { markCorrect('q5'); score++; } else { markWrong('q5'); }
+
+        const ans6 = document.getElementById('ans6').value.toLowerCase().trim();
+        if(ans6 === 'party') { markCorrect('q6'); score++; } else { markWrong('q6'); }
+
+        const ans7 = document.getElementById('ans7').value.toLowerCase().trim();
+        if(ans7.includes('slime') && ans7.includes('slug')) { markCorrect('q7'); score++; } else { markWrong('q7'); }
+
+        // Part 3 logic (Keyword based check)
+        const ans8 = document.getElementById('ans8').value.toLowerCase();
+        if(ans8.includes('wash') || ans8.includes('hand')) { markCorrect('q8'); score++; } else { markWrong('q8'); }
+
+        const ans9 = document.getElementById('ans9').value.toLowerCase();
+        if(ans9.includes('long') && ans9.includes('dirty')) { markCorrect('q9'); score++; } else { markWrong('q9'); }
+
+        // Part 4 (Always give point for participation)
+        markCorrect('q10');
+        score++;
+
+        // Show Results
+        document.getElementById('result-area').style.display = 'block';
+        document.getElementById('final-score').innerText = `Score: ${score}/${total}`;
+        
+        let msg = "";
+        if(score === 10) msg = "Perfect! You are a Reading Star! 🌟";
+        else if(score >= 7) msg = "Great job! You remember the story well! 🎈";
+        else msg = "Good try! Let's read the story again! 📖";
+        document.getElementById('cheer-message').innerText = msg;
+
+        // Reveal all correct answers
+        document.querySelectorAll('.correct-answer').forEach(div => div.style.display = 'block');
+        
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function markCorrect(id) {
+        const el = document.getElementById(id);
+        el.classList.remove('incorrect-bg');
+        el.classList.add('correct-bg');
+        if(!el.querySelector('.feedback')) {
+            el.querySelector('p').innerHTML += ' <span class="feedback">✅ Correct</span>';
+        }
+    }
+
+    function markWrong(id) {
+        const el = document.getElementById(id);
+        el.classList.add('incorrect-bg');
+        if(!el.querySelector('.feedback')) {
+            el.querySelector('p').innerHTML += ' <span class="feedback">❌ Incorrect</span>';
+        }
+    }
+</script>
+
+</body>
+</html>

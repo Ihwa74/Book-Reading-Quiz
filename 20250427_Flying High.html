@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project X: Flying High Quiz</title>
+    <style>
+        :root {
+            --primary-green: #4CAF50;
+            --secondary-yellow: #FFEB3B;
+            --accent-orange: #FF9800;
+            --light-red: #FFEBEE;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fbe7;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 5px solid var(--secondary-yellow);
+        }
+
+        h1 {
+            color: var(--primary-green);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--secondary-yellow);
+            transition: all 0.3s ease;
+        }
+
+        .incorrect-bg {
+            background-color: var(--light-red) !important;
+        }
+
+        .word-bank {
+            background: #f0f4c3;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 2px dashed var(--primary-green);
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 15px;
+            background: white;
+            border-radius: 20px;
+            color: var(--primary-green);
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .correct-ans {
+            color: #2e7d32;
+            background: #e8f5e9;
+            padding: 8px;
+            border-radius: 5px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .btn-speak {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        #submit-btn {
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto;
+            box-shadow: 0 5px 0 #e68a00;
+        }
+
+        #submit-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #e68a00;
+        }
+
+        #result-area {
+            text-align: center;
+            font-size: 2em;
+            margin-top: 20px;
+            color: var(--primary-green);
+        }
+
+        .emoji { font-size: 1.2em; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚀 Flying High Quiz 🐞</h1>
+    <p style="text-align:center;">幫助 Cat 和 Tiger 完成他們的飛行比賽吧！</p>
+
+    <h2>Part 1: Choose the Best Answer 🧐</h2>
+
+    <div class="question-block" id="q1">
+        <p>1. Whose micro-copter did Tiger take? <button class="btn-speak" onclick="speak('Whose micro-copter did Tiger take?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A) Cat's</label>
+            <label><input type="radio" name="q1" value="B"> B) Max's</label>
+            <label><input type="radio" name="q1" value="C"> C) Ant's</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-ans">Correct Answer: B) Max's</div>
+    </div>
+
+    <div class="question-block" id="q2">
+        <p>2. What did Cat see that gave her an idea? <button class="btn-speak" onclick="speak('What did Cat see that gave her an idea?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A) A dark shadow of a dragonfly</label>
+            <label><input type="radio" name="q2" value="B"> B) A bird in the tree</label>
+            <label><input type="radio" name="q2" value="C"> C) A boat on the pond</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-ans">Correct Answer: A) A dark shadow of a dragonfly</div>
+    </div>
+
+    <div class="question-block" id="q3">
+        <p>3. Where did Cat and Tiger have their race? <button class="btn-speak" onclick="speak('Where did Cat and Tiger have their race?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> A) In the garden</label>
+            <label><input type="radio" name="q3" value="B"> B) Over the mountain</label>
+            <label><input type="radio" name="q3" value="C"> C) Across the pond</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-ans">Correct Answer: C) Across the pond</div>
+    </div>
+
+    <div class="question-block" id="q4">
+        <p>4. Why did Cat cry "Oh, no!" during the race? <button class="btn-speak" onclick="speak('Why did Cat cry Oh, no during the race?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A) She was falling off</label>
+            <label><input type="radio" name="q4" value="B"> B) She saw a bee and a bird</label>
+            <label><input type="radio" name="q4" value="C"> C) The dragonfly was too slow</label>
+        </div>
+        <div class="feedback"></div>
+        <div class="correct-ans">Correct Answer: B) She saw a bee and a bird</div>
+    </div>
+
+    <h2>Part 2: Word Bank Fun 📝</h2>
+    <div class="word-bank">
+        Word Bank: 
+        <span class="word-item">zig-zagged</span>
+        <span class="word-item">won</span>
+        <span class="word-item">back</span>
+        <span class="word-item">zoomed</span>
+        <span class="word-item">four</span>
+    </div>
+
+    <div class="question-block" id="q5">
+        <p>5. Tiger _______ up and down in the micro-copter. <button class="btn-speak" onclick="speak('Tiger blank up and down in the micro-copter.')">🔊</button></p>
+        <input type="text" id="ans5" placeholder="Type your answer here...">
+        <div class="feedback"></div>
+        <div class="correct-ans">Correct Answer: zoomed</div>
+    </div>
+
+    <div class="question-block" id="q6">
+        <p>6. Cat _______ on the dragonfly. <button class="btn-speak" onclick="speak('Cat blank on the dragonfly.')">🔊</button></p>
+        <input type="text" id="ans6" placeholder="Type your answer here...">
+        <div class="feedback"></div>
+        <div class="correct-ans">Correct Answer: zig-zagged</div>
+    </div>
+
+    <div class="question-block" id="q7">
+        <p>7. At the end, Cat said, "I _______!" <button class="btn-speak" onclick="speak('At the end, Cat said, I blank!')">🔊</button></p>
+        <input type="text" id="ans7" placeholder="Type your answer here...">
+        <div class="feedback"></div>
+        <div class="correct-ans">Correct Answer: won</div>
+    </div>
+
+    <h2>Part 3: Think and Write ✍️</h2>
+
+    <div class="question-block" id="q8">
+        <p>8. What do birds eat? (Answer based on the story) <button class="btn-speak" onclick="speak('What do birds eat?')">🔊</button></p>
+        <textarea id="ans8" rows="2" placeholder="Write a short sentence..."></textarea>
+        <div class="feedback"></div>
+        <div class="correct-ans">Example Answer: Birds eat dragonflies.</div>
+    </div>
+
+    <div class="question-block" id="q9">
+        <p>9. How many wings does a dragonfly have? <button class="btn-speak" onclick="speak('How many wings does a dragonfly have?')">🔊</button></p>
+        <input type="text" id="ans9" placeholder="Type the number or word...">
+        <div class="feedback"></div>
+        <div class="correct-ans">Example Answer: A dragonfly has four wings.</div>
+    </div>
+
+    <h2>Part 4: Read Out Loud 🗣️</h2>
+    <div class="question-block" id="q10">
+        <p>10. Click the button to listen, then read this sentence out loud: <br><br>
+        <strong>"The dragonfly zig-zagged away from the bird."</strong>
+        </p>
+        <button class="btn-speak" style="background:#4CAF50; color:white; padding:10px 20px; border-radius:10px;" onclick="speak('The dragonfly zig-zagged away from the bird.')">▶️ Listen to Example</button>
+        <p>Did you read it clearly? <input type="checkbox" id="ans10"> (Check if yes!)</p>
+        <div class="feedback"></div>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit My Answers! 🏁</button>
+
+    <div id="result-area"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.lang = 'en-US';
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+
+        // Try to find a nice female voice
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Reset feedback and styles
+        document.querySelectorAll('.question-block').forEach(block => {
+            block.classList.remove('incorrect-bg');
+            block.querySelector('.feedback').style.display = 'block';
+            block.querySelector('.correct-ans').style.display = 'block';
+        });
+
+        // Q1-Q4 Multiple Choice
+        const answers = { q1: 'B', q2: 'A', q3: 'C', q4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const q = document.querySelector(`input[name="q${i}"]:checked`);
+            const feedback = document.querySelector(`#q${i} .feedback`);
+            if (q && q.value === answers[`q${i}`]) {
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'green';
+                score++;
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'red';
+                document.getElementById(`q${i}`).classList.add('incorrect-bg');
+            }
+        }
+
+        // Q5-Q7 Fill in the Blanks
+        const fillAnswers = { 5: 'zoomed', 6: 'zig-zagged', 7: 'won' };
+        for (let i = 5; i <= 7; i++) {
+            const val = document.getElementById(`ans${i}`).value.trim().toLowerCase();
+            const feedback = document.querySelector(`#q${i} .feedback`);
+            if (val === fillAnswers[i]) {
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'green';
+                score++;
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'red';
+                document.getElementById(`q${i}`).classList.add('incorrect-bg');
+            }
+        }
+
+        // Q8-Q9 Short Answers (Keywords check)
+        const q8Val = document.getElementById('ans8').value.toLowerCase();
+        const f8 = document.querySelector(`#q8 .feedback`);
+        if (q8Val.includes('dragonfl')) {
+            f8.innerHTML = '✅ Correct';
+            f8.style.color = 'green';
+            score++;
+        } else {
+            f8.innerHTML = '❌ Incorrect (Remember what Cat said!)';
+            f8.style.color = 'red';
+            document.getElementById('q8').classList.add('incorrect-bg');
+        }
+
+        const q9Val = document.getElementById('ans9').value.toLowerCase();
+        const f9 = document.querySelector(`#q9 .feedback`);
+        if (q9Val.includes('4') || q9Val.includes('four')) {
+            f9.innerHTML = '✅ Correct';
+            f9.style.color = 'green';
+            score++;
+        } else {
+            f9.innerHTML = '❌ Incorrect';
+            f9.style.color = 'red';
+            document.getElementById('q9').classList.add('incorrect-bg');
+        }
+
+        // Q10 Reading
+        const q10Checked = document.getElementById('ans10').checked;
+        const f10 = document.querySelector(`#q10 .feedback`);
+        if (q10Checked) {
+            f10.innerHTML = '✅ Wonderful Reading!';
+            f10.style.color = 'green';
+            score++;
+        } else {
+            f10.innerHTML = '👉 Keep practicing!';
+            f10.style.color = 'orange';
+        }
+
+        // Final Score
+        const resultArea = document.getElementById('result-area');
+        let message = "";
+        if (score === 10) message = "Perfect! You are a Flying High Hero! 🏆";
+        else if (score >= 7) message = "Great job! You're almost there! 🌟";
+        else message = "Good try! Read the story again and you'll do even better! 📚";
+
+        resultArea.innerHTML = `Score: ${score}/${total}<br><span style="font-size:0.6em">${message}</span>`;
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    // Initialize voices
+    window.speechSynthesis.getVoices();
+</script>
+
+</body>
+</html>

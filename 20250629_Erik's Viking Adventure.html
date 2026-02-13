@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erik's Viking Adventure - Reading Quiz</title>
+    <style>
+        :root {
+            --viking-yellow: #FFD700;
+            --viking-green: #4CAF50;
+            --viking-blue: #2196F3;
+            --viking-red: #f44336;
+            --bg-color: #f0f8ff;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 5px solid var(--viking-yellow);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header-icon {
+            font-size: 3em;
+            display: block;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #fff;
+        }
+
+        .part-title {
+            background-color: var(--viking-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .word-bank {
+            background: #fff9c4;
+            padding: 15px;
+            border: 2px dashed #fbc02d;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s;
+            border-left: 5px solid var(--viking-blue);
+        }
+
+        .incorrect-bg {
+            background-color: #ffebee !important;
+        }
+
+        .feedback-icon {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer {
+            display: none;
+            color: var(--viking-green);
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--viking-blue);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: transform 0.2s;
+        }
+
+        #submit-btn:hover {
+            transform: scale(1.02);
+            background-color: #1976D2;
+        }
+
+        #result-area {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 3px solid #eee;
+        }
+
+        #score-display {
+            font-size: 3em;
+            color: var(--viking-blue);
+            margin-bottom: 10px;
+        }
+
+        .encouragement {
+            font-size: 1.5em;
+            color: var(--viking-green);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <span class="header-icon">⛵🛡️</span>
+    <h1>Erik's Viking Adventure</h1>
+    <p style="text-align: center;">Welcome, young Viking! Let's test your adventure knowledge!</p>
+
+    <section id="part1">
+        <div class="part-title">Part 1: Multiple Choice (选择题)</div>
+        
+        <div class="question-block" id="q1">
+            <p>1. What does Erik's dad do? <button class="audio-btn" onclick="speak('What does Eriks dad do?')">🔊</button> <span class="feedback-icon"></span></p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. He is a teacher.</label>
+                <label><input type="radio" name="q1" value="B"> B. He is a Viking trader.</label>
+                <label><input type="radio" name="q1" value="C"> C. He is a storyteller only.</label>
+            </div>
+            <div class="correct-answer">Correct Answer: B. He is a Viking trader.</div>
+        </div>
+
+        <div class="question-block" id="q2">
+            <p>2. What items are they loading onto the ship at the harbour? <button class="audio-btn" onclick="speak('What items are they loading onto the ship at the harbour?')">🔊</button> <span class="feedback-icon"></span></p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> A. Gold and silver.</label>
+                <label><input type="radio" name="q2" value="B"> B. Fur and leather.</label>
+                <label><input type="radio" name="q2" value="C"> C. Fish and bread.</label>
+            </div>
+            <div class="correct-answer">Correct Answer: B. Fur and leather.</div>
+        </div>
+
+        <div class="question-block" id="q3">
+            <p>3. Where do Erik and the Vikings sleep on the ship? <button class="audio-btn" onclick="speak('Where do Erik and the Vikings sleep on the ship?')">🔊</button> <span class="feedback-icon"></span></p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. In a bedroom below the ship.</label>
+                <label><input type="radio" name="q3" value="B"> B. Inside a tent.</label>
+                <label><input type="radio" name="q3" value="C"> C. On the deck.</label>
+            </div>
+            <div class="correct-answer">Correct Answer: C. On the deck.</div>
+        </div>
+
+        <div class="question-block" id="q4">
+            <p>4. What did Erik use to buy presents for his mum and sister? <button class="audio-btn" onclick="speak('What did Erik use to buy presents for his mum and sister?')">🔊</button> <span class="feedback-icon"></span></p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. Gold rings.</label>
+                <label><input type="radio" name="q4" value="B"> B. Silver coins.</label>
+                <label><input type="radio" name="q4" value="C"> C. Fish bones.</label>
+            </div>
+            <div class="correct-answer">Correct Answer: B. Silver coins.</div>
+        </div>
+    </section>
+
+    <section id="part2">
+        <div class="part-title">Part 2: Fill in the Blanks (選填題)</div>
+        <div class="word-bank">
+            Word Bank: <span class="word-item">oars</span> | <span class="word-item">bone</span> | <span class="word-item">blue</span> | <span class="word-item">storm</span> | <span class="word-item">landmarks</span>
+        </div>
+
+        <div class="question-block" id="q5">
+            <p>5. If it isn't windy, the Vikings row with the <input type="text" id="q5-input" placeholder="...">. <button class="audio-btn" onclick="speak('If it isnt windy, the Vikings row with the...')">🔊</button> <span class="feedback-icon"></span></p>
+            <div class="correct-answer">Correct Answer: oars</div>
+        </div>
+
+        <div class="question-block" id="q6">
+            <p>6. On the way back, there is a big <input type="text" id="q6-input" placeholder="..."> and Erik is afraid of thunder. <button class="audio-btn" onclick="speak('On the way back, there is a big blank and Erik is afraid of thunder.')">🔊</button> <span class="feedback-icon"></span></p>
+            <div class="correct-answer">Correct Answer: storm</div>
+        </div>
+
+        <div class="question-block" id="q7">
+            <p>7. Erik has a new tunic. His mum used plants to make it <input type="text" id="q7-input" placeholder="...">. <button class="audio-btn" onclick="speak('Erik has a new tunic. His mum used plants to make it...')">🔊</button> <span class="feedback-icon"></span></p>
+            <div class="correct-answer">Correct Answer: blue</div>
+        </div>
+    </section>
+
+    <section id="part3">
+        <div class="part-title">Part 3: Short Answer (簡答題)</div>
+        
+        <div class="question-block" id="q8">
+            <p>8. What were Viking toys made of? <button class="audio-btn" onclick="speak('What were Viking toys made of?')">🔊</button> <span class="feedback-icon"></span></p>
+            <textarea id="q8-input" rows="2" placeholder="Write your answer here..."></textarea>
+            <div class="correct-answer">Example Answer: They were made of bone or wood.</div>
+        </div>
+
+        <div class="question-block" id="q9">
+            <p>9. What are Erik's mum and granny cooking for the feast? <button class="audio-btn" onclick="speak('What are Eriks mum and granny cooking for the feast?')">🔊</button> <span class="feedback-icon"></span></p>
+            <textarea id="q9-input" rows="2" placeholder="Write your answer here..."></textarea>
+            <div class="correct-answer">Example Answer: They are cooking beef stew.</div>
+        </div>
+    </section>
+
+    <section id="part4">
+        <div class="part-title">Part 4: Read Aloud (朗讀題)</div>
+        <div class="question-block" id="q10">
+            <p>10. Read this sentence aloud: <br><strong>"Dad is a storyteller. He's talking about our trip. It was my first Viking adventure!"</strong> 
+            <br><br>Listen to the example: <button class="audio-btn" style="background:#f0f0f0; padding:10px; border-radius:10px;" onclick="speak('Dad is a storyteller. Hes talking about our trip. It was my first Viking adventure!')">▶️ Play Example Audio</button>
+            <span class="feedback-icon"></span></p>
+            <p><i>(Self-check: Did you read it clearly?)</i></p>
+            <div class="correct-answer">Great job reading! You sound like a true Viking!</div>
+        </div>
+    </section>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit My Quiz! 🏹</button>
+
+    <div id="result-area">
+        <div id="score-display"></div>
+        <div class="encouragement" id="message"></div>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find a nice female English voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Reset styles
+        document.querySelectorAll('.question-block').forEach(block => {
+            block.classList.remove('incorrect-bg');
+            block.querySelector('.feedback-icon').innerHTML = '';
+            block.querySelector('.correct-answer').style.display = 'none';
+        });
+
+        // Q1-Q4 Logic
+        const answers = { q1: 'B', q2: 'B', q3: 'C', q4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const qName = 'q' + i;
+            const selected = document.querySelector(`input[name="${qName}"]:checked`);
+            const block = document.getElementById(qName);
+            if (selected && selected.value === answers[qName]) {
+                score++;
+                block.querySelector('.feedback-icon').innerHTML = '✅ Correct';
+            } else {
+                block.classList.add('incorrect-bg');
+                block.querySelector('.feedback-icon').innerHTML = '❌ Incorrect';
+                block.querySelector('.correct-answer').style.display = 'block';
+            }
+        }
+
+        // Q5-Q7 Fill in blanks
+        const fillAnswers = { q5: 'oars', q6: 'storm', q7: 'blue' };
+        for (let i = 5; i <= 7; i++) {
+            const qId = 'q' + i;
+            const input = document.getElementById(qId + '-input').value.toLowerCase().trim();
+            const block = document.getElementById(qId);
+            if (input === fillAnswers[qId]) {
+                score++;
+                block.querySelector('.feedback-icon').innerHTML = '✅ Correct';
+            } else {
+                block.classList.add('incorrect-bg');
+                block.querySelector('.feedback-icon').innerHTML = '❌ Incorrect';
+                block.querySelector('.correct-answer').style.display = 'block';
+            }
+        }
+
+        // Q8-Q9 Short Answer (Keyword check)
+        const q8Input = document.getElementById('q8-input').value.toLowerCase();
+        const block8 = document.getElementById('q8');
+        if (q8Input.includes('bone') || q8Input.includes('wood')) {
+            score++;
+            block8.querySelector('.feedback-icon').innerHTML = '✅ Good Effort!';
+        } else {
+            block8.classList.add('incorrect-bg');
+            block8.querySelector('.feedback-icon').innerHTML = '❌ Keep Trying!';
+        }
+        block8.querySelector('.correct-answer').style.display = 'block';
+
+        const q9Input = document.getElementById('q9-input').value.toLowerCase();
+        const block9 = document.getElementById('q9');
+        if (q9Input.includes('beef') || q9Input.includes('stew')) {
+            score++;
+            block9.querySelector('.feedback-icon').innerHTML = '✅ Good Effort!';
+        } else {
+            block9.classList.add('incorrect-bg');
+            block9.querySelector('.feedback-icon').innerHTML = '❌ Keep Trying!';
+        }
+        block9.querySelector('.correct-answer').style.display = 'block';
+
+        // Q10 Read Aloud (Give point for attempt)
+        score++; 
+        document.getElementById('q10').querySelector('.feedback-icon').innerHTML = '✅ Completed!';
+        document.getElementById('q10').querySelector('.correct-answer').style.display = 'block';
+
+        // Show Results
+        document.getElementById('result-area').style.display = 'block';
+        document.getElementById('score-display').innerText = `Score: ${score}/${total}`;
+        
+        let msg = "";
+        if(score >= 9) msg = "Incredible! You are a Viking Master! 👑";
+        else if(score >= 7) msg = "Great job! Ready for your next voyage! 🛶";
+        else msg = "Good try! Let's read the adventure again! 📖";
+        document.getElementById('message').innerText = msg;
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club: The Magic Paintbrush Quiz</title>
+    <style>
+        :root {
+            --primary-orange: #f39c12;
+            --secondary-blue: #3498db;
+            --bg-color: #fef9e7;
+            --correct-green: #2ecc71;
+            --wrong-red: #e74c3c;
+            --card-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-white);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 5px solid #f1c40f;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-orange);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            background-color: var(--secondary-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .word-bank {
+            border: 3px dashed var(--secondary-blue);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            background: #eaf2f8;
+        }
+
+        .word-item {
+            display: inline-block;
+            background: white;
+            padding: 5px 15px;
+            margin: 5px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: var(--secondary-blue);
+        }
+
+        .question-card {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 20px;
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .incorrect-bg {
+            background-color: #ffdada !important;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer-box {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #d4edda;
+            border-left: 5px solid var(--correct-green);
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            vertical-align: middle;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        button.submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: transform 0.2s;
+        }
+
+        button.submit-btn:hover {
+            transform: scale(1.02);
+            background-color: #e67e22;
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+
+        #score-text {
+            font-size: 3rem;
+            color: var(--primary-orange);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎨 The Magic Paintbrush 🖌️</h1>
+    <p style="text-align: center;">Let's see how much you remember from the story!</p>
+
+    <div class="section-title">Part 1: Choose the Best Answer (Multiple Choice)</div>
+    
+    <div class="question-card" id="q1">
+        <p>1. What was Ho's job? <button class="audio-btn" onclick="speak('What was Ho s job?')">🔊</button></p>
+        <input type="radio" name="q1" value="A"> A. He was a rich farmer.<br>
+        <input type="radio" name="q1" value="B"> B. He looked after cattle.<br>
+        <input type="radio" name="q1" value="C"> C. He made bread.<br>
+        <div class="correct-answer-box">Correct Answer: B. He looked after cattle.</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <p>2. Who gave Ho the golden paintbrush? <button class="audio-btn" onclick="speak('Who gave Ho the golden paintbrush?')">🔊</button></p>
+        <input type="radio" name="q2" value="A"> A. A rich farmer.<br>
+        <input type="radio" name="q2" value="B"> B. A young child.<br>
+        <input type="radio" name="q2" value="C"> C. A thin old man.<br>
+        <div class="correct-answer-box">Correct Answer: C. A thin old man.</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <p>3. What happened when Ho painted the hay? <button class="audio-btn" onclick="speak('What happened when Ho painted the hay?')">🔊</button></p>
+        <input type="radio" name="q3" value="A"> A. It became real.<br>
+        <input type="radio" name="q3" value="B"> B. It stayed on the paper.<br>
+        <input type="radio" name="q3" value="C"> C. It blew away in the wind.<br>
+        <div class="correct-answer-box">Correct Answer: A. It became real.</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <p>4. Why did Ho paint a blue stream? <button class="audio-btn" onclick="speak('Why did Ho paint a blue stream?')">🔊</button></p>
+        <input type="radio" name="q4" value="A"> A. To wash his paintbrush.<br>
+        <input type="radio" name="q4" value="B"> B. Because the stream was dry and animals were thirsty.<br>
+        <input type="radio" name="q4" value="C"> C. To help the farmer swim.<br>
+        <div class="correct-answer-box">Correct Answer: B. Because the stream was dry and animals were thirsty.</div>
+    </div>
+
+    <div class="section-title">Part 2: Word Bank (Fill in the Blanks)</div>
+    <div class="word-bank">
+        <span class="word-item">jail</span>
+        <span class="word-item">paints</span>
+        <span class="word-item">greedy</span>
+        <span class="word-item">real</span>
+        <span class="word-item">golden</span>
+    </div>
+
+    <div class="question-card" id="q5">
+        <p>5. Ho made his own <input type="text" id="ans5"> from plants, berries and mud. <button class="audio-btn" onclick="speak('Ho made his own blank from plants, berries and mud.')">🔊</button></p>
+        <div class="correct-answer-box">Correct Answer: paints</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <p>6. The rich farmer was <input type="text" id="ans6"> and wanted all the gold. <button class="audio-btn" onclick="speak('The rich farmer was blank and wanted all the gold.')">🔊</button></p>
+        <div class="correct-answer-box">Correct Answer: greedy</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <p>7. The farmer put Ho in <input type="text" id="ans7"> and took the brush. <button class="audio-btn" onclick="speak('The farmer put Ho in blank and took the brush.')">🔊</button></p>
+        <div class="correct-answer-box">Correct Answer: jail</div>
+    </div>
+
+    <div class="section-title">Part 3: Short Answer (Write 1-2 words)</div>
+
+    <div class="question-card" id="q8">
+        <p>8. What did Ho paint for the farmer to go across the sea? <button class="audio-btn" onclick="speak('What did Ho paint for the farmer to go across the sea?')">🔊</button></p>
+        <input type="text" id="ans8" placeholder="Type here...">
+        <div class="correct-answer-box">Example Answer: A ship</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <p>9. What did Ho paint to blow the farmer far away? <button class="audio-btn" onclick="speak('What did Ho paint to blow the farmer far away?')">🔊</button></p>
+        <input type="text" id="ans9" placeholder="Type here...">
+        <div class="correct-answer-box">Example Answer: A gale (or a strong wind)</div>
+    </div>
+
+    <div class="section-title">Part 4: Read Aloud (Speaking)</div>
+    <div class="question-card" id="q10">
+        <p>10. Click the button to hear the sentence, then try to say it out loud! 🗣️</p>
+        <p style="font-size: 1.2rem; background: #fff; padding: 15px; border-radius: 10px; border: 2px solid var(--primary-orange);">
+            "The magic paintbrush became real!"
+        </p>
+        <button class="submit-btn" style="width: auto; padding: 10px 20px; font-size: 1rem; margin: 10px auto;" onclick="speak('The magic paintbrush became real!')">Listen to Example 👂</button>
+        <div class="correct-answer-box">Tip: Focus on the word "Magic" and "Real"!</div>
+    </div>
+
+    <button class="submit-btn" onclick="checkAnswers()">Check My Score! 📝</button>
+
+    <div id="result-area">
+        <div id="score-text"></div>
+        <p id="praise-msg" style="font-size: 1.5rem;"></p>
+        <button class="submit-btn" style="background-color: var(--secondary-blue);" onclick="location.reload()">Try Again 🔄</button>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find a preferred voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Reset display
+        document.querySelectorAll('.feedback').forEach(f => f.remove());
+        document.querySelectorAll('.question-card').forEach(c => c.classList.remove('incorrect-bg'));
+        document.querySelectorAll('.correct-answer-box').forEach(b => b.style.display = 'block');
+
+        // Q1-Q4 Logic
+        const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+        if(q1 === 'B') score++; else markWrong('q1');
+
+        const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+        if(q2 === 'C') score++; else markWrong('q2');
+
+        const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+        if(q3 === 'A') score++; else markWrong('q3');
+
+        const q4 = document.querySelector('input[name="q4"]:checked')?.value;
+        if(q4 === 'B') score++; else markWrong('q4');
+
+        // Q5-Q7 Logic
+        if(document.getElementById('ans5').value.trim().toLowerCase() === 'paints') score++; else markWrong('q5');
+        if(document.getElementById('ans6').value.trim().toLowerCase() === 'greedy') score++; else markWrong('q6');
+        if(document.getElementById('ans7').value.trim().toLowerCase() === 'jail') score++; else markWrong('q7');
+
+        // Q8-Q9 Logic (Simple keyword check)
+        const ans8 = document.getElementById('ans8').value.trim().toLowerCase();
+        if(ans8.includes('ship')) score++; else markWrong('q8');
+
+        const ans9 = document.getElementById('ans9').value.trim().toLowerCase();
+        if(ans9.includes('gale') || ans9.includes('wind')) score++; else markWrong('q9');
+
+        // Q10 is always bonus/participation for this static HTML
+        score++; 
+
+        // Show Result
+        document.getElementById('result-area').style.display = 'block';
+        document.getElementById('score-text').innerText = `Score: ${score}/${total}`;
+        
+        let praise = "";
+        if(score === 10) praise = "You are a Magic Painter! 🌟 Perfect!";
+        else if(score >= 7) praise = "Great job! You remember the story well! 🎨";
+        else praise = "Good try! Read the story again to find the magic! 📖";
+        document.getElementById('praise-msg').innerText = praise;
+
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function markWrong(id) {
+        const card = document.getElementById(id);
+        card.classList.add('incorrect-bg');
+        const p = card.querySelector('p');
+        const span = document.createElement('span');
+        span.className = 'feedback';
+        span.innerText = ' ❌ Incorrect';
+        span.style.color = 'var(--wrong-red)';
+        p.appendChild(span);
+    }
+
+    // Add correct marks for right answers
+    function markCorrect(id) {
+        const card = document.getElementById(id);
+        const p = card.querySelector('p');
+        const span = document.createElement('span');
+        span.className = 'feedback';
+        span.innerText = ' ✅ Correct';
+        span.style.color = 'var(--correct-green)';
+        p.appendChild(span);
+    }
+    
+    // Modify checkAnswers to add correct marks
+    const originalCheck = checkAnswers;
+    checkAnswers = function() {
+        originalCheck();
+        // After checking, add green check to those not marked wrong
+        document.querySelectorAll('.question-card').forEach(card => {
+            if(!card.classList.contains('incorrect-bg')) {
+                const p = card.querySelector('p');
+                if(!p.querySelector('.feedback')) {
+                    const span = document.createElement('span');
+                    span.className = 'feedback';
+                    span.innerText = ' ✅ Correct';
+                    span.style.color = 'var(--correct-green)';
+                    p.appendChild(span);
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

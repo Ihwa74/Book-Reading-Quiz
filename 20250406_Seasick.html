@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasick - Interactive Reading Quiz</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #FFEB3B;
+            --bg-color: #F1F8E9;
+            --text-color: #333;
+            --wrong-bg: #FFEBEE;
+            --correct-color: #2E7D32;
+            --incorrect-color: #C62828;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border: 4px solid #FBC02D;
+        }
+
+        h1 { margin: 0; font-size: 2.5rem; color: #5D4037; }
+        h2 { border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; color: var(--primary-color); }
+
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #E8F5E9;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .word-bank {
+            background-color: #FFF9C4;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border: 2px dashed #FBC02D;
+        }
+
+        .word-item { background: white; padding: 5px 15px; border-radius: 20px; }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #DDD;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background: #FAFAFA;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .feedback { font-weight: bold; margin-top: 10px; display: none; }
+        .correct-answer { color: var(--correct-color); display: none; margin-top: 5px; font-weight: bold; }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            font-size: 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #388E3C;
+            margin-top: 30px;
+        }
+
+        .btn-submit:active { transform: translateY(3px); box-shadow: 0 2px 0 #388E3C; }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            display: none;
+            background: var(--secondary-color);
+            border-radius: 20px;
+        }
+
+        .incorrect-bg { background-color: var(--wrong-bg) !important; border-color: #EF9A9A !important; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>⛵ Seasick Reading Quiz 🌊</h1>
+    <p>Let's see how much you remember from Biff, Chip & Kipper!</p>
+</div>
+
+<div class="quiz-container">
+    <form id="quizForm">
+        <h2>Part 1: Choose the Best Answer 🧐</h2>
+        
+        <div class="question-block" id="q1">
+            <p>1. What is the name of Gran's beach hut? <button type="button" class="audio-btn" onclick="speak('What is the name of Grans beach hut?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="Sandy Feet"> Sandy Feet</label>
+                <label><input type="radio" name="q1" value="Jolly Jean"> Jolly Jean</label>
+                <label><input type="radio" name="q1" value="Sea Hut"> Sea Hut</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: Sandy Feet</div>
+        </div>
+
+        <div class="question-block" id="q2">
+            <p>2. How many seats are inside Gran's hut? <button type="button" class="audio-btn" onclick="speak('How many seats are inside Grans hut?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="4"> 4</label>
+                <label><input type="radio" name="q2" value="6"> 6</label>
+                <label><input type="radio" name="q2" value="8"> 8</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: 6</div>
+        </div>
+
+        <div class="question-block" id="q3">
+            <p>3. What did Chip see from the boat? <button type="button" class="audio-btn" onclick="speak('What did Chip see from the boat?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A whale"> A whale</label>
+                <label><input type="radio" name="q3" value="A seagull"> A seagull</label>
+                <label><input type="radio" name="q3" value="A seal"> A seal</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: A seal</div>
+        </div>
+
+        <div class="question-block" id="q4">
+            <p>4. Why did the children feel sick? <button type="button" class="audio-btn" onclick="speak('Why did the children feel sick?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="Too much jelly and cream"> Too much jelly and cream</label>
+                <label><input type="radio" name="q4" value="The boat was too fast"> The boat was too fast</label>
+                <label><input type="radio" name="q4" value="It was too hot"> It was too hot</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: Too much jelly and cream</div>
+        </div>
+
+        <h2>Part 2: Word Bank 🔠</h2>
+        <div class="word-bank">
+            <span class="word-item">choppy</span>
+            <span class="word-item">Jolly Jean</span>
+            <span class="word-item">picnic</span>
+            <span class="word-item">beans</span>
+            <span class="word-item">cheese</span>
+        </div>
+
+        <div class="question-block" id="q5">
+            <p>5. They had a _______ in the hut. <button type="button" class="audio-btn" onclick="speak('They had a blank in the hut.')">🔊</button></p>
+            <input type="text" id="ans5" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: picnic</div>
+        </div>
+
+        <div class="question-block" id="q6">
+            <p>6. Gran's boat is called _______. <button type="button" class="audio-btn" onclick="speak('Grans boat is called blank.')">🔊</button></p>
+            <input type="text" id="ans6" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: Jolly Jean</div>
+        </div>
+
+        <div class="question-block" id="q7">
+            <p>7. The sea was _______ and the boat went up and down. <button type="button" class="audio-btn" onclick="speak('The sea was blank and the boat went up and down.')">🔊</button></p>
+            <input type="text" id="ans7" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="correct-answer">Correct Answer: choppy</div>
+        </div>
+
+        <h2>Part 3: Look and Write ✍️</h2>
+
+        <div class="question-block" id="q8">
+            <p>8. What food did Biff call a "feast"? <button type="button" class="audio-btn" onclick="speak('What food did Biff call a feast?')">🔊</button></p>
+            <textarea id="ans8" rows="2" placeholder="Write your answer..."></textarea>
+            <div class="feedback"></div>
+            <div class="correct-answer">Example Answer: Cheese rolls, jelly, and cream.</div>
+        </div>
+
+        <div class="question-block" id="q9">
+            <p>9. At the end, what did Gran want to cook for the children? <button type="button" class="audio-btn" onclick="speak('At the end, what did Gran want to cook for the children?')">🔊</button></p>
+            <textarea id="ans9" rows="2" placeholder="Write your answer..."></textarea>
+            <div class="feedback"></div>
+            <div class="correct-answer">Example Answer: She wanted to cook beans on toast.</div>
+        </div>
+
+        <h2>Part 4: Read Out Loud 🗣️</h2>
+        <div class="question-block" id="q10">
+            <p>10. Please read this sentence: <br><strong>"My tummy feels funny," said Wilma.</strong></p>
+            <button type="button" class="btn-submit" style="background:#2196F3; font-size:1rem; padding:10px; width:auto; margin:10px 0;" onclick="speak('My tummy feels funny, said Wilma.')">▶️ Listen to Example</button>
+            <p><i>Did you read it clearly?</i></p>
+            <div class="options">
+                <label><input type="radio" name="q10" value="Yes"> Yes, I did! ✅</label>
+                <label><input type="radio" name="q10" value="No"> I need more practice! 🔄</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="correct-answer">Great job reading!</div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Check My Score! 🌟</button>
+    </form>
+
+    <div id="result-area">
+        <h2 id="final-score" style="font-size: 3rem;">Score: 0/10</h2>
+        <p id="encouragement" style="font-size: 1.5rem;"></p>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find a natural female voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Load voices for first time
+    window.speechSynthesis.onvoiceschanged = () => {};
+
+    function submitQuiz() {
+        let score = 0;
+        const answers = {
+            q1: "Sandy Feet",
+            q2: "6",
+            q3: "A seal",
+            q4: "Too much jelly and cream",
+            ans5: "picnic",
+            ans6: "Jolly Jean",
+            ans7: "choppy"
+        };
+
+        // Part 1: Radio Buttons
+        for(let i=1; i<=4; i++) {
+            const q = document.querySelector(`input[name="q${i}"]:checked`);
+            const block = document.getElementById(`q${i}`);
+            const feedback = block.querySelector('.feedback');
+            const correctDiv = block.querySelector('.correct-answer');
+            
+            feedback.style.display = "block";
+            correctDiv.style.display = "block";
+            
+            if(q && q.value === answers[`q${i}`]) {
+                score++;
+                feedback.innerHTML = "✅ Correct";
+                feedback.style.color = "var(--correct-color)";
+                block.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = "❌ Incorrect";
+                feedback.style.color = "var(--incorrect-color)";
+                block.classList.add('incorrect-bg');
+            }
+        }
+
+        // Part 2: Fill in the Blanks
+        for(let i=5; i<=7; i++) {
+            const val = document.getElementById(`ans${i}`).value.trim().toLowerCase();
+            const block = document.getElementById(`q${i}`);
+            const feedback = block.querySelector('.feedback');
+            const correctDiv = block.querySelector('.correct-answer');
+
+            feedback.style.display = "block";
+            correctDiv.style.display = "block";
+
+            if(val === answers[`ans${i}`].toLowerCase()) {
+                score++;
+                feedback.innerHTML = "✅ Correct";
+                feedback.style.color = "var(--correct-color)";
+                block.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = "❌ Incorrect";
+                feedback.style.color = "var(--incorrect-color)";
+                block.classList.add('incorrect-bg');
+            }
+        }
+
+        // Part 3: Short Answer (Manual/Keyword check)
+        const keywords = { ans8: ['cheese', 'jelly', 'cream', 'rolls'], ans9: ['beans', 'toast'] };
+        for(let i=8; i<=9; i++) {
+            const val = document.getElementById(`ans${i}`).value.toLowerCase();
+            const block = document.getElementById(`q${i}`);
+            const feedback = block.querySelector('.feedback');
+            const correctDiv = block.querySelector('.correct-answer');
+            
+            feedback.style.display = "block";
+            correctDiv.style.display = "block";
+            
+            let found = keywords[`ans${i}`].some(k => val.includes(k));
+            if(found) {
+                score++;
+                feedback.innerHTML = "✅ Looking Good!";
+                feedback.style.color = "var(--correct-color)";
+                block.classList.remove('incorrect-bg');
+            } else {
+                feedback.innerHTML = "❌ Try to use keywords from the story!";
+                feedback.style.color = "var(--incorrect-color)";
+                block.classList.add('incorrect-bg');
+            }
+        }
+
+        // Part 4: Reading
+        const q10 = document.querySelector(`input[name="q10"]:checked`);
+        const block10 = document.getElementById(`q10`);
+        block10.querySelector('.feedback').style.display = "block";
+        block10.querySelector('.correct-answer').style.display = "block";
+        if(q10 && q10.value === "Yes") {
+            score++;
+            block10.querySelector('.feedback').innerHTML = "✅ Brilliant reading!";
+            block10.classList.remove('incorrect-bg');
+        } else {
+            block10.querySelector('.feedback').innerHTML = "❌ Keep practicing!";
+            block10.classList.add('incorrect-bg');
+        }
+
+        // Final Score display
+        const resultArea = document.getElementById('result-area');
+        const scoreEl = document.getElementById('final-score');
+        const encouragement = document.getElementById('encouragement');
+        
+        resultArea.style.display = "block";
+        scoreEl.innerHTML = `Score: ${score}/10`;
+        
+        if(score >= 8) encouragement.innerHTML = "Amazing! You are a reading superstar! 🏆";
+        else if(score >= 5) encouragement.innerHTML = "Good job! You have a great memory! 🎈";
+        else encouragement.innerHTML = "Keep reading and try again! You can do it! 💪";
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

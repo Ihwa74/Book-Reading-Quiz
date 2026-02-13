@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Club Quiz: A Monster Mistake</title>
+    <style>
+        :root {
+            --primary-green: #76ba1b;
+            --primary-yellow: #ffde59;
+            --soft-red: #ffe5e5;
+            --text-dark: #333;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
+            background-color: var(--primary-yellow);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-green);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0px #eee;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .section-title {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .question-card {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 2px solid #f0f0f0;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .incorrect-bg {
+            background-color: var(--soft-red) !important;
+            border-color: #ff9999 !important;
+        }
+
+        .word-bank {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px dashed var(--primary-green);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .word-tag {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .feedback-icon {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer-box {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            margin-top: 10px;
+            font-family: inherit;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            background: #f8f8f8;
+        }
+
+        .options label:hover {
+            background: #eee;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: transform 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-speak {
+            background-color: #2196F3;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            margin-left: 10px;
+            font-size: 0.8em;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--primary-green);
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .score-text {
+            font-size: 3em;
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        .emoji-decoration {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🦕 A Monster Mistake 🎨</h1>
+    <p class="subtitle">Interactive Reading Quiz</p>
+
+    <div class="section-title">Part 1: Choose the Best Answer 🧐</div>
+    
+    <div class="question-card" id="q1">
+        <p>1. Where did the family stay for their holiday? <button class="btn-speak" onclick="speak('Where did the family stay for their holiday?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A big hotel</label>
+            <label><input type="radio" name="q1" value="B"> A cottage by a lake</label>
+            <label><input type="radio" name="q1" value="C"> A tent in the woods</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: B (A cottage by a lake)</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <p>2. What did Gran paint a picture of first? <button class="btn-speak" onclick="speak('What did Gran paint a picture of first?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A big monster</label>
+            <label><input type="radio" name="q2" value="B"> A beautiful boat</label>
+            <label><input type="radio" name="q2" value="C"> Mum reading a book</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: A (A big monster)</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <p>3. Who went shopping with Mum? <button class="btn-speak" onclick="speak('Who went shopping with Mum?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> Biff</label>
+            <label><input type="radio" name="q3" value="B"> Chip</label>
+            <label><input type="radio" name="q3" value="C"> Kipper</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: C (Kipper)</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <p>4. What did Kipper buy for Dad? <button class="btn-speak" onclick="speak('What did Kipper buy for Dad?')">🔊</button></p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A monster toy</label>
+            <label><input type="radio" name="q4" value="B"> A postcard</label>
+            <label><input type="radio" name="q4" value="C"> A box of erasers</label>
+        </div>
+        <div class="correct-answer-box">Correct Answer: B (A postcard)</div>
+    </div>
+
+    <div class="section-title">Part 2: Word Bank 🔠</div>
+    <div class="word-bank">
+        <span class="word-tag">monster</span>
+        <span class="word-tag">joke</span>
+        <span class="word-tag">tyres</span>
+        <span class="word-tag">rope</span>
+        <span class="word-tag">fishing</span>
+    </div>
+
+    <div class="question-card" id="q5">
+        <p>5. Biff and Kipper went <input type="text" id="ans5" placeholder="..."> by the lake. <button class="btn-speak" onclick="speak('Biff and Kipper went fishing by the lake.')">🔊</button></p>
+        <div class="correct-answer-box">Correct Answer: fishing</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <p>6. Gran used old <input type="text" id="ans6" placeholder="..."> and paint to make a fake monster. <button class="btn-speak" onclick="speak('Gran used old tyres and paint to make a fake monster.')">🔊</button></p>
+        <div class="correct-answer-box">Correct Answer: tyres</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <p>7. Gran told everyone the monster was just a <input type="text" id="ans7" placeholder="...">. <button class="btn-speak" onclick="speak('Gran told everyone the monster was just a joke.')">🔊</button></p>
+        <div class="correct-answer-box">Correct Answer: joke</div>
+    </div>
+
+    <div class="section-title">Part 3: Think and Write ✍️</div>
+    
+    <div class="question-card" id="q8">
+        <p>8. How did Gran move the "monster" across the lake? <button class="btn-speak" onclick="speak('How did Gran move the monster across the lake?')">🔊</button></p>
+        <textarea id="ans8" rows="2" placeholder="Write your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: She pulled a rope to move it.</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <p>9. What happened after people saw the monster? <button class="btn-speak" onclick="speak('What happened after people saw the monster?')">🔊</button></p>
+        <textarea id="ans9" rows="2" placeholder="Write your answer here..."></textarea>
+        <div class="correct-answer-box">Example Answer: Lots of people came and it was on television.</div>
+    </div>
+
+    <div class="section-title">Part 4: Speak Out Loud 🗣️</div>
+    <div class="question-card" id="q10">
+        <p>10. Please read the following sentence: <br><br><strong>"Oh Gran! Now look what you've done."</strong></p>
+        <button class="btn-submit" style="background-color: #ff9800; margin: 10px 0; font-size: 1em; padding: 10px;" onclick="speak('Oh Gran! Now look what you have done.')">Listen to Example 🔊</button>
+        <p><i>(Tip: Record yourself or read it to a teacher!)</i></p>
+        <div class="correct-answer-box" style="display:block; background-color: #fff3e0;">Focus on: Expression and the "shout" from Mum!</div>
+    </div>
+
+    <button class="btn-submit" onclick="checkAnswers()">Submit My Answers! ✨</button>
+
+    <div id="result-area">
+        <div class="score-text" id="score-display">Score: 0/10</div>
+        <p id="encouragement" style="font-size: 1.5em;"></p>
+        <button class="btn-submit" style="background-color: #2196F3; width: auto; margin: 20px auto;" onclick="window.location.reload()">Try Again 🔄</button>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        // Try to find the best voice
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const totalQuestions = 10;
+        const answers = {
+            q1: 'B',
+            q2: 'A',
+            q3: 'C',
+            q4: 'B',
+            ans5: 'fishing',
+            ans6: 'tyres',
+            ans7: 'joke'
+        };
+
+        // Reset styles
+        document.querySelectorAll('.question-card').forEach(el => el.classList.remove('incorrect-bg'));
+        document.querySelectorAll('.feedback-icon').forEach(el => el.remove());
+
+        // Part 1: Multiple Choice
+        ['q1', 'q2', 'q3', 'q4'].forEach((id, index) => {
+            const selected = document.querySelector(`input[name="${id}"]:checked`);
+            const isCorrect = selected && selected.value === answers[id];
+            displayFeedback(id, isCorrect);
+            if(isCorrect) score++;
+        });
+
+        // Part 2: Cloze
+        ['ans5', 'ans6', 'ans7'].forEach(id => {
+            const val = document.getElementById(id).value.toLowerCase().trim();
+            const isCorrect = val === answers[id];
+            displayFeedback(id.replace('ans', 'q'), isCorrect);
+            if(isCorrect) score++;
+        });
+
+        // Part 3: Short Answer (Manual check simulation)
+        ['ans8', 'ans9'].forEach(id => {
+            const val = document.getElementById(id).value.trim();
+            const isCorrect = val.length > 5; // Basic check for effort
+            displayFeedback(id.replace('ans', 'q'), isCorrect);
+            if(isCorrect) score++;
+        });
+
+        // Part 4: Reading Aloud (Always mark correct for participation)
+        displayFeedback('q10', true);
+        score++;
+
+        // Show Score and Correct Answers
+        document.getElementById('result-area').style.display = 'block';
+        document.getElementById('score-display').innerText = `Score: ${score}/${totalQuestions}`;
+        document.querySelectorAll('.correct-answer-box').forEach(el => el.style.display = 'block');
+
+        // Encouragement
+        const encouragement = document.getElementById('encouragement');
+        if(score >= 9) encouragement.innerText = "🌟 Amazing! You're a Reading Superstar! 🌟";
+        else if(score >= 7) encouragement.innerText = "👍 Great job! You know the story well! 📚";
+        else encouragement.innerText = "😊 Good try! Let's read the story again together! ❤️";
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function displayFeedback(questionId, isCorrect) {
+        const card = document.getElementById(questionId);
+        const icon = document.createElement('span');
+        icon.className = 'feedback-icon';
+        
+        if(isCorrect) {
+            icon.innerText = " ✅ Correct";
+            icon.style.color = "green";
+        } else {
+            icon.innerText = " ❌ Incorrect";
+            icon.style.color = "red";
+            card.classList.add('incorrect-bg');
+        }
+        card.querySelector('p').appendChild(icon);
+    }
+
+    // Load voices
+    window.speechSynthesis.onvoiceschanged = function() {
+        window.speechSynthesis.getVoices();
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Orchid Thief - Interactive Quiz</title>
+    <style>
+        :root {
+            --primary-green: #4CAF50;
+            --secondary-yellow: #FFD700;
+            --soft-bg: #F9FFF9;
+            --error-red: #FFEBEE;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--soft-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 8px solid var(--secondary-yellow);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-green);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-emoji {
+            font-size: 3rem;
+            text-align: center;
+            display: block;
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 2px dashed #eee;
+        }
+
+        h2 {
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 15px;
+            transition: background 0.3s;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .word-bank {
+            background: #fff9c4;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid var(--secondary-yellow);
+            font-weight: bold;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+            font-family: inherit;
+        }
+
+        .btn-speak {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer {
+            display: none;
+            color: #2E7D32;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            background: #E8F5E9;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--primary-green);
+            color: white;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .incorrect-bg {
+            background-color: var(--error-red) !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <span class="header-emoji">🌿🔍🌸</span>
+    <h1>The Orchid Thief Quiz</h1>
+
+    <section>
+        <h2>Part 1: Choose the Best Answer 💡</h2>
+        
+        <div class="question-block" id="q1">
+            <span class="question-text">1. What were the children doing in the field at first?</span>
+            <button class="btn-speak" onclick="speak('What were the children doing in the field at first?')">🔊</button>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. Playing football</label>
+                <label><input type="radio" name="q1" value="B"> B. Counting butterflies</label>
+                <label><input type="radio" name="q1" value="C"> C. Picking flowers</label>
+            </div>
+            <div class="correct-answer">Correct Answer: B. Counting butterflies</div>
+        </div>
+
+        <div class="question-block" id="q2">
+            <span class="question-text">2. How many blue butterflies did Chip see?</span>
+            <button class="btn-speak" onclick="speak('How many blue butterflies did Chip see?')">🔊</button>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> A. Three</label>
+                <label><input type="radio" name="q2" value="B"> B. Five</label>
+                <label><input type="radio" name="q2" value="C"> C. Seven</label>
+            </div>
+            <div class="correct-answer">Correct Answer: B. Five</div>
+        </div>
+
+        <div class="question-block" id="q3">
+            <span class="question-text">3. Who is Alex?</span>
+            <button class="btn-speak" onclick="speak('Who is Alex?')">🔊</button>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. A thief</label>
+                <label><input type="radio" name="q3" value="B"> B. A botanist who works there</label>
+                <label><input type="radio" name="q3" value="C"> C. A nature ranger</label>
+            </div>
+            <div class="correct-answer">Correct Answer: B. A botanist who works there</div>
+        </div>
+
+        <div class="question-block" id="q4">
+            <span class="question-text">4. Where did the children find the stolen orchids?</span>
+            <button class="btn-speak" onclick="speak('Where did the children find the stolen orchids?')">🔊</button>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. In a man's pocket</label>
+                <label><input type="radio" name="q4" value="B"> B. In a woman's blue bag</label>
+                <label><input type="radio" name="q4" value="C"> C. Under a tree</label>
+            </div>
+            <div class="correct-answer">Correct Answer: B. In a woman's blue bag</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Part 2: Word Bank Fun ✏️</h2>
+        <div class="word-bank">
+            Word Bank: [ dug up / bike / blue / gasped / grin ]
+        </div>
+
+        <div class="question-block" id="q5">
+            <span class="question-text">5. Sally saw the hole and ______, "It's been ______!"</span>
+            <button class="btn-speak" onclick="speak('Sally saw the hole and gasped, It has been dug up!')">🔊</button><br>
+            <input type="text" id="q5a" placeholder="gasped"> and <input type="text" id="q5b" placeholder="dug up">
+            <div class="correct-answer">Correct Answer: gasped / dug up</div>
+        </div>
+
+        <div class="question-block" id="q6">
+            <span class="question-text">6. The children thought the man was the thief and raced after his ______.</span>
+            <button class="btn-speak" onclick="speak('The children thought the man was the thief and raced after his bike.')">🔊</button><br>
+            <input type="text" id="q6a" placeholder="bike">
+            <div class="correct-answer">Correct Answer: bike</div>
+        </div>
+
+        <div class="question-block" id="q7">
+            <span class="question-text">7. Alex was not angry; he just gave a ______.</span>
+            <button class="btn-speak" onclick="speak('Alex was not angry; he just gave a grin.')">🔊</button><br>
+            <input type="text" id="q7a" placeholder="grin">
+            <div class="correct-answer">Correct Answer: grin</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Part 3: Think and Write 📝</h2>
+        
+        <div class="question-block" id="q8">
+            <span class="question-text">8. Why was Sally upset in the middle of the story?</span>
+            <button class="btn-speak" onclick="speak('Why was Sally upset in the middle of the story?')">🔊</button><br>
+            <textarea id="q8a" rows="2"></textarea>
+            <div class="correct-answer">Example Answer: Because someone had dug up and stolen the wild orchids.</div>
+        </div>
+
+        <div class="question-block" id="q9">
+            <span class="question-text">9. Who called the police (the lady in the uniform)?</span>
+            <button class="btn-speak" onclick="speak('Who called the police?')">🔊</button><br>
+            <textarea id="q9a" rows="2"></textarea>
+            <div class="correct-answer">Example Answer: Sally the Nature Ranger reported the stolen orchids.</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Part 4: Speak Out Loud 🗣️</h2>
+        <div class="question-block" id="q10">
+            <span class="question-text">10. Read this sentence with your best voice:</span>
+            <p style="font-size: 1.4rem; color: #d32f2f; font-weight: bold;">"Well done! We got the orchids back, thanks to you."</p>
+            <button id="listen-btn" onclick="speak('Well done! We got the orchids back, thanks to you.')" style="padding: 10px 20px; border-radius: 10px; cursor: pointer;">Listen to Example 👂</button>
+            <div class="feedback" id="q10-feedback"></div>
+        </div>
+    </section>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit My Answers! 🏆</button>
+
+    <div id="result-area"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = speechSynthesis.getVoices();
+        // Try to find a female English voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Reset feedback
+        document.querySelectorAll('.feedback').forEach(f => f.innerHTML = '');
+        document.querySelectorAll('.question-block').forEach(b => b.classList.remove('incorrect-bg'));
+        document.querySelectorAll('.correct-answer').forEach(a => a.style.display = 'block');
+
+        // Q1
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        if (q1 && q1.value === 'B') { score++; mark('q1', true); } else { mark('q1', false); }
+
+        // Q2
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        if (q2 && q2.value === 'B') { score++; mark('q2', true); } else { mark('q2', false); }
+
+        // Q3
+        const q3 = document.querySelector('input[name="q3"]:checked');
+        if (q3 && q3.value === 'B') { score++; mark('q3', true); } else { mark('q3', false); }
+
+        // Q4
+        const q4 = document.querySelector('input[name="q4"]:checked');
+        if (q4 && q4.value === 'B') { score++; mark('q4', true); } else { mark('q4', false); }
+
+        // Q5
+        const q5a = document.getElementById('q5a').value.toLowerCase().trim();
+        const q5b = document.getElementById('q5b').value.toLowerCase().trim();
+        if (q5a === 'gasped' && q5b === 'dug up') { score++; mark('q5', true); } else { mark('q5', false); }
+
+        // Q6
+        const q6a = document.getElementById('q6a').value.toLowerCase().trim();
+        if (q6a === 'bike') { score++; mark('q6', true); } else { mark('q6', false); }
+
+        // Q7
+        const q7a = document.getElementById('q7a').value.toLowerCase().trim();
+        if (q7a === 'grin') { score++; mark('q7', true); } else { mark('q7', false); }
+
+        // Q8 & Q9 (Basic check if not empty)
+        if (document.getElementById('q8a').value.length > 5) { score++; mark('q8', true); } else { mark('q8', false); }
+        if (document.getElementById('q9a').value.length > 3) { score++; mark('q9', true); } else { mark('q9', false); }
+
+        // Q10 (Self-check mock)
+        score++; mark('q10', true);
+
+        // Final Score
+        const resultArea = document.getElementById('result-area');
+        let message = score >= 8 ? "Amazing! You are an Orchid Expert! 🌟" : "Good job! Let's read the story again! 📖";
+        resultArea.innerHTML = `Score: ${score}/${total}<br><span style="font-size:1.5rem">${message}</span>`;
+        
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function mark(id, isCorrect) {
+        const block = document.getElementById(id);
+        const feedback = document.createElement('span');
+        feedback.className = 'feedback';
+        if (isCorrect) {
+            feedback.innerHTML = '✅ Correct';
+            feedback.style.color = 'green';
+        } else {
+            feedback.innerHTML = '❌ Incorrect';
+            feedback.style.color = 'red';
+            block.classList.add('incorrect-bg');
+        }
+        block.querySelector('.question-text').appendChild(feedback);
+    }
+
+    // Load voices
+    window.speechSynthesis.onvoiceschanged = () => { speechSynthesis.getVoices(); };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Academy: Stuck to the Ice Quiz</title>
+    <style>
+        :root {
+            --primary-yellow: #FFD700;
+            --hero-red: #E63946;
+            --ice-blue: #A8DADC;
+            --dark-blue: #1D3557;
+            --light-bg: #F1FAEE;
+            --correct-green: #2A9D8F;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-blue);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-yellow);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--hero-red);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px var(--primary-yellow);
+        }
+
+        .section-title {
+            background: var(--ice-blue);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        .question-card {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .wrong-bg {
+            background-color: #FFEBEE !important;
+        }
+
+        .btn-speak {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #eee;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            justify-content: center;
+        }
+
+        .word-item {
+            background: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 2px solid var(--ice-blue);
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            border: none;
+            border-bottom: 2px solid var(--dark-blue);
+            padding: 5px;
+            font-size: 1rem;
+            width: 120px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 60px;
+            border-radius: 10px;
+            padding: 10px;
+            border: 2px solid var(--ice-blue);
+            margin-top: 10px;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .correct-answer {
+            color: var(--correct-green);
+            font-size: 0.9rem;
+            display: none;
+            margin-top: 5px;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--hero-red);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4);
+        }
+
+        #score-board {
+            text-align: center;
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 20px;
+            background: var(--primary-yellow);
+        }
+
+        .option-label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>❄️ Stuck to the Ice ❄️</h1>
+    <p style="text-align:center;">Can you help the heroes? Answer the 10 questions! 🚀</p>
+
+    <div class="section-title">Part 1: Choose the Best Answer 🎒</div>
+    
+    <div class="question-card" id="q1">
+        <p>1. What did Mr Trainer use to freeze the pond? <button class="btn-speak" onclick="speak('What did Mr Trainer use to freeze the pond?')">🔊</button></p>
+        <label class="option-label"><input type="radio" name="q1" value="A"> A long, blue stick</label>
+        <label class="option-label"><input type="radio" name="q1" value="B"> A magic bucket</label>
+        <label class="option-label"><input type="radio" name="q1" value="C"> A snowball</label>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: A long, blue stick</div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <p>2. Who was falling down on the ice? <button class="btn-speak" onclick="speak('Who was falling down on the ice?')">🔊</button></p>
+        <label class="option-label"><input type="radio" name="q2" value="A"> Cam</label>
+        <label class="option-label"><input type="radio" name="q2" value="B"> Jin</label>
+        <label class="option-label"><input type="radio" name="q2" value="C"> Slink</label>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: Jin</div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <p>3. What happened when the blue stick was broken? <button class="btn-speak" onclick="speak('What happened when the blue stick was broken?')">🔊</button></p>
+        <label class="option-label"><input type="radio" name="q3" value="A"> It turned into a rocket</label>
+        <label class="option-label"><input type="radio" name="q3" value="B"> It shot out fire</label>
+        <label class="option-label"><input type="radio" name="q3" value="C"> Lots of ice blasted out</label>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: Lots of ice blasted out</div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <p>4. How did Jin save Slink and Cam? <button class="btn-speak" onclick="speak('How did Jin save Slink and Cam?')">🔊</button></p>
+        <label class="option-label"><input type="radio" name="q4" value="A"> He skated very fast</label>
+        <label class="option-label"><input type="radio" name="q4" value="B"> He flew out of his skates</label>
+        <label class="option-label"><input type="radio" name="q4" value="C"> He used a rope</label>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: He flew out of his skates</div>
+    </div>
+
+    <div class="section-title">Part 2: Fill in the Blanks ✏️</div>
+    <div class="word-bank">
+        <div class="word-item">freezing</div>
+        <div class="word-item">icicles</div>
+        <div class="word-item">broken</div>
+        <div class="word-item">zoom</div>
+        <div class="word-item">rescuing</div>
+    </div>
+
+    <div class="question-card" id="q5">
+        <p>5. Jin can <input type="text" id="ans5"> up and up like a rocket. <button class="btn-speak" onclick="speak('Jin can what up and up like a rocket?')">🔊</button></p>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: zoom</div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <p>6. Cam said, "I'm <input type="text" id="ans6">! My feet are like ice cubes." <button class="btn-speak" onclick="speak('Cam said, I am what? My feet are like ice cubes.')">🔊</button></p>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: freezing</div>
+    </div>
+
+    <div class="question-card" id="q7">
+        <p>7. Slink thought, "My whiskers are like <input type="text" id="ans7">!" <button class="btn-speak" onclick="speak('Slink thought, My whiskers are like what?')">🔊</button></p>
+        <div class="feedback"></div>
+        <div class="correct-answer">Correct Answer: icicles</div>
+    </div>
+
+    <div class="section-title">Part 3: Short Answer Questions 💬</div>
+
+    <div class="question-card" id="q8">
+        <p>8. What sound did the blue stick make before it stopped? <button class="btn-speak" onclick="speak('What sound did the blue stick make before it stopped?')">🔊</button></p>
+        <textarea id="ans8" placeholder="Type your answer here..."></textarea>
+        <div class="feedback"></div>
+        <div class="correct-answer">Example Answer: It went CLUNK!</div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <p>9. What is Jin good at? (Not skating!) <button class="btn-speak" onclick="speak('What is Jin good at?')">🔊</button></p>
+        <textarea id="ans9" placeholder="Type your answer here..."></textarea>
+        <div class="feedback"></div>
+        <div class="correct-answer">Example Answer: He is good at rescuing!</div>
+    </div>
+
+    <div class="section-title">Part 4: Reading Hero 🦸‍♀️</div>
+    <div class="question-card" id="q10">
+        <p>10. Click the button to listen, then read this sentence out loud: <br><br>
+        <strong>"I may not be good at skating, but I'm good at rescuing!"</strong></p>
+        <button id="example-voice" style="padding:10px 20px; border-radius:10px; cursor:pointer; background:var(--ice-blue); border:none;" onclick="speak('I may not be good at skating, but I am good at rescuing!')">▶️ Listen to Example</button>
+        <p style="font-size:0.8rem; color:gray; margin-top:10px;">Check the box if you did it!</p>
+        <label><input type="checkbox" id="ans10"> I read it perfectly!</label>
+        <div class="feedback"></div>
+        <div class="correct-answer">Goal: Read with confidence and expression!</div>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit My Work! ⭐️</button>
+
+    <div id="score-board">
+        <h2 id="final-score">Score: 0/10</h2>
+        <p id="praise-msg"></p>
+    </div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.volume = 1;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        // Try to find a nice female voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Female'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Load voices
+    window.speechSynthesis.onvoiceschanged = () => {};
+
+    function checkAnswers() {
+        let score = 0;
+        const totalQuestions = 10;
+
+        // Reset display
+        document.querySelectorAll('.feedback').forEach(f => f.style.display = 'block');
+        document.querySelectorAll('.correct-answer').forEach(c => c.style.display = 'block');
+
+        // Q1-Q4 Multiple Choice
+        const correctAnswers = { q1: 'A', q2: 'B', q3: 'C', q4: 'B' };
+        for (let i = 1; i <= 4; i++) {
+            const qId = 'q' + i;
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            const qCard = document.getElementById(qId);
+            const feedback = qCard.querySelector('.feedback');
+
+            if (selected && selected.value === correctAnswers[qId]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'var(--correct-green)';
+                qCard.classList.remove('wrong-bg');
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'var(--hero-red)';
+                qCard.classList.add('wrong-bg');
+            }
+        }
+
+        // Q5-Q7 Fill in the Blanks
+        const blankAnswers = { ans5: 'zoom', ans6: 'freezing', ans7: 'icicles' };
+        [5, 6, 7].forEach(num => {
+            const id = 'ans' + num;
+            const val = document.getElementById(id).value.trim().toLowerCase();
+            const qCard = document.getElementById('q' + num);
+            const feedback = qCard.querySelector('.feedback');
+
+            if (val === blankAnswers[id]) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                feedback.style.color = 'var(--correct-green)';
+                qCard.classList.remove('wrong-bg');
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                feedback.style.color = 'var(--hero-red)';
+                qCard.classList.add('wrong-bg');
+            }
+        });
+
+        // Q8-Q9 Short Answers (Keywords check)
+        const q8Val = document.getElementById('ans8').value.toLowerCase();
+        const q8Card = document.getElementById('q8');
+        if (q8Val.includes('clunk')) {
+            score++;
+            q8Card.querySelector('.feedback').innerHTML = '✅ Great Observation!';
+            q8Card.querySelector('.feedback').style.color = 'var(--correct-green)';
+        } else {
+            q8Card.querySelector('.feedback').innerHTML = '❌ Not quite, check the book sounds!';
+            q8Card.classList.add('wrong-bg');
+        }
+
+        const q9Val = document.getElementById('ans9').value.toLowerCase();
+        const q9Card = document.getElementById('q9');
+        if (q9Val.includes('rescuing') || q9Val.includes('rescue') || q9Val.includes('save')) {
+            score++;
+            q9Card.querySelector('.feedback').innerHTML = '✅ Correct! He is a hero.';
+            q9Card.querySelector('.feedback').style.color = 'var(--correct-green)';
+        } else {
+            q9Card.querySelector('.feedback').innerHTML = '❌ He said he is good at...';
+            q9Card.classList.add('wrong-bg');
+        }
+
+        // Q10 Reading
+        const q10Checked = document.getElementById('ans10').checked;
+        const q10Card = document.getElementById('q10');
+        if (q10Checked) {
+            score++;
+            q10Card.querySelector('.feedback').innerHTML = '✅ Awesome reading!';
+            q10Card.querySelector('.feedback').style.color = 'var(--correct-green)';
+        } else {
+            q10Card.querySelector('.feedback').innerHTML = '❌ Don\'t forget to practice reading!';
+            q10Card.classList.add('wrong-bg');
+        }
+
+        // Show Score
+        const scoreBoard = document.getElementById('score-board');
+        const finalScore = document.getElementById('final-score');
+        const praiseMsg = document.getElementById('praise-msg');
+        
+        scoreBoard.style.display = 'block';
+        finalScore.innerHTML = `Score: ${score} / ${totalQuestions}`;
+        
+        if (score === 10) praiseMsg.innerHTML = "🏆 Perfect! You are a Super Hero Reader!";
+        else if (score >= 7) praiseMsg.innerHTML = "✨ Great job! You really know your heroes!";
+        else praiseMsg.innerHTML = "💪 Good try! Let's read the story one more time!";
+
+        scoreBoard.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

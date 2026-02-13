@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Days Poems - Interactive Quiz</title>
+    <style>
+        :root {
+            --primary-yellow: #FFD700;
+            --secondary-green: #4CAF50;
+            --accent-red: #FF4D4D;
+            --bg-color: #FFF9E6;
+            --card-bg: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            background: var(--primary-yellow);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 { color: #5C4033; margin: 0; font-size: 2.5rem; }
+        p.subtitle { font-size: 1.2rem; color: #74512D; font-weight: bold; }
+
+        .section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: background 0.3s;
+        }
+
+        .incorrect-bg { background-color: #FFE6E6 !important; }
+
+        h2 { color: var(--secondary-green); border-bottom: 2px solid var(--primary-yellow); padding-bottom: 10px; }
+
+        .word-bank {
+            background: #F0F0F0;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border: 2px dashed var(--secondary-green);
+        }
+
+        .word-item { background: white; padding: 5px 15px; border-radius: 20px; color: #333; }
+
+        .question-box { margin-bottom: 20px; position: relative; }
+        .question-text { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; display: block; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option {
+            padding: 10px 15px;
+            border: 2px solid #EEE;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .option:hover { background: #F9F9F9; border-color: var(--primary-yellow); }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 2px solid #DDD;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 80%;
+        }
+
+        .feedback { font-weight: bold; margin-top: 5px; display: none; }
+        .correct-text { color: #2E7D32; }
+        .incorrect-text { color: #D32F2F; }
+        .ans-key { color: #555; font-size: 0.9rem; margin-top: 5px; font-style: italic; display: none; }
+
+        .audio-btn {
+            background: var(--secondary-green);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.4);
+            margin-top: 40px;
+        }
+
+        #result-area {
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+        .score-display { font-size: 3rem; color: var(--accent-red); font-weight: 900; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🎆 Special Days Poems 🎆</h1>
+        <p class="subtitle">Fun English Quiz with Teacher & Designer</p>
+    </div>
+
+    <div class="section" id="part1">
+        <h2>Part 1: Choose the Best Answer 🎈</h2>
+        
+        <div class="question-box" id="q1">
+            <span class="question-text">1. On Monday, how old will the birthday child be? <button class="audio-btn" onclick="speak('On Monday, how old will the birthday child be?')">🔊</button></span>
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q1" value="5"> 5 years old</label>
+                <label class="option"><input type="radio" name="q1" value="6"> 6 years old</label>
+                <label class="option"><input type="radio" name="q1" value="7"> 7 years old</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="ans-key">Correct Answer: 6 years old</div>
+        </div>
+
+        <div class="question-box" id="q2">
+            <span class="question-text">2. What color are the letters on the birthday cake? <button class="audio-btn" onclick="speak('What color are the letters on the birthday cake?')">🔊</button></span>
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q2" value="Red"> Red</label>
+                <label class="option"><input type="radio" name="q2" value="Silver"> Silver</label>
+                <label class="option"><input type="radio" name="q2" value="Gold"> Gold</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="ans-key">Correct Answer: Gold</div>
+        </div>
+
+        <div class="question-box" id="q3">
+            <span class="question-text">3. On Pancake Day, who is cooking the pancakes? <button class="audio-btn" onclick="speak('On Pancake Day, who is cooking the pancakes?')">🔊</button></span>
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q3" value="Mum"> Mum</label>
+                <label class="option"><input type="radio" name="q3" value="Dad"> Dad</label>
+                <label class="option"><input type="radio" name="q3" value="Grandad"> Grandad</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="ans-key">Correct Answer: Dad</div>
+        </div>
+
+        <div class="question-box" id="q4">
+            <span class="question-text">4. What is the family shouting on Eid-Mubarak? <button class="audio-btn" onclick="speak('What is the family shouting on Eid-Mubarak?')">🔊</button></span>
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q4" value="Happy Birthday"> Happy Birthday</label>
+                <label class="option"><input type="radio" name="q4" value="Eid-Mubarak"> Eid-Mubarak</label>
+                <label class="option"><input type="radio" name="q4" value="Happy Divali"> Happy Divali</label>
+            </div>
+            <div class="feedback"></div>
+            <div class="ans-key">Correct Answer: Eid-Mubarak</div>
+        </div>
+    </div>
+
+    <div class="section" id="part2">
+        <h2>Part 2: Fill in the Blanks 📝</h2>
+        <div class="word-bank">
+            <span class="word-item">fireworks</span>
+            <span class="word-item">paint</span>
+            <span class="word-item">sugar</span>
+            <span class="word-item">dragons</span>
+            <span class="word-item">guy</span>
+        </div>
+
+        <div class="question-box" id="q5">
+            <span class="question-text">5. Sprinkle the pancakes with ______ and gobble them down. <button class="audio-btn" onclick="speak('Sprinkle the pancakes with blank and gobble them down.')">🔊</button></span>
+            <input type="text" id="ans5" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="ans-key">Correct Answer: sugar</div>
+        </div>
+
+        <div class="question-box" id="q6">
+            <span class="question-text">6. On Bonfire Night, the sparks lit up the ______. <button class="audio-btn" onclick="speak('On Bonfire Night, the sparks lit up the blank.')">🔊</button></span>
+            <input type="text" id="ans6" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="ans-key">Correct Answer: guy</div>
+        </div>
+
+        <div class="question-box" id="q7">
+            <span class="question-text">7. For Holi, the poem says: "Get the ______, off we go!" <button class="audio-btn" onclick="speak('For Holi, the poem says: Get the blank, off we go!')">🔊</button></span>
+            <input type="text" id="ans7" placeholder="Type here...">
+            <div class="feedback"></div>
+            <div class="ans-key">Correct Answer: paint</div>
+        </div>
+    </div>
+
+    <div class="section" id="part3">
+        <h2>Part 3: Short Answers ✍️</h2>
+        
+        <div class="question-box" id="q8">
+            <span class="question-text">8. In "Christmas Eve", what does the child hear a voice yell? <button class="audio-btn" onclick="speak('In Christmas Eve, what does the child hear a voice yell?')">🔊</button></span>
+            <input type="text" id="ans8" placeholder="Type your answer...">
+            <div class="feedback"></div>
+            <div class="ans-key">Example Answer: "BACK TO BED!"</div>
+        </div>
+
+        <div class="question-box" id="q9">
+            <span class="question-text">9. What animals are in the Chinese New Year parade? <button class="audio-btn" onclick="speak('What animals are in the Chinese New Year parade?')">🔊</button></span>
+            <input type="text" id="ans9" placeholder="Type your answer...">
+            <div class="feedback"></div>
+            <div class="ans-key">Example Answer: Dragons and lions.</div>
+        </div>
+    </div>
+
+    <div class="section" id="part4">
+        <h2>Part 4: Read Aloud 🎤</h2>
+        <div class="question-box" id="q10">
+            <span class="question-text">10. Read this sentence from "At Bimla's House": <button class="audio-btn" onclick="speak('At Bimla’s house last night, we had fireworks and sparklers and rice.')">🔊 Listen Example</button></span>
+            <p style="font-size: 1.4rem; padding: 15px; background: #FFF9E6; border-radius: 10px; border-left: 5px solid var(--accent-red);">
+                "At Bimla’s house last night, we had fireworks and sparklers and rice."
+            </p>
+            <p style="font-size: 0.9rem; color: #666;">(Teacher: Tick the box if you read it clearly!)</p>
+            <label><input type="checkbox" id="ans10"> I read it out loud! ✅</label>
+            <div class="feedback"></div>
+            <div class="ans-key">Keep practicing! You are doing great!</div>
+        </div>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Submit My Quiz! 🚀</button>
+
+    <div id="result-area">
+        <div class="score-display" id="final-score"></div>
+        <p id="praise-msg" style="font-size: 1.5rem;"></p>
+        <button onclick="location.reload()" style="padding: 10px 20px; cursor: pointer;">Try Again 🔄</button>
+    </div>
+
+    <script>
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voices = speechSynthesis.getVoices();
+            // Try to find a natural female voice
+            const preferredVoice = voices.find(voice => 
+                voice.name.includes('Google US English') || 
+                voice.name.includes('Microsoft Zira') || 
+                voice.name.includes('Natural')
+            );
+            
+            if (preferredVoice) utterance.voice = preferredVoice;
+            utterance.rate = 0.85;
+            utterance.pitch = 1.1;
+            speechSynthesis.speak(utterance);
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            const answers = {
+                q1: "6",
+                q2: "Gold",
+                q3: "Dad",
+                q4: "Eid-Mubarak",
+                q5: "sugar",
+                q6: "guy",
+                q7: "paint"
+            };
+
+            // Part 1: Choice
+            for (let i = 1; i <= 4; i++) {
+                const qDiv = document.getElementById('q' + i);
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const feedback = qDiv.querySelector('.feedback');
+                const ansKey = qDiv.querySelector('.ans-key');
+
+                if (selected && selected.value === answers['q' + i]) {
+                    score++;
+                    showFeedback(qDiv, feedback, ansKey, true);
+                } else {
+                    showFeedback(qDiv, feedback, ansKey, false);
+                }
+            }
+
+            // Part 2: Fill in blanks
+            for (let i = 5; i <= 7; i++) {
+                const qDiv = document.getElementById('q' + i);
+                const inputVal = document.getElementById('ans' + i).value.toLowerCase().trim();
+                const feedback = qDiv.querySelector('.feedback');
+                const ansKey = qDiv.querySelector('.ans-key');
+
+                if (inputVal === answers['q' + i]) {
+                    score++;
+                    showFeedback(qDiv, feedback, ansKey, true);
+                } else {
+                    showFeedback(qDiv, feedback, ansKey, false);
+                }
+            }
+
+            // Part 3: Short Answer (Flexible matching)
+            const q8 = document.getElementById('q8');
+            const ans8 = document.getElementById('ans8').value.toLowerCase();
+            if (ans8.includes("back") || ans8.includes("bed")) {
+                score++;
+                showFeedback(q8, q8.querySelector('.feedback'), q8.querySelector('.ans-key'), true);
+            } else {
+                showFeedback(q8, q8.querySelector('.feedback'), q8.querySelector('.ans-key'), false);
+            }
+
+            const q9 = document.getElementById('q9');
+            const ans9 = document.getElementById('ans9').value.toLowerCase();
+            if (ans9.includes("dragon") || ans9.includes("lion")) {
+                score++;
+                showFeedback(q9, q9.querySelector('.feedback'), q9.querySelector('.ans-key'), true);
+            } else {
+                showFeedback(q9, q9.querySelector('.feedback'), q9.querySelector('.ans-key'), false);
+            }
+
+            // Part 4: Reading
+            const q10 = document.getElementById('q10');
+            const isRead = document.getElementById('ans10').checked;
+            if (isRead) {
+                score++;
+                showFeedback(q10, q10.querySelector('.feedback'), q10.querySelector('.ans-key'), true);
+            } else {
+                showFeedback(q10, q10.querySelector('.feedback'), q10.querySelector('.ans-key'), false);
+            }
+
+            // Show final results
+            document.getElementById('result-area').style.display = 'block';
+            document.getElementById('final-score').innerText = `Score: ${score}/10`;
+            
+            let msg = "";
+            if (score === 10) msg = "Perfect! You are a Poetry Master! 🌟🏅";
+            else if (score >= 7) msg = "Great job! You remember the poems well! 🍎✨";
+            else msg = "Keep going! Let's read the poems again! 📚💪";
+            document.getElementById('praise-msg').innerText = msg;
+            
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function showFeedback(container, fbElement, keyElement, isCorrect) {
+            fbElement.style.display = 'block';
+            keyElement.style.display = 'block';
+            if (isCorrect) {
+                fbElement.innerHTML = "✅ Correct";
+                fbElement.className = "feedback correct-text";
+                container.classList.remove('incorrect-bg');
+            } else {
+                fbElement.innerHTML = "❌ Incorrect";
+                fbElement.className = "feedback incorrect-text";
+                container.classList.add('incorrect-bg');
+            }
+        }
+    </script>
+</body>
+</html>

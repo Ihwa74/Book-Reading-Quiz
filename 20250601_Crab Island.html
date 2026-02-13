@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crab Island Reading Quiz</title>
+    <style>
+        :root {
+            --primary-yellow: #FFE119;
+            --primary-green: #76B947;
+            --ocean-blue: #B3E5FC;
+            --error-red: #FFEBEE;
+            --correct-text: #2E7D32;
+            --wrong-text: #C62828;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--ocean-blue);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .quiz-card {
+            background: white;
+            width: 100%;
+            max-width: 850px;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 6px solid var(--primary-yellow);
+        }
+
+        h1 { color: var(--primary-green); text-align: center; font-size: 2.5rem; }
+        
+        .section-box {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .part-header {
+            background: var(--primary-green);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .question-item {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .word-bank {
+            background: #FFF9C4;
+            border: 2px dashed #FBC02D;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .audio-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 8px;
+            background: none;
+            border: none;
+        }
+
+        input[type="text"], textarea {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 1rem;
+        }
+
+        .ans-area { display: none; margin-top: 10px; color: var(--correct-text); font-weight: bold; }
+        .feedback-mark { font-weight: bold; margin-left: 10px; }
+
+        .submit-btn {
+            background: var(--primary-yellow);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .submit-btn:hover { transform: scale(1.05); }
+
+        .wrong-highlight { background-color: var(--error-red) !important; }
+
+        #final-score {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-green);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-card">
+    <h1>🏝️ Crab Island Reading Quiz 🦀</h1>
+
+    <div class="section-box">
+        <div class="part-header">Part 1: Multiple Choice</div>
+        
+        <div class="question-item" id="block1">
+            <p>1. Where did the children want to go? <button class="audio-icon" onclick="speak('Where did the children want to go?')">🔊</button> <span class="feedback-mark"></span></p>
+            <input type="radio" name="q1" value="wrong"> Park<br>
+            <input type="radio" name="q1" value="correct"> Crab Island<br>
+            <input type="radio" name="q1" value="wrong"> School
+            <div class="ans-area">Correct Answer: Crab Island</div>
+        </div>
+
+        <div class="question-item" id="block2">
+            <p>2. What did Chip say was on the island? <button class="audio-icon" onclick="speak('What did Chip say was on the island?')">🔊</button> <span class="feedback-mark"></span></p>
+            <input type="radio" name="q2" value="wrong"> A big tree<br>
+            <input type="radio" name="q2" value="correct"> A cave<br>
+            <input type="radio" name="q2" value="wrong"> A shop
+            <div class="ans-area">Correct Answer: A cave</div>
+        </div>
+
+        <div class="question-item" id="block3">
+            <p>3. What was in the big plastic tub Mum brought? <button class="audio-icon" onclick="speak('What was in the big plastic tub Mum brought?')">🔊</button> <span class="feedback-mark"></span></p>
+            <input type="radio" name="q3" value="correct"> Food<br>
+            <input type="radio" name="q3" value="wrong"> Toys<br>
+            <input type="radio" name="q3" value="wrong"> Shoes
+            <div class="ans-area">Correct Answer: Food</div>
+        </div>
+
+        <div class="question-item" id="block4">
+            <p>4. How did the family feel at the start? <button class="audio-icon" onclick="speak('How did the family feel at the start?')">🔊</button> <span class="feedback-mark"></span></p>
+            <input type="radio" name="q4" value="wrong"> Sad<br>
+            <input type="radio" name="q4" value="wrong"> Angry<br>
+            <input type="radio" name="q4" value="correct"> Excited
+            <div class="ans-area">Correct Answer: Excited</div>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <div class="part-header">Part 2: Word Bank</div>
+        <div class="word-bank">Word Bank: beach / speedboat / apples / bottles / signal</div>
+        
+        <div class="question-item" id="block5">
+            <p>5. A <input type="text" id="in5"> went past and made big waves. <button class="audio-icon" onclick="speak('A speedboat went past and made big waves.')">🔊</button> <span class="feedback-mark"></span></p>
+            <div class="ans-area">Correct Answer: speedboat</div>
+        </div>
+
+        <div class="question-item" id="block6">
+            <p>6. Dad's phone had no <input type="text" id="in6">. <button class="audio-icon" onclick="speak('Dads phone had no signal.')">🔊</button> <span class="feedback-mark"></span></p>
+            <div class="ans-area">Correct Answer: signal</div>
+        </div>
+
+        <div class="question-item" id="block7">
+            <p>7. They only had one sweet each and a bag of <input type="text" id="in7">. <button class="audio-icon" onclick="speak('They only had one sweet each and a bag of apples.')">🔊</button> <span class="feedback-mark"></span></p>
+            <div class="ans-area">Correct Answer: apples</div>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <div class="part-header">Part 3: Short Answer</div>
+        
+        <div class="question-item" id="block8">
+            <p>8. What happened to the plastic tub? <button class="audio-icon" onclick="speak('What happened to the plastic tub?')">🔊</button> <span class="feedback-mark"></span></p>
+            <textarea id="in8" style="width:100%"></textarea>
+            <div class="ans-area">Example Answer: It fell off the dinghy into the sea.</div>
+        </div>
+
+        <div class="question-item" id="block9">
+            <p>9. How did the food box get back to the beach? <button class="audio-icon" onclick="speak('How did the food box get back to the beach?')">🔊</button> <span class="feedback-mark"></span></p>
+            <textarea id="in9" style="width:100%"></textarea>
+            <div class="ans-area">Example Answer: It floated in on the tide.</div>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <div class="part-header">Part 4: Reading</div>
+        <div class="question-item" id="block10">
+            <p>10. Read out loud: <strong>"Mmm! Seafood!" said Biff.</strong> <span class="feedback-mark"></span></p>
+            <button class="audio-icon" style="background:#eee; padding:5px 10px; border-radius:5px;" onclick="speak('Mmm! Seafood! said Biff.')">Listen to Example 🔊</button>
+        </div>
+    </div>
+
+    <button class="submit-btn" onclick="submitQuiz()">Submit Answers! ✨</button>
+    <div id="final-score"></div>
+</div>
+
+<script>
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.85;
+        utterance.pitch = 1.1;
+
+        const voices = window.speechSynthesis.getVoices();
+        // Priority: Google US English (Female)
+        const preferredVoice = voices.find(v => v.name === 'Google US English' || (v.lang === 'en-US' && v.name.includes('Female')));
+        
+        if (preferredVoice) {
+            utterance.voice = preferredVoice;
+        }
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // Initialize voices
+    window.speechSynthesis.getVoices();
+
+    function submitQuiz() {
+        let score = 0;
+        
+        // Q1-Q4
+        const qAnswers = { q1: 'correct', q2: 'correct', q3: 'correct', q4: 'correct' };
+        for(let i=1; i<=4; i++) {
+            const block = document.getElementById('block'+i);
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if(selected && selected.value === qAnswers['q'+i]) {
+                score++;
+                mark(i, true);
+            } else {
+                mark(i, false);
+            }
+        }
+
+        // Q5-Q7
+        const fillAnswers = { in5: 'speedboat', in6: 'signal', in7: 'apples' };
+        for(let i=5; i<=7; i++) {
+            const val = document.getElementById('in'+i).value.toLowerCase().trim();
+            if(val === fillAnswers['in'+i]) {
+                score++;
+                mark(i, true);
+            } else {
+                mark(i, false);
+            }
+        }
+
+        // Q8-Q9 (Short answer check: not empty)
+        for(let i=8; i<=9; i++) {
+            const val = document.getElementById('in'+i).value.trim();
+            if(val.length > 5) {
+                score++;
+                mark(i, true);
+            } else {
+                mark(i, false);
+            }
+        }
+
+        // Q10 (Oral check)
+        score++; mark(10, true);
+
+        // Show Score
+        const scoreDiv = document.getElementById('final-score');
+        scoreDiv.style.display = 'block';
+        scoreDiv.innerHTML = `Your Score: ${score}/10 <br> ${score > 7 ? 'Amazing Job! 🌟' : 'Keep practicing! 🦀'}`;
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function mark(num, isCorrect) {
+        const block = document.getElementById('block'+num);
+        const feedback = block.querySelector('.feedback-mark');
+        const ansArea = block.querySelector('.ans-area');
+        
+        if(isCorrect) {
+            feedback.innerHTML = "✅ Correct";
+            feedback.style.color = "var(--correct-text)";
+            block.classList.remove('wrong-highlight');
+        } else {
+            feedback.innerHTML = "❌ Incorrect";
+            feedback.style.color = "var(--wrong-text)";
+            block.classList.add('wrong-highlight');
+        }
+        if(ansArea) ansArea.style.display = "block";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Magic Key - Reading Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 提取自圖片的色調 */
+            --oxford-green: #89b42c;
+            --oxford-yellow: #ffde17;
+            --oxford-brown: #795548;
+            --bg-warm: #fdfcf0;
+            --wrong-bg: #ffebee;
+            --correct-green: #2e7d32;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-warm);
+            color: #333;
+            padding: 20px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            border: 6px solid var(--oxford-yellow);
+            box-shadow: 0 10px 0 #e6c815;
+            margin-bottom: 40px;
+        }
+
+        h1 { color: var(--oxford-green); font-size: 2.8rem; margin: 0; text-shadow: 1px 1px 0px #fff; }
+
+        .section-box {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            background: var(--oxford-green);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .question-card {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border: 2px solid #eee;
+            transition: all 0.3s;
+        }
+
+        .q-text { font-size: 1.25rem; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; }
+        .btn-audio { background: #eee; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; margin-right: 15px; font-size: 1.2rem; }
+        .btn-audio:hover { background: var(--oxford-yellow); }
+
+        .options label {
+            display: block;
+            background: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .options input { margin-right: 12px; transform: scale(1.3); }
+
+        .word-bank {
+            background: #fff9c4;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 3px dashed var(--oxford-yellow);
+            margin-bottom: 25px;
+            color: var(--oxford-brown);
+        }
+
+        input[type="text"], textarea {
+            width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #ddd; font-size: 1.1rem; font-family: inherit;
+        }
+
+        /* 批改視覺效果 */
+        .feedback-msg { display: none; font-weight: bold; margin-left: 10px; }
+        .ans-hint { display: none; margin-top: 10px; color: var(--correct-green); background: #e8f5e9; padding: 10px; border-radius: 8px; font-weight: bold; }
+        .wrong-mode { background-color: var(--wrong-bg) !important; border-color: #ffcdd2 !important; }
+
+        #submit-btn {
+            display: block; width: 100%; padding: 25px; background: var(--oxford-green); color: white;
+            border: none; border-radius: 15px; font-size: 1.8rem; font-weight: bold; cursor: pointer;
+            box-shadow: 0 8px 0 #6d8f23; margin-bottom: 50px;
+        }
+        #submit-btn:active { transform: translateY(4px); box-shadow: 0 4px 0 #6d8f23; }
+
+        #final-result {
+            display: none; text-align: center; padding: 40px; background: white; border-radius: 30px; border: 8px solid var(--oxford-green);
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>✨ The Magic Key Quiz</h1>
+    <p style="font-size: 1.2rem; color: #666;">Level 5 Story Adventure</p>
+</div>
+
+<div class="section-box">
+    <div class="section-title">Part 1: Story Check (選擇題)</div>
+    
+    <div class="question-card" id="q-box-1">
+        <div class="q-text"><button class="btn-audio" onclick="playTTS('1. Where was the box?')">🔊</button> 1. Where was the box? <span class="feedback-msg"></span></div>
+        <div class="options">
+            <label><input type="radio" name="q1" value="wrong"> In Biff's room</label>
+            <label><input type="radio" name="q1" value="correct"> By Chip's bed </label>
+            <label><input type="radio" name="q1" value="wrong"> In the garden</label>
+        </div>
+        <div class="ans-hint">Correct Answer: By Chip's bed</div>
+    </div>
+
+    <div class="question-card" id="q-box-2">
+        <div class="q-text"><button class="btn-audio" onclick="playTTS('2. What was inside the box?')">🔊</button> 2. What was inside the box? <span class="feedback-msg"></span></div>
+        <div class="options">
+            <label><input type="radio" name="q2" value="wrong"> A small mouse</label>
+            <label><input type="radio" name="q2" value="correct"> A magic key [cite: 41]</label>
+            <label><input type="radio" name="q2" value="wrong"> A big pencil</label>
+        </div>
+        <div class="ans-hint">Correct Answer: A magic key</div>
+    </div>
+
+    <div class="question-card" id="q-box-3">
+        <div class="q-text"><button class="btn-audio" onclick="playTTS('3. What happened when the magic began?')">🔊</button> 3. What happened when the magic began? <span class="feedback-msg"></span></div>
+        <div class="options">
+            <label><input type="radio" name="q3" value="correct"> Biff and Chip got smaller </label>
+            <label><input type="radio" name="q3" value="wrong"> The dog ran away</label>
+            <label><input type="radio" name="q3" value="wrong"> The box broke</label>
+        </div>
+        <div class="ans-hint">Correct Answer: Biff and Chip got smaller</div>
+    </div>
+
+    <div class="question-card" id="q-box-4">
+        <div class="q-text"><button class="btn-audio" onclick="playTTS('4. What did the little mouse do?')">🔊</button> 4. What did the little mouse do? <span class="feedback-msg"></span></div>
+        <div class="options">
+            <label><input type="radio" name="q4" value="wrong"> It talked to Biff</label>
+            <label><input type="radio" name="q4" value="correct"> It ran away </label>
+            <label><input type="radio" name="q4" value="wrong"> It ate the key</label>
+        </div>
+        <div class="ans-hint">Correct Answer: It ran away</div>
+    </div>
+</div>
+
+<div class="section-box">
+    <div class="section-title">Part 2: Vocabulary (選填題)</div>
+    <div class="word-bank">Word Bank: [ bigger / glowing / magic / slippers / pin ]</div>
+    
+    <div class="question-card" id="q-box-5">
+        <div class="q-text"><button class="btn-audio" onclick="playTTS('5. Something was blank inside the box.')">🔊</button> 5. Something was _______ inside the box. <span class="feedback-msg"></span></div>
+        <input type="text" id="ans5" placeholder="Type word here...">
+        <div class="ans-hint">Correct Answer: glowing </div>
+    </div>
+
+    <div class="question-card" id="q-box-6">
+        <div class="q-text"><button class="btn-audio" onclick="playTTS('6. Biff picked up a blank.')">🔊</button> 6. Biff picked up a _______. <span class="feedback-msg"></span></div>
+        <input type="text" id="ans6" placeholder="Type word here...">
+        <div class="ans-hint">Correct Answer: pin [cite: 58]</div>
+    </div>
+
+    <div class="question-card" id="q-box-7">
+        <div class="q-text"><button class="btn-audio" onclick="playTTS('7. At the end, they got blank and blank and blank.')">🔊</button> 7. At the end, they got ______ and ______ and ______. <span class="feedback-msg"></span></div>
+        <input type="text" id="ans7" placeholder="Type word here...">
+        <div class="ans-hint">Correct Answer: bigger </div>
+    </div>
+</div>
+
+<div class="section-box">
+    <div class="section-title">Part 3: Understanding (簡答題)</div>
+    
+    <div class="question-card" id="q-box-8">
+        <div class="q-text"><button class="btn-audio" onclick="playTTS('8. What did Chip pick up to show he was small?')">🔊</button> 8. What did Chip pick up to show he was small? <span class="feedback-msg"></span></div>
+        <textarea id="ans8" rows="2"></textarea>
+        <div class="ans-hint">Example Answer: He picked up a big pencil. [cite: 55]</div>
+    </div>
+
+    <div class="question-card" id="q-box-9">
+        <div class="q-text"><button class="btn-audio" onclick="playTTS('9. What did Biff say at the end of the story?')">🔊</button> 9. What did Biff say at the end of the story? <span class="feedback-msg"></span></div>
+        <textarea id="ans9" rows="2"></textarea>
+        <div class="ans-hint">Example Answer: She said, "What an adventure!" [cite: 94]</div>
+    </div>
+</div>
+
+<div class="section-box">
+    <div class="section-title">Part 4: Read Aloud (朗讀)</div>
+    <div class="question-card" id="q-box-10">
+        <div class="q-text">10. Practice your best voice! <span class="feedback-msg"></span></div>
+        <p style="font-size: 1.5rem; background: #fffde7; padding: 20px; border-radius: 10px; border: 2px solid var(--oxford-yellow);">
+            "Biff and Chip got smaller and smaller and smaller." 
+        </p>
+        <button onclick="playTTS('Biff and Chip got smaller and smaller and smaller.')" style="background: #42a5f5; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold;">
+            ▶️ Listen Example
+        </button>
+        <div class="ans-hint">Great reading! Keep it up! 🌟</div>
+    </div>
+</div>
+
+<button id="submit-btn" onclick="checkAnswers()">Check My Score! 🚀</button>
+
+<div id="final-result">
+    <div id="score-text" style="font-size: 4rem; font-weight: bold; color: var(--oxford-green);"></div>
+    <p id="praise-text" style="font-size: 1.8rem;"></p>
+    <button onclick="location.reload()" style="background: #ccc; border:none; padding:10px 20px; border-radius:10px; cursor:pointer;">Retry Quiz 🔄</button>
+</div>
+
+<script>
+    function playTTS(text) {
+        const msg = new SpeechSynthesisUtterance(text);
+        const voices = window.speechSynthesis.getVoices();
+        // 優先尋找 Google US English Female 或 Microsoft Natural
+        msg.voice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural')) || voices[0];
+        msg.rate = 0.85; // 清晰慢速
+        msg.pitch = 1.1; // 活潑
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        
+        // Q1-Q4 Grading
+        for(let i=1; i<=4; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            const feedback = box.querySelector('.feedback-msg');
+            box.querySelector('.ans-hint').style.display = 'block';
+            feedback.style.display = 'inline';
+
+            if(selected && selected.value === 'correct') {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+                box.classList.remove('wrong-mode');
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                box.classList.add('wrong-mode');
+            }
+        }
+
+        // Q5-Q7 Grading
+        const q5 = document.getElementById('ans5').value.trim().toLowerCase();
+        const q6 = document.getElementById('ans6').value.trim().toLowerCase();
+        const q7 = document.getElementById('ans7').value.trim().toLowerCase();
+        
+        const textQs = [
+            { id: 5, val: q5, correct: 'glowing' },
+            { id: 6, val: q6, correct: 'pin' },
+            { id: 7, val: q7, correct: 'bigger' }
+        ];
+
+        textQs.forEach(item => {
+            const box = document.getElementById(`q-box-${item.id}`);
+            const feedback = box.querySelector('.feedback-msg');
+            box.querySelector('.ans-hint').style.display = 'block';
+            feedback.style.display = 'inline';
+            if(item.val.includes(item.correct)) {
+                score++;
+                feedback.innerHTML = '✅ Correct';
+            } else {
+                feedback.innerHTML = '❌ Incorrect';
+                box.classList.add('wrong-mode');
+            }
+        });
+
+        // Q8-Q10 Subjective (Check if not empty)
+        for(let i=8; i<=10; i++) {
+            const box = document.getElementById(`q-box-${i}`);
+            const feedback = box.querySelector('.feedback-msg');
+            const inputVal = (i<10) ? document.getElementById(`ans${i}`).value.trim() : "done";
+            
+            box.querySelector('.ans-hint').style.display = 'block';
+            feedback.style.display = 'inline';
+            if(inputVal.length > 2) {
+                score++;
+                feedback.innerHTML = '✅ Well Done!';
+            } else {
+                feedback.innerHTML = '❌ Needs more';
+                box.classList.add('wrong-mode');
+            }
+        }
+
+        // Result Display
+        document.getElementById('submit-btn').style.display = 'none';
+        const resDiv = document.getElementById('final-result');
+        resDiv.style.display = 'block';
+        document.getElementById('score-text').innerText = score + " / 10";
+        
+        const praise = document.getElementById('praise-text');
+        if(score >= 9) praise.innerText = "Excellent! You are a Magic Key Expert! 🏆🌈";
+        else if(score >= 6) praise.innerText = "Good job! You enjoyed the adventure! 🎈";
+        else praise.innerText = "Nice try! Let's read the story again! 📖";
+
+        resDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Chrome 語音初始化 bug 修復
+    window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Strange Beast - Reading Quiz</title>
+    <style>
+        :root {
+            --primary-green: #97C93E;
+            --accent-yellow: #FFD200;
+            --soft-red: #FFE5E5;
+            --dark-text: #333;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: var(--dark-text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: var(--white);
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 5px solid var(--primary-green);
+        }
+
+        h1 {
+            color: var(--primary-green);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0px var(--accent-yellow);
+        }
+
+        .header-image {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+            height: 100px;
+            background-color: var(--accent-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        h2 {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .question-block {
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        .incorrect-bg {
+            background-color: var(--soft-red) !important;
+        }
+
+        .word-bank {
+            background-color: #f0f8e2;
+            padding: 15px;
+            border: 2px dashed var(--primary-green);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px 15px;
+            color: #4a7c00;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+        }
+
+        .feedback {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-answer {
+            display: none;
+            color: #2d5a27;
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 0.95em;
+            border-left: 5px solid #4caf50;
+        }
+
+        button {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5em;
+            border-radius: 30px;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background-color: #7ab02d;
+            transform: scale(1.05);
+        }
+
+        .speaker-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 0;
+            margin: 0 0 0 10px;
+            box-shadow: none;
+            display: inline;
+        }
+
+        .speaker-btn:hover {
+            transform: scale(1.2);
+            background: none;
+        }
+
+        #score-display {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .encouragement {
+            text-align: center;
+            font-size: 1.5em;
+            color: #ff8c00;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-image">🐘</div>
+    <h1>The Strange Beast Quiz</h1>
+    <p style="text-align: center; font-weight: bold;">Can you solve the mystery of the strange beast? 🍎</p>
+
+    <form id="quizForm">
+        <h2>Part 1: Choose the Best Answer 🧐</h2>
+        
+        <div class="question-block" id="q1">
+            <p>1. At the beginning of the story, what animal was Wilma thinking of? <button type="button" class="speaker-btn" onclick="speak('At the beginning of the story, what animal was Wilma thinking of?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. A cat</label>
+                <label><input type="radio" name="q1" value="B"> B. An elephant</label>
+                <label><input type="radio" name="q1" value="C"> C. A dog</label>
+            </div>
+            <div class="correct-answer">Correct Answer: B. An elephant (She said it had 4 legs and later a long nose!)</div>
+        </div>
+
+        <div class="question-block" id="q2">
+            <p>2. Where did the magic key take the children? <button type="button" class="speaker-btn" onclick="speak('Where did the magic key take the children?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> A. To a modern zoo</label>
+                <label><input type="radio" name="q2" value="B"> B. To a castle in the past</label>
+                <label><input type="radio" name="q2" value="C"> C. To a farm</label>
+            </div>
+            <div class="correct-answer">Correct Answer: B. To a castle in the past</div>
+        </div>
+
+        <div class="question-block" id="q3">
+            <p>3. What were the people in the crowd waiting to see? <button type="button" class="speaker-btn" onclick="speak('What were the people in the crowd waiting to see?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. A strange beast</label>
+                <label><input type="radio" name="q3" value="B"> B. The King</label>
+                <label><input type="radio" name="q3" value="C"> C. A magic show</label>
+            </div>
+            <div class="correct-answer">Correct Answer: A. A strange beast</div>
+        </div>
+
+        <div class="question-block" id="q4">
+            <p>4. How did the elephant feel when it heard all the noise? <button type="button" class="speaker-btn" onclick="speak('How did the elephant feel when it heard all the noise?')">🔊</button></p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. Happy</label>
+                <label><input type="radio" name="q4" value="B"> B. Hungry</label>
+                <label><input type="radio" name="q4" value="C"> C. Frightened</label>
+            </div>
+            <div class="correct-answer">Correct Answer: C. Frightened (Wilma said it was not angry, but frightened.)</div>
+        </div>
+
+        <h2>Part 2: Word Bank Fun 📝</h2>
+        <div class="word-bank">
+            <span class="word-item">zoo</span>
+            <span class="word-item">apples</span>
+            <span class="word-item">trunk</span>
+            <span class="word-item">house</span>
+            <span class="word-item">glowing</span>
+        </div>
+
+        <div class="question-block" id="q5">
+            <p>5. A woman said the beast will live in the king's <input type="text" id="q5_input" placeholder="...">. <button type="button" class="speaker-btn" onclick="speak('A woman said the beast will live in the kings zoo.')">🔊</button></p>
+            <div class="correct-answer">Correct Answer: zoo</div>
+        </div>
+
+        <div class="question-block" id="q6">
+            <p>6. One man shouted, "The beast is as big as a <input type="text" id="q6_input" placeholder="...">!" <button type="button" class="speaker-btn" onclick="speak('One man shouted, The beast is as big as a house!')">🔊</button></p>
+            <div class="correct-answer">Correct Answer: house</div>
+        </div>
+
+        <div class="question-block" id="q7">
+            <p>7. Wilma grabbed two <input type="text" id="q7_input" placeholder="..."> from a cart. <button type="button" class="speaker-btn" onclick="speak('Wilma grabbed two apples from a cart.')">🔊</button></p>
+            <div class="correct-answer">Correct Answer: apples</div>
+        </div>
+
+        <h2>Part 3: Think and Write ✍️</h2>
+        <div class="question-block" id="q8">
+            <p>8. How did the elephant take the apple from Wilma? <button type="button" class="speaker-btn" onclick="speak('How did the elephant take the apple from Wilma?')">🔊</button></p>
+            <textarea id="q8_input" rows="2" placeholder="Write your answer here..."></textarea>
+            <div class="correct-answer">Example Answer: It took the apple carefully with its long trunk.</div>
+        </div>
+
+        <div class="question-block" id="q9">
+            <p>9. What did the people do when they saw Wilma feeding the elephant? <button type="button" class="speaker-btn" onclick="speak('What did the people do when they saw Wilma feeding the elephant?')">🔊</button></p>
+            <textarea id="q9_input" rows="2" placeholder="Write your answer here..."></textarea>
+            <div class="correct-answer">Example Answer: They began to smile and they loved the beast now.</div>
+        </div>
+
+        <h2>Part 4: Speak Like a Star ⭐</h2>
+        <div class="question-block" id="q10">
+            <p>10. Read this sentence aloud: <br><br><strong>"Elephants eat plants, not people!" said Chip.</strong> <button type="button" class="speaker-btn" onclick="speak('Elephants eat plants, not people! said Chip.')">🔊 (Listen to Example)</button></p>
+            <p style="color: #666; font-style: italic;">(Press the speaker to hear the example, then try it yourself!)</p>
+            <div class="correct-answer">Keep practicing! You sound great!</div>
+        </div>
+
+        <button type="button" onclick="checkAnswers()">Submit My Score! ✅</button>
+    </form>
+
+    <div id="score-display"></div>
+    <div class="encouragement" id="encouragement-text"></div>
+</div>
+
+<script>
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.rate = 0.85;
+        msg.pitch = 1.1;
+        
+        const voices = speechSynthesis.getVoices();
+        // Try to find a female English voice
+        const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Microsoft Zira') || v.name.includes('Natural'));
+        if (preferredVoice) msg.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const total = 10;
+
+        // Reset styles
+        document.querySelectorAll('.question-block').forEach(block => block.classList.remove('incorrect-bg'));
+        document.querySelectorAll('.feedback').forEach(f => f.remove());
+        document.querySelectorAll('.correct-answer').forEach(ca => ca.style.display = 'block');
+
+        // Part 1
+        const answers1 = { q1: 'B', q2: 'B', q3: 'A', q4: 'C' };
+        for (let i = 1; i <= 4; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const qBlock = document.getElementById(`q${i}`);
+            if (selected && selected.value === answers1[`q${i}`]) {
+                score++;
+                qBlock.innerHTML += '<span class="feedback" style="color: green;">✅ Correct</span>';
+            } else {
+                qBlock.classList.add('incorrect-bg');
+                qBlock.innerHTML += '<span class="feedback" style="color: red;">❌ Incorrect</span>';
+            }
+        }
+
+        // Part 2
+        const answers2 = { q5: 'zoo', q6: 'house', q7: 'apples' };
+        for (let i = 5; i <= 7; i++) {
+            const val = document.getElementById(`q${i}_input`).value.trim().toLowerCase();
+            const qBlock = document.getElementById(`q${i}`);
+            if (val === answers2[`q${i}`]) {
+                score++;
+                qBlock.innerHTML += '<span class="feedback" style="color: green;">✅ Correct</span>';
+            } else {
+                qBlock.classList.add('incorrect-bg');
+                qBlock.innerHTML += '<span class="feedback" style="color: red;">❌ Incorrect</span>';
+            }
+        }
+
+        // Part 3 (Simple keyword check for auto-grading)
+        const q8Val = document.getElementById('q8_input').value.toLowerCase();
+        if (q8Val.includes('trunk')) {
+            score++;
+            document.getElementById('q8').innerHTML += '<span class="feedback" style="color: green;">✅ Great Job!</span>';
+        } else {
+            document.getElementById('q8').classList.add('incorrect-bg');
+            document.getElementById('q8').innerHTML += '<span class="feedback" style="color: orange;">❌ Try again!</span>';
+        }
+
+        const q9Val = document.getElementById('q9_input').value.toLowerCase();
+        if (q9Val.includes('smile') || q9Val.includes('loved')) {
+            score++;
+            document.getElementById('q9').innerHTML += '<span class="feedback" style="color: green;">✅ Excellent!</span>';
+        } else {
+            document.getElementById('q9').classList.add('incorrect-bg');
+            document.getElementById('q9').innerHTML += '<span class="feedback" style="color: orange;">❌ Check the story!</span>';
+        }
+
+        // Part 4 (Always give point for participation)
+        score++;
+        document.getElementById('q10').innerHTML += '<span class="feedback" style="color: green;">✅ Well Done!</span>';
+
+        // Final Score
+        const scoreDisplay = document.getElementById('score-display');
+        scoreDisplay.style.display = 'block';
+        scoreDisplay.innerText = `Final Score: ${score} / ${total}`;
+
+        const encouragement = document.getElementById('encouragement-text');
+        encouragement.style.display = 'block';
+        if (score >= 8) {
+            encouragement.innerText = "Wow! You are a Star Explorer! 🌟🏆";
+        } else if (score >= 5) {
+            encouragement.innerText = "Good job! You know the beast very well! 🐘✨";
+        } else {
+            encouragement.innerText = "Keep reading! You're getting better! 📚💪";
+        }
+
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+
+</body>
+</html>
